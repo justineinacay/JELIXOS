@@ -27,15 +27,16 @@
   --red-glow:0 0 12px rgba(255,34,68,.5);
 }
 [data-theme="light"]{
-  --navy:#e8f4ff;--navy2:#d0e8ff;--navy3:#b8d8f8;--navy4:#a0c8f0;
-  --teal:#006080;--teal2:#008899;--teal3:rgba(0,96,128,.12);--teal4:rgba(0,96,128,.06);
-  --orange:#b84000;--orange2:#8c2c00;--orange3:rgba(184,64,0,.1);--orange4:rgba(184,64,0,.04);
-  --text1:#001828;--text2:#003050;--text3:#406080;
-  --border:#7ab0cc;--border2:#4888aa;
-  --green:#007020;--red:#cc0020;--amber:#aa6600;--purple:#6020cc;--pink:#b8006a;
-  --cyan-glow:0 0 8px rgba(0,96,128,.3);
-  --amber-glow:0 0 8px rgba(170,102,0,.3);
-  --red-glow:0 0 8px rgba(204,0,32,.3);
+  /* Clean professional light — white base, slate accents, no awkward teal-on-white */
+  --navy:#f0f4f8;--navy2:#ffffff;--navy3:#e8eef4;--navy4:#dde6ee;
+  --teal:#0066cc;--teal2:#0052a3;--teal3:rgba(0,102,204,.08);--teal4:rgba(0,102,204,.04);
+  --orange:#e06500;--orange2:#b34f00;--orange3:rgba(224,101,0,.1);--orange4:rgba(224,101,0,.04);
+  --text1:#0d1117;--text2:#24292f;--text3:#57606a;
+  --border:#d0d7de;--border2:#b0bcc8;
+  --green:#1a7f37;--red:#cf222e;--amber:#9a6700;--purple:#6639ba;--pink:#bf3989;
+  --cyan-glow:0 0 8px rgba(0,102,204,.2);
+  --amber-glow:0 0 8px rgba(224,101,0,.2);
+  --red-glow:0 0 8px rgba(207,34,46,.2);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{height:100%;height:-webkit-fill-available}
@@ -45,7 +46,7 @@ body{height:100%;height:-webkit-fill-available;font-family:var(--font);backgroun
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(128,255,250,.015) 3px,rgba(128,255,250,.015) 4px);pointer-events:none;z-index:9000}
 body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(128,255,250,.05) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(80,180,255,.04) 0%,transparent 60%);pointer-events:none;z-index:8999}
 a{color:var(--teal);text-decoration:none}
-input,textarea,select{font-family:var(--font);font-size:14px;color:var(--teal);background:#000000;border:1px solid var(--border2);border-radius:3px;padding:6px 10px;outline:none;width:100%;transition:border .15s}
+input,textarea,select{font-family:var(--font);font-size:14px;color:var(--text1);background:var(--navy2);border:1px solid var(--border2);border-radius:3px;padding:6px 10px;outline:none;width:100%;transition:border .15s}
 input:focus,textarea:focus,select:focus{border-color:var(--teal);box-shadow:0 0 8px rgba(0,255,242,.2)}
 input::placeholder,textarea::placeholder{color:var(--text3)}
 button{font-family:var(--font);cursor:pointer;font-size:13px;border:none;border-radius:4px;transition:all .15s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -53,9 +54,9 @@ select option{background:var(--navy3)}
 
 /* LAYOUT */
 .app{display:grid;grid-template-columns:220px 1fr;grid-template-rows:52px 1fr;height:100vh;height:100dvh;position:relative;z-index:1}
-.topbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 16px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));background:#000000;border-bottom:1px solid var(--teal2);position:relative;z-index:100;box-shadow:0 1px 0 var(--teal2),0 2px 20px rgba(0,255,242,.08)}
+.topbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 16px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));background:var(--navy2);border-bottom:1px solid var(--teal2);position:relative;z-index:100;box-shadow:0 1px 0 var(--teal2),0 2px 20px rgba(0,255,242,.08)}
 .topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal),var(--teal2),var(--orange),transparent);box-shadow:0 0 10px rgba(128,255,250,.35)}
-.side-panel{grid-row:2;background:#000000;border-right:1px solid var(--teal2);display:flex;flex-direction:column;overflow:hidden;box-shadow:inset -1px 0 0 rgba(0,255,242,.08)}
+.side-panel{grid-row:2;background:var(--navy2);border-right:1px solid var(--teal2);display:flex;flex-direction:column;overflow:hidden;box-shadow:inset -1px 0 0 rgba(0,255,242,.08)}
 .side-nav{flex:1;overflow-y:auto;padding:6px 0;-webkit-overflow-scrolling:touch}
 .ngl{font-size:8px;font-weight:700;letter-spacing:.15em;color:var(--text3);padding:8px 14px 3px;display:flex;align-items:center;gap:6px;text-transform:uppercase}
 .ngl::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -488,7 +489,21 @@ select option{background:var(--navy3)}
 #dataTicker{font-size:10px;color:var(--teal2);letter-spacing:.08em;opacity:.6;overflow:hidden;white-space:nowrap;font-family:'Poppins',monospace}
 /* Corner HUD brackets on cards */
 .hc::after{content:'';position:absolute;bottom:4px;right:4px;width:8px;height:8px;border-bottom:1px solid rgba(0,212,200,.2);border-right:1px solid rgba(0,212,200,.2);animation:corner-blink 3s infinite}
-[data-theme="light"] .hc::after{border-color:rgba(0,110,104,.15)}
+[data-theme="light"] .hc::after{border-color:rgba(0,102,204,.12)}
+[data-theme="light"] body::before{background:none}
+[data-theme="light"] body::after{background:none}
+[data-theme="light"] .topbar::after{background:linear-gradient(90deg,transparent,var(--teal),var(--teal2),var(--orange),transparent);box-shadow:none;opacity:.5}
+[data-theme="light"] .hc{background:var(--navy2);border-color:var(--border)}
+[data-theme="light"] .hc.oc{background:#fff8f0;border-color:rgba(224,101,0,.3)}
+[data-theme="light"] .modal{background:var(--navy2);border-color:var(--border)}
+[data-theme="light"] .bd-block{background:var(--navy2);border-color:var(--border)}
+[data-theme="light"] .side-panel{box-shadow:1px 0 0 var(--border)}
+[data-theme="light"] .ni:hover{background:rgba(0,102,204,.07)}
+[data-theme="light"] .ni.active{background:rgba(0,102,204,.1);text-shadow:none}
+[data-theme="light"] .vbar .vpill{background:rgba(255,255,255,.92);border-color:rgba(0,102,204,.3);box-shadow:0 4px 24px rgba(0,0,0,.12),0 0 0 1px rgba(0,102,204,.1)}
+[data-theme="light"] .vlabel{color:var(--teal)}
+[data-theme="light"] select option{background:var(--navy2);color:var(--text1)}
+[data-theme="light"] #mbGlobalSpotlight{opacity:0!important}
 
 /* ═══════════════════════════════════════════════════════════════
    MOBILE — iPhone 14 Pro Max (430×932pt) + Dynamic Island
@@ -823,7 +838,7 @@ select option{background:var(--navy3)}
     <div class="mb">
       <div class="fg"><label class="fl">Title</label><input id="tf-title" placeholder="Task title..."></div>
       <div class="fr">
-        <div class="fg"><label class="fl">World</label><select id="tf-world"><option value="WORK-IH">WORK — Ideahub</option><option value="WORK-CS">WORK — Chainsmoker & Sweetheart</option><option value="VENTURE">VENTURE</option><option value="BUILD">BUILD</option><option value="SIDES">SIDES</option><option value="FAITH">FAITH</option><option value="LIFE">LIFE</option></select></div>
+        <div class="fg"><label class="fl">World</label><select id="tf-world" onchange="updateTaskClientDropdown(this.value)"><option value="WORK-IH">WORK — Ideahub</option><option value="WORK-CS">WORK — Chainsmoker & Sweetheart</option><option value="VENTURE">VENTURE</option><option value="BUILD">BUILD</option><option value="SIDES">SIDES</option><option value="FAITH">FAITH</option><option value="LIFE">LIFE</option></select></div>
         <div class="fg"><label class="fl">Priority</label><select id="tf-prio"><option>High</option><option>Medium</option><option>Low</option></select></div>
       </div>
       <div class="fr">
@@ -831,10 +846,18 @@ select option{background:var(--navy3)}
         <div class="fg"><label class="fl">Deadline</label><input type="date" id="tf-due"></div>
       </div>
       <div class="fr">
-        <div class="fg"><label class="fl">Platform</label><input id="tf-platform" placeholder="e.g. Instagram, Facebook..."></div>
-        <div class="fg"><label class="fl">Client</label><input id="tf-client" placeholder="e.g. Millscope..."></div>
+        <div class="fg"><label class="fl">Start Time</label><input type="time" id="tf-start-time"></div>
+        <div class="fg"><label class="fl">End Time</label><input type="time" id="tf-end-time"></div>
       </div>
-      <div class="fg"><label class="fl">Note</label><textarea id="tf-notes" rows="3" placeholder="Additional notes..."></textarea></div>
+      <div class="fr">
+        <div class="fg"><label class="fl">Platform</label><input id="tf-platform" placeholder="e.g. Instagram, Facebook..."></div>
+        <div class="fg" id="tf-client-wrap">
+          <label class="fl">Client</label>
+          <select id="tf-client-select" style="display:none" onchange="document.getElementById('tf-client').value=this.value"></select>
+          <input id="tf-client" placeholder="e.g. Millscope...">
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Note</label><textarea id="tf-notes" rows="2" placeholder="Additional notes..."></textarea></div>
     </div>
     <div class="mf"><button class="btn btn-g" onclick="closeModal('taskModal')">Cancel</button><button class="btn btn-t" onclick="saveTask()">Save Task</button></div>
   </div>
@@ -939,7 +962,8 @@ select option{background:var(--navy3)}
       <div class="fg"><label class="fl">Title</label><input id="ce-title" placeholder="Event title..."></div>
       <div class="fr">
         <div class="fg"><label class="fl">Date</label><input type="date" id="ce-date"></div>
-        <div class="fg"><label class="fl">Time</label><input type="time" id="ce-time"></div>
+        <div class="fg"><label class="fl">Start Time</label><input type="time" id="ce-time"></div>
+        <div class="fg"><label class="fl">End Time</label><input type="time" id="ce-end-time"></div>
       </div>
       <div class="fr">
         <div class="fg"><label class="fl">World</label><select id="ce-type">
@@ -1304,10 +1328,12 @@ select option{background:var(--navy3)}
               </div>
             </div>
             <!-- Table header -->
-            <div style="display:grid;grid-template-columns:1fr 100px 100px;gap:0;border-bottom:1px solid var(--teal2);padding-bottom:5px;margin-bottom:4px">
+            <div style="display:grid;grid-template-columns:1fr 80px 90px 90px 70px;gap:0;border-bottom:1px solid var(--teal2);padding-bottom:5px;margin-bottom:4px">
               <div style="font-size:9px;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;padding:0 4px">Title</div>
-              <div style="font-size:9px;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase">Origin</div>
-              <div style="font-size:9px;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase">Link</div>
+              <div style="font-size:9px;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase">World</div>
+              <div style="font-size:9px;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase">Deadline</div>
+              <div style="font-size:9px;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase">Status</div>
+              <div style="font-size:9px;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase">Priority</div>
             </div>
             <div id="briefWorldTasks" style="overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch"></div>
           </div>
@@ -1508,14 +1534,14 @@ select option{background:var(--navy3)}
         <div class="cftab"><div class="cfbt active" onclick="setCFTab('overview',this)">Overview</div><div class="cfbt" onclick="setCFTab('transactions',this)">Transactions</div><div class="cfbt" onclick="setCFTab('chart',this)">Chart</div><div class="cfbt" onclick="setCFTab('property',this)">Property</div></div>
         <div id="cf-overview">
           <div class="mr" style="grid-template-columns:repeat(4,1fr)">
-            <div class="hc"><div class="cl">Total Income</div><div class="cv" id="cf-income" style="font-size:14px;margin-top:2px;color:var(--green)">₱0.00</div></div>
-            <div class="hc oc"><div class="cl">Total Expenses</div><div class="cv oc" id="cf-expense" style="font-size:14px;margin-top:2px">₱0.00</div></div>
-            <div class="hc"><div class="cl">Net Cash Flow</div><div class="cv" id="cf-net" style="font-size:14px;margin-top:2px">₱0.00</div></div>
+            <div class="hc"><div class="cl">Total Income</div><div class="cv" id="cf-income" style="font-size:28px;font-weight:800;margin-top:4px;color:var(--green);line-height:1.1">₱0.00</div></div>
+            <div class="hc oc"><div class="cl">Total Expenses</div><div class="cv oc" id="cf-expense" style="font-size:28px;font-weight:800;margin-top:4px;line-height:1.1">₱0.00</div></div>
+            <div class="hc"><div class="cl">Net Cash Flow</div><div class="cv" id="cf-net" style="font-size:28px;font-weight:800;margin-top:4px;color:#3b82f6;line-height:1.1">₱0.00</div></div>
             <div class="hc"><div class="cl">Transactions</div><div class="cv" id="cf-count">0</div></div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div class="bd-block"><div class="bd-h"><i class="ti ti-trending-up"></i> Recent Credits</div><div id="cf-recent-credits"><div style="font-size:11px;color:var(--text3)">No credits yet.</div></div></div>
-            <div class="bd-block"><div class="bd-h"><i class="ti ti-trending-down"></i> Recent Debits</div><div id="cf-recent-debits"><div style="font-size:11px;color:var(--text3)">No debits yet.</div></div></div>
+            <div class="bd-block"><div class="bd-h"><i class="ti ti-trending-up"></i> Recent Debits</div><div id="cf-recent-credits"><div style="font-size:11px;color:var(--text3)">No entries yet.</div></div></div>
+            <div class="bd-block"><div class="bd-h"><i class="ti ti-trending-down"></i> Recent Credits</div><div id="cf-recent-debits"><div style="font-size:11px;color:var(--text3)">No entries yet.</div></div></div>
           </div>
         </div>
         <div id="cf-transactions" style="display:none"><table class="ht"><thead><tr><th>Date</th><th>Description</th><th>Type</th><th>Category</th><th>Account</th><th>Amount</th><th></th></tr></thead><tbody id="cashTbody"></tbody></table><div style="margin-top:8px;font-size:11px;color:var(--text3);text-align:center" id="cashEmpty">No transactions yet.</div></div>
@@ -1999,16 +2025,16 @@ function renderBriefWorldTasks(){
     else if(wtFilter==='No Progress')tasks=tasks.filter(t=>t.status==='No Progress');
     else if(wtFilter==='Done')tasks=tasks.filter(t=>t.status==='Done');
     tasks.forEach(t=>{
-      rows+=`<div style="display:grid;grid-template-columns:1fr 100px 100px;gap:0;padding:6px 4px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s" onclick="editTask(${t.id})" onmouseover="this.style.background='rgba(0,255,242,.04)'" onmouseout="this.style.background=''">
+      const prioCol=t.priority==='High'?'var(--red)':t.priority==='Medium'?'var(--amber)':'var(--text3)';
+      rows+=`<div style="display:grid;grid-template-columns:1fr 80px 90px 90px 70px;gap:0;padding:6px 4px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s" onclick="editTask(${t.id})" onmouseover="this.style.background='rgba(0,255,242,.04)'" onmouseout="this.style.background=''">
         <div style="display:flex;align-items:center;gap:6px;min-width:0;padding-right:8px">
           <i class="ti ${w.icon}" style="color:${w.c};font-size:11px;line-height:1;display:block;flex-shrink:0"></i>
           <span style="font-size:11px;color:var(--text1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:${t.priority==='High'?'600':'400'}">${t.title}</span>
-          ${t.priority==='High'?'<span style="color:var(--red);font-size:11px;flex-shrink:0;line-height:1">!</span>':''}
         </div>
-        <div style="font-size:10px;color:${w.c};display:flex;align-items:center">[${w.l}]</div>
-        <div style="font-size:10px;display:flex;align-items:center">
-          ${t.client?`<span style="color:var(--teal)">[${t.client}]</span>`:`<span style="color:${sc[t.status]}">[${t.status}]</span>`}
-        </div>
+        <div style="font-size:10px;color:${w.c};display:flex;align-items:center;white-space:nowrap">${w.l}</div>
+        <div style="font-size:10px;color:var(--text3);display:flex;align-items:center">${t.due||'—'}</div>
+        <div style="font-size:10px;display:flex;align-items:center"><span style="color:${sc[t.status]}">${t.status}</span></div>
+        <div style="font-size:10px;display:flex;align-items:center;gap:4px"><span style="color:${prioCol};font-weight:600">${t.priority}</span></div>
       </div>`;
     });
   });
@@ -2561,27 +2587,73 @@ function openTaskForStatus(world,status){document.getElementById('tf-world').val
 
 let editingTaskId=null;
 function saveTask(){
-  const t={id:editingTaskId||Date.now(),title:document.getElementById('tf-title').value.trim()||'Untitled Task',world:document.getElementById('tf-world').value,priority:document.getElementById('tf-prio').value,status:document.getElementById('tf-status').value,due:document.getElementById('tf-due').value,platform:document.getElementById('tf-platform').value.trim(),client:document.getElementById('tf-client').value.trim(),notes:document.getElementById('tf-notes').value};
+  const startTime=document.getElementById('tf-start-time')?.value||'';
+  const endTime=document.getElementById('tf-end-time')?.value||'';
+  const t={id:editingTaskId||Date.now(),title:document.getElementById('tf-title').value.trim()||'Untitled Task',world:document.getElementById('tf-world').value,priority:document.getElementById('tf-prio').value,status:document.getElementById('tf-status').value,due:document.getElementById('tf-due').value,platform:document.getElementById('tf-platform').value.trim(),client:document.getElementById('tf-client').value.trim(),notes:document.getElementById('tf-notes').value,startTime,endTime};
   const isEdit=!!editingTaskId;
   if(editingTaskId){const i=DB.tasks.findIndex(x=>x.id===editingTaskId);if(i>=0)DB.tasks[i]=t;SB.update('tasks',t.id,t,'tasks');}else{DB.tasks.unshift(t);SB.upsert('tasks',t,'tasks');}
   addHistory(isEdit?'edit':'add',(isEdit?'Edited':'Added')+' task: '+t.title,{...t,_dbKey:'tasks'});
-  closeModal('taskModal');['tf-title','tf-notes','tf-platform','tf-client'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  reRenderAll();showToast('✓ Task saved');
+  // Auto-add task to calendar as a highlight block if it has a due date
+  if(t.due&&!isEdit){
+    const existingCal=DB.calEvents.find(e=>e._taskId===t.id);
+    if(!existingCal){
+      const calEntry={id:Date.now()+1,_taskId:t.id,title:'📋 '+t.title,date:t.due,time:startTime,endTime:endTime,type:'task',loc:'',notes:t.world+(t.client?' · '+t.client:''),_isTask:true};
+      DB.calEvents.push(calEntry);
+      SB.upsert('cal_events',calEntry,'calEvents');
+    }
+  }
+  closeModal('taskModal');['tf-title','tf-notes','tf-platform'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  reRenderAll();showToast('✓ Task saved'+(t.due?' + added to calendar':''));
 }
 function editTask(id){
   const t=DB.tasks.find(x=>x.id===id);if(!t)return;editingTaskId=id;
   document.getElementById('taskModalTitle').textContent='Edit Task';
-  document.getElementById('tf-title').value=t.title;document.getElementById('tf-world').value=t.world;
-  document.getElementById('tf-prio').value=t.priority;document.getElementById('tf-status').value=t.status;
-  document.getElementById('tf-due').value=t.due||'';document.getElementById('tf-platform').value=t.platform||'';
-  document.getElementById('tf-client').value=t.client||'';document.getElementById('tf-notes').value=t.notes||'';
+  document.getElementById('tf-title').value=t.title;
+  document.getElementById('tf-world').value=t.world;
+  document.getElementById('tf-prio').value=t.priority;
+  document.getElementById('tf-status').value=t.status;
+  document.getElementById('tf-due').value=t.due||'';
+  document.getElementById('tf-platform').value=t.platform||'';
+  document.getElementById('tf-client').value=t.client||'';
+  document.getElementById('tf-notes').value=t.notes||'';
+  const stEl=document.getElementById('tf-start-time');if(stEl)stEl.value=t.startTime||'';
+  const etEl=document.getElementById('tf-end-time');if(etEl)etEl.value=t.endTime||'';
+  updateTaskClientDropdown(t.world);
   openModal('taskModal');
 }
 function deleteTask(e,id){
   e.stopPropagation();const t=DB.tasks.find(x=>x.id===id);if(!t)return;
   DB.tasks=DB.tasks.filter(x=>x.id!==id);SB.remove('tasks',id,'tasks');
+  // Remove associated calendar entry
+  DB.calEvents=DB.calEvents.filter(e=>e._taskId!==id);
   addHistory('delete','Deleted task: '+t.title,{...t,_dbKey:'tasks'});
   reRenderAll();showToast('Task deleted');
+}
+
+// Dynamic dropdown for task modal based on world selection
+function updateTaskClientDropdown(world){
+  const sel=document.getElementById('tf-client-select');
+  const inp=document.getElementById('tf-client');
+  if(!sel||!inp)return;
+  if(world==='WORK-IH'){
+    const clients=(DB.clients||[]).filter(c=>!c.world||c.world==='WORK-IH');
+    sel.innerHTML='<option value="">— Select client —</option>'+clients.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
+    sel.style.display='';inp.style.display='none';
+    sel.onchange=()=>{inp.value=sel.value;};
+  } else if(world==='WORK-CS'){
+    sel.innerHTML='<option value="">— Select store —</option><option>Chainsmoker Brampton</option><option>Chainsmoker Mississauga</option><option>Chainsmoker Scarborough</option><option>Chainsmoker Markham</option><option>Chainsmoker Hamilton</option><option>Chainsmoker Ottawa</option><option>Sweetheart Cafe</option>';
+    sel.style.display='';inp.style.display='none';
+    sel.onchange=()=>{inp.value=sel.value;};
+  } else if(world==='BUILD'){
+    const lbl=document.querySelector('label[for="tf-client"],label.fl+#tf-client-select')?.closest('.fg')?.querySelector('.fl');
+    if(lbl)lbl.textContent='App';
+    sel.innerHTML='<option value="">— Select app —</option><option>NAKNAK</option><option>DISKARTE</option><option>PASAHERO</option>';
+    sel.style.display='';inp.style.display='none';
+    sel.onchange=()=>{inp.value=sel.value;};
+  } else {
+    sel.style.display='none';inp.style.display='';
+    sel.innerHTML='';
+  }
 }
 
 let editingClientId=null;
@@ -2797,7 +2869,7 @@ function saveCashflow(){
   renderLife();renderBrief();
 }
 function deleteCash(id){const t=DB.cashflow.find(x=>x.id===id);DB.cashflow=DB.cashflow.filter(x=>x.id!==id);SB.remove('cashflow',id,'cashflow');addHistory('delete','Deleted transaction: '+t.desc,{...t,_dbKey:'cashflow'});renderLife();renderBrief();showToast('Deleted');}
-function renderLife(){const credits=DB.cashflow.filter(t=>t.type==='Debit'),debits=DB.cashflow.filter(t=>t.type==='Credit');const ti=credits.reduce((s,t)=>s+(t.amount||0),0),to=debits.reduce((s,t)=>s+(t.amount||0),0),net=ti-to;const fmt=v=>'₱'+v.toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});document.getElementById('cf-income').textContent=fmt(ti);document.getElementById('cf-expense').textContent=fmt(to);const ne=document.getElementById('cf-net');ne.textContent=fmt(Math.abs(net));ne.style.color=net>=0?'var(--green)':'var(--red)';document.getElementById('cf-count').textContent=DB.cashflow.length;document.getElementById('cf-recent-credits').innerHTML=credits.slice(0,4).map(t=>`<div class="brow"><div class="bdot" style="background:var(--green)"></div><div class="btxt">${t.desc}</div><span class="btag pg">+₱${t.amount.toLocaleString()}</span></div>`).join('')||'<div style="font-size:11px;color:var(--text3)">No debit entries yet.</div>';document.getElementById('cf-recent-debits').innerHTML=debits.slice(0,4).map(t=>`<div class="brow"><div class="bdot" style="background:var(--red)"></div><div class="btxt">${t.desc}</div><span class="btag pr">-₱${t.amount.toLocaleString()}</span></div>`).join('')||'<div style="font-size:11px;color:var(--text3)">No credit entries yet.</div>';if(cfActiveTab==='transactions')renderCashTable();if(cfActiveTab==='chart')renderCashCharts();}
+function renderLife(){const credits=DB.cashflow.filter(t=>t.type==='Debit'),debits=DB.cashflow.filter(t=>t.type==='Credit');const ti=credits.reduce((s,t)=>s+(t.amount||0),0),to=debits.reduce((s,t)=>s+(t.amount||0),0),net=ti-to;const fmt=v=>'₱'+v.toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});document.getElementById('cf-income').textContent=fmt(ti);document.getElementById('cf-expense').textContent=fmt(to);const ne=document.getElementById('cf-net');ne.textContent=(net>=0?'+':'-')+fmt(Math.abs(net));ne.style.color='#3b82f6';document.getElementById('cf-count').textContent=DB.cashflow.length;document.getElementById('cf-recent-credits').innerHTML=credits.slice(0,4).map(t=>`<div class="brow"><div class="bdot" style="background:var(--green)"></div><div class="btxt">${t.desc}</div><span class="btag pg">+₱${t.amount.toLocaleString()}</span></div>`).join('')||'<div style="font-size:11px;color:var(--text3)">No debit entries yet.</div>';document.getElementById('cf-recent-debits').innerHTML=debits.slice(0,4).map(t=>`<div class="brow"><div class="bdot" style="background:var(--red)"></div><div class="btxt">${t.desc}</div><span class="btag pr">-₱${t.amount.toLocaleString()}</span></div>`).join('')||'<div style="font-size:11px;color:var(--text3)">No credit entries yet.</div>';if(cfActiveTab==='transactions')renderCashTable();if(cfActiveTab==='chart')renderCashCharts();}
 function renderCashTable(){const em=document.getElementById('cashEmpty'),tb=document.getElementById('cashTbody');if(!DB.cashflow.length){tb.innerHTML='';em.style.display='';return;}em.style.display='none';tb.innerHTML=DB.cashflow.map(t=>`<tr><td style="font-size:11px;color:var(--text3)">${t.date||'—'}</td><td style="font-weight:500">${t.desc}${t.notes?`<div style="font-size:10px;color:var(--text3);margin-top:2px;font-style:italic">${t.notes}</div>`:''}</td><td><span class="pill ${t.type==='Debit'?'pg':'pr'}">${t.type.toUpperCase()}</span></td><td style="font-size:11px;color:var(--text3)">${t.category}${t.catNotes?`<div style="font-size:10px;color:var(--text3)">${t.catNotes}</div>`:''}</td><td style="font-size:11px;color:var(--text3)">${t.account}</td><td style="font-weight:700;color:${t.type==='Debit'?'var(--green)':'var(--red)'}">${t.type==='Debit'?'+':'-'}₱${(t.amount||0).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td style="display:flex;gap:4px"><button class="btn" style="padding:2px 7px;background:rgba(0,255,242,.08);border:1px solid var(--border2);color:var(--teal)" onclick="editCash(${t.id})"><i class="ti ti-pencil" style="font-size:11px;line-height:1;display:block"></i></button><button class="btn btn-d" style="padding:2px 7px" onclick="deleteCash(${t.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:block"></i></button></td></tr>`).join('');}
 function renderCashCharts(){const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const mI=new Array(12).fill(0),mO=new Array(12).fill(0);DB.cashflow.forEach(t=>{const m=new Date(t.date).getMonth();if(t.type==='Debit')mI[m]+=(t.amount||0);else mO[m]+=(t.amount||0);});const ctx1=document.getElementById('cashflowChart');if(cfCharts.flow)cfCharts.flow.destroy();cfCharts.flow=new Chart(ctx1,{type:'bar',data:{labels:months,datasets:[{label:'Debit (+)',data:mI,backgroundColor:'rgba(0,212,200,.5)',borderColor:'var(--teal)',borderWidth:1},{label:'Credit (−)',data:mO,backgroundColor:'rgba(255,107,26,.4)',borderColor:'var(--orange)',borderWidth:1}]},options:{responsive:true,plugins:{legend:{labels:{color:'#7ab8c8',font:{size:10}}}},scales:{x:{ticks:{color:'#3a6878',font:{size:9}}},y:{ticks:{color:'#3a6878',font:{size:9}}}}}});const cats={};DB.cashflow.filter(t=>t.type==='Credit').forEach(t=>{cats[t.category]=(cats[t.category]||0)+(t.amount||0);});const ctx2=document.getElementById('catChart');if(cfCharts.cat)cfCharts.cat.destroy();const colors=['rgba(0,212,200,.7)','rgba(255,107,26,.7)','rgba(168,85,247,.7)','rgba(34,197,94,.7)','rgba(245,158,11,.7)','rgba(239,68,68,.7)'];cfCharts.cat=new Chart(ctx2,{type:'doughnut',data:{labels:Object.keys(cats),datasets:[{data:Object.values(cats),backgroundColor:colors.slice(0,Object.keys(cats).length),borderColor:'#040d1a',borderWidth:2}]},options:{responsive:true,plugins:{legend:{position:'right',labels:{color:'#7ab8c8',font:{size:10},boxWidth:10}}}}});}
 
@@ -2807,7 +2879,7 @@ function renderCalendar(){const months=['January','February','March','April','Ma
 function calNav(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
 function openCalEventModal(){openCalEventModalOnDate(new Date().toISOString().split('T')[0]);}
 function openCalEventModalOnDate(date){selectedCalDate=date;document.getElementById('calModalTitle').textContent='Add Event — '+date;document.getElementById('ce-date').value=date;['ce-title','ce-time','ce-loc','ce-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});openModal('calModal');}
-function saveCalEvent(){const e={id:Date.now(),title:document.getElementById('ce-title').value.trim()||'Event',date:document.getElementById('ce-date').value||selectedCalDate,time:document.getElementById('ce-time').value,type:document.getElementById('ce-type').value,loc:document.getElementById('ce-loc').value.trim(),notes:document.getElementById('ce-notes')?.value.trim()||''};DB.calEvents.push(e);SB.upsert('cal_events',e,'calEvents');closeModal('calModal');addHistory('add','Added event: '+e.title,{...e,_dbKey:'calEvents'});renderCalendar();renderBrief();showToast('✓ Event saved');}
+function saveCalEvent(){const rawDate=document.getElementById('ce-date').value||selectedCalDate;const e={id:Date.now(),title:document.getElementById('ce-title').value.trim()||'Event',date:rawDate,time:document.getElementById('ce-time').value,endTime:document.getElementById('ce-end-time')?.value||'',type:document.getElementById('ce-type').value,loc:document.getElementById('ce-loc').value.trim(),notes:document.getElementById('ce-notes')?.value.trim()||''};DB.calEvents.push(e);SB.upsert('cal_events',e,'calEvents');closeModal('calModal');addHistory('add','Added event: '+e.title,{...e,_dbKey:'calEvents'});renderCalendar();renderBrief();showToast('✓ Event saved');}
 
 // NOTES — callout grid
 let noteBlocks=[],currentNote=0;
