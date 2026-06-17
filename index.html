@@ -973,48 +973,32 @@ select option{background:var(--navy3)}
     padding:10px !important;
     font-size:12px !important;
   }
-  /* ROW 2: Filter chips — 2-column grid, dark cohesive */
+  /* ── MOBILE: hide the entire filter row — just show the task list ── */
   #view-tasks .board-toolbar > div:nth-child(2){
-    display:grid !important;
-    grid-template-columns:1fr 1fr !important;
-    gap:8px !important;
-    padding:10px 12px !important;
-    background:transparent !important;
+    display:none !important;
   }
-  #view-tasks .filter-sep{display:none !important}
-  #view-tasks .board-toolbar > div:nth-child(2) > div{
-    background:var(--navy3) !important;
-    border:1px solid var(--border2) !important;
-    border-radius:8px !important;
-    padding:8px 10px !important;
-    width:100% !important;
+  /* Board shell + body must allow vertical scroll on mobile */
+  #view-tasks .board-shell{
     display:flex !important;
-    align-items:center !important;
-    gap:6px !important;
+    flex-direction:column !important;
+    height:100% !important;
+    overflow:hidden !important;
   }
-  .filter-chip-sel{
-    background:transparent !important;
-    border:none !important;
-    padding:2px !important;
-    font-size:13px !important;
-    width:100% !important;
-    min-width:0 !important;
-    color:var(--text1) !important;
-  }
-  /* Clear button spans full width */
-  #view-tasks .board-toolbar > div:nth-child(2) > button{
-    grid-column:1 / -1 !important;
-    width:100% !important;
-    padding:8px !important;
+  #boardBody{
+    flex:1 !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    min-height:0 !important;
+    padding-bottom:calc(80px + env(safe-area-inset-bottom)) !important;
   }
   /* Board groups / tables — horizontal scroll on mobile */
   .task-group-body{overflow-x:auto !important;-webkit-overflow-scrolling:touch}
   .board-table{min-width:640px}
   .task-group-header{position:sticky;left:0}
-  /* Tasks view — clear the bottom nav (56px + safe area) */
-  #view-tasks .vb,#view-tasks > div:last-child{padding-bottom:calc(70px + env(safe-area-inset-bottom)) !important}
-  #view-tasks .kanban-wrap{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
-  .kc-body{max-height:calc(100dvh - 320px) !important}
+  /* Kanban scroll clearance */
+  #view-tasks .kanban-wrap{padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+  .kc-body{max-height:calc(100dvh - 280px) !important}
 
   /* ── Tasks by world table — scroll on mobile ── */
   #briefWorldTasks{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -1246,6 +1230,7 @@ select option{background:var(--navy3)}
    Token inheritance: all vars from :root
    ═══════════════════════════════════════════════════════════════ */
 .board-toolbar{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--navy2);flex-wrap:wrap}
+.board-shell{display:flex;flex-direction:column;height:100%;overflow:hidden}
 .board-view-tabs{display:flex;gap:2px;background:var(--navy3);border:1px solid var(--border);border-radius:5px;padding:2px}
 .bvt{padding:4px 11px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.06em;cursor:pointer;color:var(--text3);border:none;background:transparent;transition:all .15s;text-transform:uppercase}
 .bvt.active{background:var(--teal3);color:var(--teal);border:1px solid var(--teal2)}
@@ -2397,7 +2382,7 @@ select option{background:var(--navy3)}
           <div style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--navy3);flex-wrap:wrap;border-bottom:1px solid var(--border)">
 
             <!-- Board / World -->
-            <div style="display:flex;align-items:center;gap:4px">
+            <div class="filter-wrap" data-filter="board" style="display:flex;align-items:center;gap:4px">
               <i class="ti ti-layout-board" style="font-size:11px;color:var(--teal);line-height:1;display:block"></i>
               <select id="taskFilter" onchange="renderTasks()" class="filter-chip-sel">
                 <option value="all">All Boards</option>
@@ -2414,7 +2399,7 @@ select option{background:var(--navy3)}
             <div class="filter-sep"></div>
 
             <!-- Person / Client -->
-            <div style="display:flex;align-items:center;gap:4px">
+            <div class="filter-wrap filter-hide-mobile" data-filter="person" style="display:flex;align-items:center;gap:4px">
               <i class="ti ti-user" style="font-size:11px;color:var(--teal);line-height:1;display:block"></i>
               <select id="filterPerson" onchange="renderTasks()" class="filter-chip-sel">
                 <option value="all">Person</option>
@@ -2424,7 +2409,7 @@ select option{background:var(--navy3)}
             <div class="filter-sep"></div>
 
             <!-- Priority -->
-            <div style="display:flex;align-items:center;gap:4px">
+            <div class="filter-wrap" data-filter="priority" style="display:flex;align-items:center;gap:4px">
               <i class="ti ti-flag" style="font-size:11px;color:var(--amber);line-height:1;display:block"></i>
               <select id="filterPriority" onchange="renderTasks()" class="filter-chip-sel">
                 <option value="all">Priority</option>
@@ -2437,7 +2422,7 @@ select option{background:var(--navy3)}
             <div class="filter-sep"></div>
 
             <!-- Status -->
-            <div style="display:flex;align-items:center;gap:4px">
+            <div class="filter-wrap" data-filter="status" style="display:flex;align-items:center;gap:4px">
               <i class="ti ti-circle-check" style="font-size:11px;color:var(--green);line-height:1;display:block"></i>
               <select id="taskSF" onchange="renderTasks()" class="filter-chip-sel">
                 <option value="all">Status</option>
@@ -2451,7 +2436,7 @@ select option{background:var(--navy3)}
             <div class="filter-sep"></div>
 
             <!-- Deadline range -->
-            <div style="display:flex;align-items:center;gap:4px">
+            <div class="filter-wrap filter-hide-mobile" data-filter="deadline" style="display:flex;align-items:center;gap:4px">
               <i class="ti ti-calendar" style="font-size:11px;color:var(--purple);line-height:1;display:block"></i>
               <select id="filterDeadline" onchange="renderTasks()" class="filter-chip-sel">
                 <option value="all">Deadline</option>
@@ -2466,7 +2451,7 @@ select option{background:var(--navy3)}
             <div class="filter-sep"></div>
 
             <!-- Time (has start time) -->
-            <div style="display:flex;align-items:center;gap:4px">
+            <div class="filter-wrap filter-hide-mobile" data-filter="time" style="display:flex;align-items:center;gap:4px">
               <i class="ti ti-clock" style="font-size:11px;color:var(--teal);line-height:1;display:block"></i>
               <select id="filterTime" onchange="renderTasks()" class="filter-chip-sel">
                 <option value="all">Time</option>
@@ -2478,7 +2463,7 @@ select option{background:var(--navy3)}
             <div class="filter-sep"></div>
 
             <!-- Connected board -->
-            <div style="display:flex;align-items:center;gap:4px">
+            <div class="filter-wrap filter-hide-mobile" data-filter="conn" style="display:flex;align-items:center;gap:4px">
               <i class="ti ti-link" style="font-size:11px;color:var(--orange);line-height:1;display:block"></i>
               <select id="filterConn" onchange="renderTasks()" class="filter-chip-sel">
                 <option value="all">Connected</option>
@@ -2491,7 +2476,7 @@ select option{background:var(--navy3)}
             <div class="filter-sep"></div>
 
             <!-- Platform -->
-            <div style="display:flex;align-items:center;gap:4px">
+            <div class="filter-wrap filter-hide-mobile" data-filter="platform" style="display:flex;align-items:center;gap:4px">
               <i class="ti ti-device-desktop" style="font-size:11px;color:var(--text3);line-height:1;display:block"></i>
               <select id="filterPlatform" onchange="renderTasks()" class="filter-chip-sel">
                 <option value="all">Platform</option>
