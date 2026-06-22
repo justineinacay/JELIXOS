@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -134,11 +134,25 @@ select option{background:var(--navy3)}
 
 /* LAYOUT */
 .app{display:grid;grid-template-columns:clamp(180px,18vw,220px) 1fr;grid-template-rows:52px 1fr;height:100vh;height:100dvh;position:relative;z-index:1}
-/* Nav collapsed state */
-.app.nav-hidden{grid-template-columns:0 1fr}
-.app.nav-hidden .side-panel{transform:translateX(-100%);pointer-events:none;position:absolute;left:0;top:52px;height:calc(100% - 52px);z-index:200}
-.app.nav-hidden #navShowBtn{display:flex !important}
-.side-panel{transition:transform .22s cubic-bezier(.4,0,.2,1);grid-row:2;background:var(--navy2);border-right:1px solid var(--teal2);display:flex;flex-direction:column;overflow:hidden;box-shadow:inset -1px 0 0 rgba(0,255,242,.08)}
+/* Side nav slides in/out as an overlay — main content never shrinks */
+.side-panel{
+  position:relative;z-index:100;
+  grid-row:2;background:var(--navy2);border-right:1px solid var(--teal2);
+  display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:inset -1px 0 0 rgba(0,255,242,.08);
+  transition:width .22s cubic-bezier(.4,0,.2,1),opacity .2s;
+  width:clamp(180px,18vw,220px);min-width:0;
+}
+.app.nav-collapsed{grid-template-columns:0 1fr}
+.app.nav-collapsed .side-panel{width:0;opacity:0;pointer-events:none;border:none}
+.app.nav-collapsed #navPeekBtn{display:flex!important}
+/* Peek button — appears in topbar when nav is hidden */
+#navPeekBtn{
+  display:none;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:4px;cursor:pointer;
+  background:rgba(0,255,242,.08);border:1px solid var(--teal2);
+  color:var(--teal);font-size:14px;flex-shrink:0;
+}
 .topbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 16px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));background:var(--navy2);border-bottom:1px solid var(--teal2);position:relative;z-index:100;box-shadow:0 1px 0 var(--teal2),0 2px 20px rgba(0,255,242,.08)}
 .topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal),var(--teal2),var(--orange),transparent);box-shadow:0 0 10px rgba(128,255,250,.35)}
 .side-nav{flex:1;overflow-y:auto;padding:6px 0;-webkit-overflow-scrolling:touch}
@@ -220,6 +234,14 @@ select option{background:var(--navy3)}
 .pam{background:rgba(245,158,11,.1);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
 .pdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block}
 .ph{background:var(--red);box-shadow:0 0 4px var(--red)}.pm{background:var(--amber)}.pl{background:var(--green)}
+/* ── Task status colours: No Progress=Red · To-Do=Orange · In Progress=Yellow · Approved=Green · Done=Blue */
+.sp-no-progress{background:rgba(255,34,68,.14);color:var(--red)!important;border:1px solid rgba(255,34,68,.4)}
+.sp-todo       {background:rgba(255,140,0,.14);color:var(--orange)!important;border:1px solid rgba(255,140,0,.4)}
+.sp-in-progress{background:rgba(255,220,0,.10);color:#f5d800!important;border:1px solid rgba(255,220,0,.35)}
+.sp-approved   {background:rgba(0,255,136,.10);color:var(--green)!important;border:1px solid rgba(0,255,136,.35)}
+.sp-done       {background:rgba(59,130,246,.14);color:#60a5fa!important;border:1px solid rgba(59,130,246,.4)}
+/* Inline status select — inherits colour class */
+.sp-sel{-webkit-appearance:none;appearance:none;background:transparent;border:none;outline:none;cursor:pointer;font-size:11px;font-weight:700;color:inherit;width:100%;padding:2px 4px;font-family:var(--font);border-radius:2px}
 
 /* TABLE */
 .ht{width:100%;border-collapse:collapse;font-size:13px}
@@ -1960,15 +1982,6 @@ select option{background:var(--navy3)}
 .board-view-tabs{display:flex;gap:2px;background:var(--navy3);border:1px solid var(--border);border-radius:5px;padding:2px}
 .bvt{padding:4px 11px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.06em;cursor:pointer;color:var(--text3);border:none;background:transparent;transition:all .15s;text-transform:uppercase}
 .bvt.active{background:var(--teal3);color:var(--teal);border:1px solid var(--teal2)}
-/* Inline table cell edits */
-.il-sel{background:transparent;border:none;outline:none;cursor:pointer;font-size:11px;font-weight:600;color:inherit;width:100%;padding:0;-webkit-appearance:none;appearance:none;font-family:var(--font)}
-.il-sel:hover{opacity:.8}
-.il-inp{background:transparent;border:none;border-bottom:1px solid transparent;outline:none;font-size:11px;color:var(--text3);width:100%;padding:2px 0;font-family:var(--font)}
-.il-inp:focus{border-bottom-color:var(--teal2);color:var(--text1)}
-.il-date{background:transparent;border:none;border-bottom:1px solid transparent;outline:none;font-size:11px;color:var(--text3);width:100%;padding:2px 0;font-family:var(--font);cursor:pointer}
-.il-date:focus{border-bottom-color:var(--teal2);color:var(--text1)}
-.il-title{transition:color .1s}.il-title:hover{color:var(--teal)}
-.il-status-wrap select{background:transparent;border:none;padding:2px 4px;font-size:11px;-webkit-appearance:none;appearance:none}
 .board-search{background:var(--navy3);border:1px solid var(--border);border-radius:4px;padding:4px 10px;color:var(--text1);font-size:12px;width:160px;outline:none}
 .board-search:focus{border-color:var(--teal2)}
 .filter-chip-sel{background:transparent;border:none;color:var(--text2);font-size:11px;font-family:var(--font);cursor:pointer;outline:none;padding:1px 2px;appearance:none;-webkit-appearance:none;min-width:60px}
@@ -2562,7 +2575,11 @@ select option{background:var(--navy3)}
 <div class="app" style="opacity:0;transition:opacity .5s" id="appRoot">
   <!-- TOPBAR -->
   <header class="topbar">
-    <div style="display:flex;align-items:center;gap:12px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <!-- Show-nav peek button — visible when nav is collapsed -->
+      <button id="navPeekBtn" onclick="toggleNav()" title="Show navigation" style="display:none;align-items:center;justify-content:center;width:30px;height:30px;border-radius:4px;cursor:pointer;background:rgba(0,255,242,.08);border:1px solid var(--teal2);color:var(--teal);font-size:13px;flex-shrink:0">
+        <i class="ti ti-layout-sidebar-left-expand" style="line-height:1;display:block"></i>
+      </button>
       <div class="tb-logo">J.E.L.I.X OS</div>
       <div style="height:24px;width:1px;background:var(--border2)"></div>
       <div id="desktopSearchBar" style="background:var(--navy3);border:1px solid var(--border);border-radius:3px;padding:4px 10px;display:flex;align-items:center;gap:7px;cursor:pointer;width:clamp(120px,20vw,280px)" onclick="openCmd()">
@@ -2592,18 +2609,15 @@ select option{background:var(--navy3)}
   </header>
 
   <!-- SIDE PANEL -->
-  <!-- NAV TOGGLE BUTTON (visible when nav is hidden) -->
-  <button id="navShowBtn" onclick="toggleNav()" title="Show navigation" style="display:none;position:fixed;top:60px;left:0;z-index:300;width:18px;height:48px;background:var(--navy2);border:1px solid var(--teal2);border-left:none;border-radius:0 6px 6px 0;cursor:pointer;color:var(--teal);font-size:10px;align-items:center;justify-content:center;writing-mode:vertical-rl;letter-spacing:.1em;font-weight:700;padding:0;box-shadow:2px 0 8px rgba(0,0,0,.4)">›</button>
-
   <div class="side-panel" id="sidePanel">
-    <!-- Collapse button inside nav -->
-    <button onclick="toggleNav()" title="Hide navigation" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:transparent;border:none;border-bottom:1px solid var(--border);padding:7px 14px;cursor:pointer;color:var(--text3);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;flex-shrink:0">
-      <span style="display:flex;align-items:center;gap:6px"><i class="ti ti-layout-sidebar-left-collapse" style="font-size:13px;line-height:1;display:block"></i>J.E.L.I.X OS</span>
-      <span style="font-size:9px;opacity:.5">Hide</span>
-    </button>
+    <!-- Collapse toggle at top of nav -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--border);flex-shrink:0">
+      <span style="font-size:9px;font-weight:800;letter-spacing:.14em;color:var(--teal2);text-transform:uppercase">J.E.L.I.X OS</span>
+      <button onclick="toggleNav()" title="Hide navigation" style="background:transparent;border:none;cursor:pointer;color:var(--text3);font-size:13px;padding:2px 4px;display:flex;align-items:center;border-radius:3px" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--text3)'">
+        <i class="ti ti-layout-sidebar-left-collapse" style="line-height:1;display:block"></i>
+      </button>
+    </div>
     <div class="side-nav">
-
-      <!-- 1. COMMAND -->
       <div class="ngl">Command</div>
       <div class="ni active" onclick="setView('brief')" data-view="brief"><i class="ti ti-layout-dashboard"></i>Daily Brief</div>
       <div class="ni" onclick="setView('tasks')" data-view="tasks"><i class="ti ti-checklist"></i>Tasks<span class="nbadge" id="taskBadge">0</span></div>
@@ -2612,8 +2626,6 @@ select option{background:var(--navy3)}
       <div class="ni" onclick="setView('ai')" data-view="ai"><i class="ti ti-sparkles"></i>AI Workspace</div>
       <div class="ni" onclick="setView('memory')" data-view="memory"><i class="ti ti-brain"></i>Memory</div>
       <div class="ni" onclick="setView('history')" data-view="history"><i class="ti ti-history"></i>Activity History</div>
-
-      <!-- 2. SIX WORLDS -->
       <div class="ngl" style="margin-top:4px">Six Worlds</div>
       <div class="ni" onclick="setView('work-ih')" data-view="work-ih"><i class="ti ti-briefcase" style="color:var(--teal)"></i>WORK — Ideahub<div style="width:5px;height:5px;border-radius:50%;background:var(--teal);margin-left:auto"></div></div>
       <div class="ni cs" onclick="setView('work-cs')" data-view="work-cs"><i class="ti ti-flame" style="color:var(--red)"></i>WORK — Chainsmoker</div>
@@ -2623,8 +2635,6 @@ select option{background:var(--navy3)}
       <div class="ni" onclick="setView('health')" data-view="health"><i class="ti ti-heart-rate-monitor" style="color:var(--red)"></i>HEALTH</div>
       <div class="ni" onclick="setView('faith')" data-view="faith"><i class="ti ti-heart-handshake" style="color:var(--purple)"></i>FAITH</div>
       <div class="ni" onclick="setView('life')" data-view="life"><i class="ti ti-leaf" style="color:var(--teal2)"></i>LIFE — Cash Flow</div>
-
-      <!-- 3. INTELLIGENCE -->
       <div class="ngl" style="margin-top:4px">Intelligence</div>
       <div class="ni" onclick="setView('jarvis-brief')" data-view="jarvis-brief"><i class="ti ti-sun" style="color:var(--amber)"></i>Morning Brief</div>
       <div class="ni" onclick="setView('jarvis-capture')" data-view="jarvis-capture"><i class="ti ti-capture" style="color:var(--teal)"></i>Capture Processor</div>
@@ -2634,13 +2644,10 @@ select option{background:var(--navy3)}
       <div class="ni" onclick="setView('jarvis-pattern')" data-view="jarvis-pattern"><i class="ti ti-trending-up" style="color:var(--orange)"></i>Pattern Detector</div>
       <div class="ni" onclick="setView('jarvis-decision')" data-view="jarvis-decision"><i class="ti ti-scale" style="color:var(--amber)"></i>Decision Intel</div>
       <div class="ni" onclick="setView('jarvis-claude')" data-view="jarvis-claude"><i class="ti ti-id" style="color:var(--pink)"></i>CLAUDE.md</div>
-
-      <!-- 4. QUICK -->
       <div class="ngl" style="margin-top:4px">Quick</div>
       <div class="ni" onclick="openCmd()"><i class="ti ti-command"></i>Command Palette<span style="font-size:9px;color:var(--text3);margin-left:auto">⌘K</span></div>
       <div class="ni" onclick="openModal('taskModal')"><i class="ti ti-plus"></i>New Task</div>
       <div class="ni" onclick="setView('settings')" data-view="settings"><i class="ti ti-settings"></i>System Settings</div>
-
     </div>
     <div class="side-bottom">
       <button class="vsbtn" id="vsbtn" onclick="toggleVoice()">
@@ -2672,8 +2679,10 @@ select option{background:var(--navy3)}
         <div id="briefCaptureBar" style="background:#050a12;border:1px solid var(--teal2);border-radius:4px;padding:8px 12px;display:flex;gap:8px;align-items:center;flex-shrink:0">
           <span style="font-size:9px;font-weight:800;letter-spacing:.14em;color:var(--teal2);text-transform:uppercase;flex-shrink:0;white-space:nowrap">QUICK CAPTURE</span>
           <div style="width:1px;height:14px;background:var(--border2);flex-shrink:0"></div>
-          <input style="border:none;background:transparent;flex:1;font-size:12px;outline:none;color:var(--text1);min-width:0" id="captureInput" placeholder="/cs · /ih · /build · /faith · /debit 500 desc · /credit 1000 desc · or type anything…" onkeydown="if(event.key==='Enter')processCapture()">
-          <button onclick="processCapture()" style="flex-shrink:0;background:var(--teal);color:var(--navy);border:none;border-radius:3px;padding:5px 14px;font-size:11px;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:5px;white-space:nowrap"><i class="ti ti-corner-down-left" style="font-size:11px;line-height:1;display:block"></i> Enter</button>
+          <input style="border:none;background:transparent;flex:1;font-size:12px;outline:none;color:var(--text1);min-width:0" id="captureInput" placeholder="/cs task · /ih task · /build task · /faith task · /debit 500 desc · /credit 1000 desc · or type anything…" onkeydown="if(event.key==='Enter'){event.preventDefault();runCapture();}">
+          <button onclick="runCapture()" style="flex-shrink:0;background:var(--teal);color:var(--navy);border:none;border-radius:3px;padding:5px 14px;font-size:11px;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:5px;white-space:nowrap;font-family:var(--font)">
+            <i class="ti ti-corner-down-left" style="font-size:11px;line-height:1;display:block"></i> Enter
+          </button>
         </div>
 
         <!-- ROW 1: TO DO NOW (left) + CASH FLOW (right) -->
@@ -2719,7 +2728,7 @@ select option{background:var(--navy3)}
           <div id="briefWeekStrip" style="display:grid;grid-template-columns:repeat(7,1fr);gap:clamp(2px,1vw,5px)"></div>
         </div>
 
-        <!-- ROW 4: TASKS BY WORLD (left) + OPERATIONAL FLYWHEEL (right) -->
+        <!-- ROW 4: TASKS BY WORLD (left) + GOOGLE WORKSPACE (right) -->
         <div id="briefTasksRow" style="display:grid;grid-template-columns:1fr min(320px,40%);gap:10px;min-height:220px">
 
           <!-- TASKS BY WORLD -->
@@ -2745,31 +2754,46 @@ select option{background:var(--navy3)}
             <div id="briefWorldTasks" style="overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch"></div>
           </div>
 
-          <!-- OPERATIONAL FLYWHEEL -->
+          <!-- GOOGLE WORKSPACE LAUNCHER (replaces Operational Flywheel) -->
           <div class="bd-block" style="display:flex;flex-direction:column;gap:10px">
-            <div class="bd-h"><i class="ti ti-refresh" style="color:var(--teal)"></i>OPERATIONAL FLYWHEEL</div>
-            <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:10px">
-              <div style="display:flex;align-items:center;gap:8px">
-                <button onclick="setView('work-ih')" style="flex:1;padding:10px 12px;background:rgba(0,255,242,.06);border:1px solid var(--teal2);border-radius:4px;color:var(--teal);font-size:11px;font-weight:700;cursor:pointer;text-align:left;transition:all .2s" onmouseover="this.style.background='rgba(0,255,242,.12)'" onmouseout="this.style.background='rgba(0,255,242,.06)'">Work Insight</button>
-                <div style="color:var(--teal);font-size:14px;font-weight:700">→</div>
-                <button onclick="setView('tasks')" style="flex:1;padding:10px 12px;background:rgba(255,140,0,.08);border:1px solid var(--orange2);border-radius:4px;color:var(--orange);font-size:11px;font-weight:700;cursor:pointer;text-align:left;transition:all .2s" onmouseover="this.style.background='rgba(255,140,0,.15)'" onmouseout="this.style.background='rgba(255,140,0,.08)'">Build Backlog</button>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <button onclick="setView('venture')" style="flex:1;padding:10px 12px;background:rgba(191,95,255,.07);border:1px solid rgba(191,95,255,.3);border-radius:4px;color:var(--purple);font-size:11px;font-weight:700;cursor:pointer;text-align:left;transition:all .2s" onmouseover="this.style.background='rgba(191,95,255,.14)'" onmouseout="this.style.background='rgba(191,95,255,.07)'">Venture OS</button>
-                <div style="color:var(--text3);font-size:14px;font-weight:700">→</div>
-                <button onclick="setView('sides')" style="flex:1;padding:10px 12px;background:rgba(255,170,0,.07);border:1px solid rgba(255,170,0,.3);border-radius:4px;color:var(--amber);font-size:11px;font-weight:700;cursor:pointer;text-align:left;transition:all .2s" onmouseover="this.style.background='rgba(255,170,0,.14)'" onmouseout="this.style.background='rgba(255,170,0,.07)'">Sides Income</button>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <button onclick="setView('faith')" style="flex:1;padding:10px 12px;background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.25);border-radius:4px;color:var(--purple);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s" onmouseover="this.style.background='rgba(168,85,247,.14)'" onmouseout="this.style.background='rgba(168,85,247,.07)'">Faith</button>
-                <div style="color:var(--text3);font-size:14px;font-weight:700">→</div>
-                <button onclick="setView('life')" style="flex:1;padding:10px 12px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.25);border-radius:4px;color:var(--green);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s" onmouseover="this.style.background='rgba(34,197,94,.14)'" onmouseout="this.style.background='rgba(34,197,94,.07)'">Life & Cash</button>
-              </div>
-            </div>
-            <!-- JARVIS Orb decorative -->
-            <div style="display:flex;justify-content:center;padding:8px 0">
-              <div style="width:44px;height:44px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,242,.2),transparent 70%);border:1px solid rgba(0,255,242,.3);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,255,242,.15)">
-                <i class="ti ti-diamond" style="font-size:16px;color:var(--teal);line-height:1;display:block"></i>
-              </div>
+            <div class="bd-h"><i class="ti ti-brand-google" style="color:#4285F4"></i>GOOGLE WORKSPACE</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:1">
+              <a href="https://mail.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 6px;background:#050a12;border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#EA4335';this.style.background='rgba(234,67,53,.07)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#050a12'">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="#EA4335"/></svg>
+                <span style="font-size:10px;color:var(--text2);font-weight:600">Gmail</span>
+              </a>
+              <a href="https://drive.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 6px;background:#050a12;border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#FBBC04';this.style.background='rgba(251,188,4,.07)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#050a12'">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M7.71 3.5L1.15 15l3.43 5.5h14.84L22.85 15 16.29 3.5z" fill="none"/><path d="M12 3.5L5.44 15H2.01L8.57 3.5z" fill="#0066DA"/><path d="M12 3.5l6.56 11.5H22L15.43 3.5z" fill="#00AC47"/><path d="M2.01 15l3.43 5.5h12.12L21 15z" fill="#EA4335"/><path d="M8.57 3.5H2.01L5.44 15h3.13z" fill="#00832D"/><path d="M15.43 3.5H22L18.57 15h-3.14z" fill="#2684FC"/><path d="M5.44 15h13.12l-3.43 5.5H8.87z" fill="#FFBA00"/></svg>
+                <span style="font-size:10px;color:var(--text2);font-weight:600">Drive</span>
+              </a>
+              <a href="https://calendar.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 6px;background:#050a12;border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#1A73E8';this.style.background='rgba(26,115,232,.07)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#050a12'">
+                <svg width="24" height="24" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2" fill="none" stroke="#1A73E8" stroke-width="1.5"/><path d="M3 9h18" stroke="#1A73E8" stroke-width="1.5"/><path d="M8 2v4M16 2v4" stroke="#1A73E8" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="13" width="4" height="3" rx=".5" fill="#EA4335"/></svg>
+                <span style="font-size:10px;color:var(--text2);font-weight:600">Calendar</span>
+              </a>
+              <a href="https://docs.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 6px;background:#050a12;border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#4285F4';this.style.background='rgba(66,133,244,.07)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#050a12'">
+                <svg width="24" height="24" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="1.5" fill="#4285F4" opacity=".15"/><rect x="4" y="2" width="16" height="20" rx="1.5" fill="none" stroke="#4285F4" stroke-width="1.5"/><path d="M8 8h8M8 12h8M8 16h5" stroke="#4285F4" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <span style="font-size:10px;color:var(--text2);font-weight:600">Docs</span>
+              </a>
+              <a href="https://sheets.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 6px;background:#050a12;border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#34A853';this.style.background='rgba(52,168,83,.07)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#050a12'">
+                <svg width="24" height="24" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="1.5" fill="#34A853" opacity=".15"/><rect x="4" y="2" width="16" height="20" rx="1.5" fill="none" stroke="#34A853" stroke-width="1.5"/><path d="M8 2v20M4 8h16M4 13h16" stroke="#34A853" stroke-width="1.2"/></svg>
+                <span style="font-size:10px;color:var(--text2);font-weight:600">Sheets</span>
+              </a>
+              <a href="https://slides.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 6px;background:#050a12;border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#FBBC04';this.style.background='rgba(251,188,4,.07)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#050a12'">
+                <svg width="24" height="24" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="1.5" fill="#FBBC04" opacity=".15"/><rect x="2" y="5" width="20" height="14" rx="1.5" fill="none" stroke="#FBBC04" stroke-width="1.5"/><polygon points="10,9 10,15 15,12" fill="#FBBC04"/></svg>
+                <span style="font-size:10px;color:var(--text2);font-weight:600">Slides</span>
+              </a>
+              <a href="https://meet.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 6px;background:#050a12;border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#00897B';this.style.background='rgba(0,137,123,.07)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#050a12'">
+                <svg width="24" height="24" viewBox="0 0 24 24"><rect x="2" y="5" width="13" height="14" rx="1.5" fill="none" stroke="#00897B" stroke-width="1.5"/><path d="M15 9l7-4v14l-7-4V9z" fill="#00897B" opacity=".7"/></svg>
+                <span style="font-size:10px;color:var(--text2);font-weight:600">Meet</span>
+              </a>
+              <a href="https://docs.google.com/forms" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 6px;background:#050a12;border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#7B1FA2';this.style.background='rgba(123,31,162,.07)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#050a12'">
+                <svg width="24" height="24" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="1.5" fill="#7B1FA2" opacity=".15"/><rect x="4" y="2" width="16" height="20" rx="1.5" fill="none" stroke="#7B1FA2" stroke-width="1.5"/><circle cx="8" cy="8" r="1.2" fill="#7B1FA2"/><path d="M11 8h5M11 12h5M11 16h5" stroke="#7B1FA2" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="12" r="1.2" fill="#7B1FA2"/><circle cx="8" cy="16" r="1.2" fill="#7B1FA2"/></svg>
+                <span style="font-size:10px;color:var(--text2);font-weight:600">Forms</span>
+              </a>
+              <a href="https://chat.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 6px;background:#050a12;border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#1A73E8';this.style.background='rgba(26,115,232,.07)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='#050a12'">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" fill="#1A73E8" opacity=".7"/><path d="M7 9h10M7 13h7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <span style="font-size:10px;color:var(--text2);font-weight:600">Chat</span>
+              </a>
             </div>
           </div>
         </div>
@@ -4040,23 +4064,23 @@ async function loadAllFromSupabase(){
 }
 function reRenderAll(){renderBrief();renderTasks();renderWorkIH();renderWorkCS();renderVenture();renderBuild();renderSides();renderFaith();renderLife();renderCalendar();renderJournal();renderMemory();renderHistory();renderNotesList();renderHealth();if(cfActiveTab==='loans')renderLoansTab();}
 
-// ── Side nav collapse / hide ──────────────────────────────────────────────────
+// ── Side nav toggle ───────────────────────────────────────────────────────────
 function toggleNav(){
   const app=document.querySelector('.app');
-  const panel=document.getElementById('sidePanel');
-  const showBtn=document.getElementById('navShowBtn');
-  if(!app||!panel)return;
-  const hidden=app.classList.toggle('nav-hidden');
-  localStorage.setItem('j-nav-hidden',hidden?'1':'0');
+  if(!app)return;
+  const collapsed=app.classList.toggle('nav-collapsed');
+  const peekBtn=document.getElementById('navPeekBtn');
+  if(peekBtn)peekBtn.style.display=collapsed?'flex':'none';
+  localStorage.setItem('j-nav-collapsed',collapsed?'1':'0');
 }
-// Restore nav state on load
-(function(){
-  if(localStorage.getItem('j-nav-hidden')==='1'){
-    document.addEventListener('DOMContentLoaded',()=>{
-      document.querySelector('.app')?.classList.add('nav-hidden');
-    });
+// Restore collapse state on load
+document.addEventListener('DOMContentLoaded',()=>{
+  if(localStorage.getItem('j-nav-collapsed')==='1'){
+    document.querySelector('.app')?.classList.add('nav-collapsed');
+    const p=document.getElementById('navPeekBtn');
+    if(p)p.style.display='flex';
   }
-})();
+});
 
 // ===== TTS =====
 let isMuted=false,ttsVoice=null;
@@ -5438,7 +5462,7 @@ function renderSubitemRows(t,colCount){
     <td><span style="opacity:.4;margin-right:4px">↳</span>${s.title||'Sub-item'}</td>
     <td></td><td>${s.assignee||'—'}</td>
     <td></td>
-    <td><span class="pill ${s.status==='Done'?'pg':s.status==='In Progress'?'pt':'pgr'}" style="font-size:9px">${s.status||'Todo'}</span></td>
+    <td>${tsPill(s.status||'Todo')}</td>
     <td colspan="${colCount-5}"></td>
   </tr>`).join('')+addRow;
 }
@@ -5457,53 +5481,77 @@ function groupFooter(tasks,colCount){
   </tr>`;
 }
 
-// ── TABLE VIEW ─────────────────────────────────────────────────────────────
-// ── Inline cell save helpers ─────────────────────────────────────────────────
+// ── Status pill helper (used everywhere tasks render) ────────────────────────
+function tsCls(s){return s==='No Progress'?'sp-no-progress':s==='In Progress'?'sp-in-progress':s==='Approved'?'sp-approved':s==='Done'?'sp-done':'sp-todo';}
+function tsLabel(s){return s==='Todo'?'To-Do':(s||'To-Do');}
+function tsPill(s){return`<span class="pill ${tsCls(s)}" style="font-size:11px;font-weight:700;border-radius:3px;padding:2px 9px">${tsLabel(s)}</span>`;}
+// Inline status SELECT — coloured chip with dropdown
+function tsSelCell(id,val){
+  const cls=tsCls(val);
+  const opts=['Todo','In Progress','No Progress','Approved','Done'].map(v=>`<option value="${v}"${v===val?' selected':''}>${tsLabel(v)}</option>`).join('');
+  return`<span class="pill ${cls}" style="font-size:11px;font-weight:700;border-radius:3px;padding:0;display:inline-flex;align-items:center">
+    <select class="sp-sel" onchange="inlineSave(${id},'status',this.value);renderTasks()" onclick="event.stopPropagation()">${opts}</select>
+  </span>`;
+}
+// Inline priority SELECT
+function prSelCell(id,val){
+  const prCls=val==='High'?'ph':val==='Medium'?'pm':'pl';
+  const prClr=val==='High'?'var(--red)':val==='Medium'?'var(--amber)':'var(--green)';
+  return`<span style="display:flex;align-items:center;gap:5px">
+    <div class="pdot ${prCls}"></div>
+    <select style="-webkit-appearance:none;appearance:none;background:transparent;border:none;outline:none;cursor:pointer;font-size:11px;font-weight:600;color:${prClr};font-family:var(--font);padding:0" onchange="inlineSave(${id},'priority',this.value);renderTasks()" onclick="event.stopPropagation()">
+      ${['High','Medium','Low'].map(p=>`<option value="${p}"${p===val?' selected':''}>${p}</option>`).join('')}
+    </select>
+  </span>`;
+}
+// Inline board SELECT
+function boardSelCell(id,val){
+  const b=BOARDS.find(x=>x.id===val)||BOARDS[0];
+  return`<select style="-webkit-appearance:none;appearance:none;background:transparent;border:none;outline:none;cursor:pointer;font-size:11px;font-weight:700;color:${b.color};font-family:var(--font);padding:0;max-width:100px" onchange="inlineSave(${id},'world',this.value);renderTasks()" onclick="event.stopPropagation()">
+    ${BOARDS.map(x=>`<option value="${x.id}"${x.id===val?' selected':''}>${x.name}</option>`).join('')}
+  </select>`;
+}
+// Inline person INPUT
+function personCell(id,val){
+  return`<input type="text" value="${(val||'').replace(/"/g,'&quot;')}" placeholder="—" style="background:transparent;border:none;border-bottom:1px solid transparent;outline:none;font-size:11px;color:var(--text3);width:100%;max-width:100px;font-family:var(--font);padding:2px 0" onclick="event.stopPropagation()" onblur="inlineSave(${id},'client',this.value)" onfocus="this.style.borderBottomColor='var(--teal2)'" onblur_extra="this.style.borderBottomColor='transparent'">`;
+}
+// Inline date INPUT
+function deadlineCell(id,val){
+  return`<input type="date" value="${val||''}" style="background:transparent;border:none;border-bottom:1px solid transparent;outline:none;font-size:11px;color:var(--text3);font-family:var(--font);padding:2px 0;cursor:pointer;width:110px" onclick="event.stopPropagation()" onchange="inlineSave(${id},'due',this.value)" onfocus="this.style.borderBottomColor='var(--teal2)'" onblur="this.style.borderBottomColor='transparent'">`;
+}
+// Save helper
 function inlineSave(id,field,val){
   const t=DB.tasks.find(x=>x.id===id);if(!t)return;
-  t[field]=val;
-  save('tasks');SB.update('tasks',id,t,'tasks');
-  addHistory('edit','Inline edit '+field+': '+t.title,{...t,_dbKey:'tasks'});
-  renderTasks();renderBrief();
+  t[field]=val;save('tasks');
+  if(typeof SB!=='undefined')SB.update('tasks',id,t,'tasks');
+  if(typeof addHistory==='function')addHistory('edit','Edited '+field+': '+t.title,{...t,_dbKey:'tasks'});
+  if(typeof renderBrief==='function')renderBrief();
 }
 
-// ── TABLE VIEW ───────────────────────────────────────────────────────────────
+// ── TABLE VIEW ─────────────────────────────────────────────────────────────
 function renderBoardTable(tasks){
   const el=document.getElementById('boardBody');
   if(!el)return;
 
+  // Dynamic columns
   const cols=[
     {key:'title',    label:'Item',      w:'auto',   sortable:true},
-    {key:'world',    label:'Board',     w:'110px',  sortable:true},
-    {key:'client',   label:'Person',    w:'110px',  sortable:true},
-    {key:'priority', label:'Priority',  w:'95px',   sortable:true},
-    {key:'status',   label:'Status',    w:'125px',  sortable:true},
+    {key:'world',    label:'Board',     w:'100px',  sortable:true},
+    {key:'client',   label:'Person',    w:'120px',  sortable:true},
+    {key:'priority', label:'Priority',  w:'90px',   sortable:true},
+    {key:'status',   label:'Status',    w:'120px',  sortable:true},
     ...(boardColVis.timeline?[{key:'timeline',label:'Timeline',w:'200px',sortable:false}]:[]),
-    {key:'due',      label:'Deadline',  w:'110px',  sortable:true},
+    {key:'due',      label:'Deadline',  w:'100px',  sortable:true},
     ...(boardColVis.time?[{key:'startTime',label:'Time',w:'90px',sortable:false}]:[]),
     {key:'platform', label:'Platform',  w:'100px',  sortable:true},
     {key:'_actions', label:'',          w:'40px',   sortable:false},
   ];
   const cc=cols.length;
 
+  // Group by world → then by groupId
   const boards=[...new Set(tasks.map(t=>t.world))];
-  const sel=(val,opts,field,id,color)=>`<select
-    class="il-sel"
-    style="color:${color||'var(--text1)'}"
-    onclick="event.stopPropagation()"
-    onchange="inlineSave(${id},'${field}',this.value)">
-    ${opts.map(o=>`<option value="${o.v}"${o.v===val?' selected':''}>${o.l}</option>`).join('')}
-  </select>`;
 
-  const boardOpts=BOARDS.map(b=>({v:b.id,l:b.name}));
-  const prioColor=p=>p==='High'?'var(--red)':p==='Medium'?'var(--amber)':'var(--green)';
-  const statColor=s=>s==='No Progress'?'var(--red)':s==='In Progress'?'#f5d800':s==='Approved'?'var(--green)':s==='Done'?'#60a5fa':'var(--orange)';
-  const statusOpts=[
-    {v:'Todo',l:'To-Do'},{v:'In Progress',l:'In Progress'},
-    {v:'No Progress',l:'No Progress'},{v:'Approved',l:'Approved'},{v:'Done',l:'Done'}
-  ];
-  const prioOpts=[{v:'High',l:'High'},{v:'Medium',l:'Medium'},{v:'Low',l:'Low'}];
-
+  // Single scrollable container with ONE table — header stays aligned across all groups
   const thead='<tr>'+cols.map(c=>`<th style="width:${c.w}" class="${boardSortCol===c.key?'sort-'+boardSortDir:''}" ${c.sortable?`onclick="toggleBoardSort('${c.key}')"`:''}>${c.label}${c.sortable?'<span class="sort-arrow"></span>':''}</th>`).join('')+'</tr>';
   let tbodyHtml='';
 
@@ -5517,6 +5565,7 @@ function renderBoardTable(tasks){
       const gKey=world+'::'+gid;
       const collapsed=collapsedGroups.has(gKey);
       const stripe=board.stripe||'var(--border)';
+      // Group header row — spans all columns
       tbodyHtml+=`<tr class="group-header-row" onclick="toggleGroup('${gKey}')" style="cursor:pointer">
         <td colspan="${cc}" style="padding:7px 12px;background:var(--navy3);border-left:4px solid ${stripe};border-bottom:1px solid var(--border)">
           <div style="display:flex;align-items:center;gap:8px">
@@ -5529,25 +5578,23 @@ function renderBoardTable(tasks){
       </tr>`;
       if(!collapsed){
         gTasks.forEach(t=>{
-          const sel2=selectedTaskIds.has(t.id);
+          const sel=selectedTaskIds.has(t.id);
           const hasSubs=(t.subitems||[]).length;
           const expanded=subitemExpanded.has(t.id);
-          const stColor=statColor(t.status);
-          const prColor=prioColor(t.priority);
-          tbodyHtml+=`<tr class="item-row${sel2?' selected':''}" oncontextmenu="showCtx(event,${t.id},'task')">
+          tbodyHtml+=`<tr class="item-row${sel?' selected':''}" onclick="editTask(${t.id})" oncontextmenu="showCtx(event,${t.id},'task')">
             <td style="font-weight:500;max-width:220px">
               <div style="display:flex;align-items:center;gap:6px">
                 ${hasSubs?`<button class="subitem-toggle-btn" onclick="event.stopPropagation();toggleSubitems(${t.id})">${expanded?'▾':'▸'}</button>`:'<span style="width:14px;display:inline-block;flex-shrink:0"></span>'}
-                <span class="il-title" onclick="editTask(${t.id})" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;flex:1">${t.title}</span>
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.title}</span>
                 ${t.priority==='High'?'<span style="color:var(--red);font-size:10px;flex-shrink:0">!</span>':''}
               </div>
             </td>
-            <td onclick="event.stopPropagation()">${sel(t.world,boardOpts,'world',t.id,board.color)}</td>
-            <td onclick="event.stopPropagation()"><input class="il-inp" value="${t.client||''}" placeholder="—" onchange="inlineSave(${t.id},'client',this.value)" onclick="event.stopPropagation()"></td>
-            <td onclick="event.stopPropagation()"><div style="display:flex;align-items:center;gap:4px"><div class="pdot ${t.priority==='High'?'ph':t.priority==='Medium'?'pm':'pl'}"></div>${sel(t.priority,prioOpts,'priority',t.id,prColor)}</div></td>
-            <td onclick="event.stopPropagation()"><span class="il-status-wrap" style="border:1px solid ${stColor}44;border-radius:3px;background:${stColor}15;display:inline-block;width:100%">${sel(t.status,statusOpts,'status',t.id,stColor)}</span></td>
+            <td onclick="event.stopPropagation()">${boardSelCell(t.id,t.world)}</td>
+            <td onclick="event.stopPropagation()">${personCell(t.id,t.client)}</td>
+            <td onclick="event.stopPropagation()">${prSelCell(t.id,t.priority)}</td>
+            <td onclick="event.stopPropagation()">${tsSelCell(t.id,t.status)}</td>
             ${boardColVis.timeline?`<td style="min-width:180px">${timelineBar(t)}</td>`:''}
-            <td onclick="event.stopPropagation()"><input type="date" class="il-date" value="${t.due||''}" onchange="inlineSave(${t.id},'due',this.value)" onclick="event.stopPropagation()"></td>
+            <td onclick="event.stopPropagation()">${deadlineCell(t.id,t.due)}</td>
             ${boardColVis.time?`<td style="font-size:11px;color:var(--text3)">${t.startTime?t.startTime.substring(0,5)+(t.endTime?' – '+t.endTime.substring(0,5):''):'—'}</td>`:''}
             <td style="font-size:10px;color:var(--text3);white-space:nowrap">${t.platform||'—'}</td>
             <td onclick="event.stopPropagation()"><button class="btn btn-d" style="padding:2px 7px" onclick="deleteTask(event,${t.id})"><i class="ti ti-trash" style="font-size:10px;line-height:1;display:block"></i></button></td>
@@ -5566,74 +5613,48 @@ function renderBoardTable(tasks){
   el.innerHTML='<div style="overflow:auto;flex:1;height:100%"><table class="board-table" style="min-width:700px"><thead>'+thead+'</thead><tbody>'+tbodyHtml+'</tbody></table></div>';
 }
 
-// ── KANBAN VIEW ───────────────────────────────────────────────────────────────
+// ── KANBAN VIEW (upgraded with subitems + timeline + connected) ────────────
 function renderBoardKanban(tasks){
   const el=document.getElementById('boardBody');
   if(!el)return;
-
-  // Status config: No Progress=Red, To-Do=Orange, In Progress=Yellow, Approved=Green, Done=Blue
-  const statuses=['Todo','In Progress','No Progress','Approved','Done'];
-  const statusCfg={
-    'Todo':        {label:'TO-DO',       color:'var(--orange)', border:'rgba(255,140,0,.5)',   bg:'rgba(255,140,0,.07)',  pill:'background:rgba(255,140,0,.15);color:var(--orange)'},
-    'In Progress': {label:'IN PROGRESS', color:'#f5d800',       border:'rgba(245,216,0,.5)',   bg:'rgba(245,216,0,.06)',  pill:'background:rgba(245,216,0,.12);color:#f5d800'},
-    'No Progress': {label:'NO PROGRESS', color:'var(--red)',    border:'rgba(255,34,68,.5)',   bg:'rgba(255,34,68,.06)',  pill:'background:rgba(255,34,68,.15);color:var(--red)'},
-    'Approved':    {label:'APPROVED',    color:'var(--green)',  border:'rgba(0,255,136,.5)',   bg:'rgba(0,255,136,.05)',  pill:'background:rgba(0,255,136,.12);color:var(--green)'},
-    'Done':        {label:'DONE',        color:'#60a5fa',       border:'rgba(59,130,246,.5)',  bg:'rgba(59,130,246,.06)', pill:'background:rgba(59,130,246,.15);color:#60a5fa'},
+  const statuses=['Todo','In Progress','No Progress','Done'];
+  const sc={
+    'Todo':'var(--text3)','In Progress':'var(--teal)',
+    'No Progress':'var(--amber)','Done':'var(--green)'
   };
+  const sch={'Todo':'pgr','In Progress':'pt','No Progress':'pam','Done':'pg'};
+  const tgm={'Todo':'','In Progress':'prog','No Progress':'noprog','Done':'done'};
 
-  el.innerHTML=`<div style="display:flex;flex-direction:column;height:100%;min-height:0">
-    <div id="kb-board" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:12px;flex:1;min-height:0;overflow-x:auto;overflow-y:hidden">
-      ${statuses.map(s=>{
-        const cfg=statusCfg[s];
-        const items=tasks.filter(t=>t.status===s);
-        return`
-        <div style="display:flex;flex-direction:column;min-height:0;border-radius:8px;border:1px solid ${cfg.border};background:${cfg.bg};overflow:hidden">
-          <!-- Column header -->
-          <div style="padding:10px 14px;border-bottom:1px solid ${cfg.border};flex-shrink:0;display:flex;align-items:center;justify-content:space-between;border-top:3px solid ${cfg.color}">
-            <span style="font-size:10px;font-weight:800;letter-spacing:.1em;color:${cfg.color}">${cfg.label}</span>
-            <span style="font-size:11px;font-weight:700;padding:1px 8px;border-radius:10px;${cfg.pill}">${items.length}</span>
-          </div>
-          <!-- Cards -->
-          <div style="flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:7px;-webkit-overflow-scrolling:touch">
-            ${items.map(t=>{
-              const b=BOARDS.find(b=>b.id===t.world);
-              const stripe=b?b.stripe:'var(--border)';
-              const bname=b?b.name:t.world;
-              const prioColor=t.priority==='High'?'var(--red)':t.priority==='Medium'?'var(--amber)':'var(--green)';
-              const hasSubs=(t.subitems||[]).length;
-              return`<div onclick="editTask(${t.id})" oncontextmenu="showCtx(event,${t.id},'task')"
-                style="background:var(--navy2);border:1px solid var(--border);border-left:3px solid ${stripe};border-radius:5px;padding:10px 12px;cursor:pointer;transition:box-shadow .15s;display:flex;flex-direction:column;gap:5px"
-                onmouseover="this.style.boxShadow='0 2px 12px rgba(0,0,0,.4)'" onmouseout="this.style.boxShadow='none'">
-                <!-- Title -->
-                <div style="font-size:12px;font-weight:600;color:var(--text1);line-height:1.4;word-break:break-word">${t.title}${t.priority==='High'?'<span style="color:var(--red);margin-left:4px;font-size:10px">!</span>':''}</div>
-                <!-- Board badge + priority -->
-                <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:2px">
-                  <span style="font-size:9px;font-weight:700;padding:1px 6px;border-radius:2px;background:${stripe}22;color:${b?b.color:'var(--text3)'};border:1px solid ${stripe}44">${bname}</span>
-                  <span style="font-size:9px;font-weight:600;color:${prioColor};display:flex;align-items:center;gap:3px"><span style="width:6px;height:6px;border-radius:50%;background:${prioColor};display:inline-block"></span>${t.priority}</span>
-                </div>
-                <!-- Person -->
-                ${t.client?`<div style="font-size:10px;color:var(--text3);display:flex;align-items:center;gap:4px"><i class="ti ti-user" style="font-size:9px;line-height:1;display:block"></i>${t.client}</div>`:''}
-                <!-- Due date -->
-                ${t.due?`<div style="font-size:10px;color:var(--text3);display:flex;align-items:center;gap:4px"><i class="ti ti-calendar" style="font-size:9px;line-height:1;display:block"></i>${t.due}</div>`:''}
-                <!-- Platform -->
-                ${t.platform?`<div style="font-size:10px;color:var(--text3);display:flex;align-items:center;gap:4px"><i class="ti ti-device-desktop" style="font-size:9px;line-height:1;display:block"></i>${t.platform}</div>`:''}
-                <!-- Subitems -->
-                ${hasSubs?`<div style="font-size:9px;color:var(--text3);margin-top:2px">↳ ${hasSubs} sub-item${hasSubs>1?'s':''}</div>`:''}
-                <!-- Timeline -->
-                ${(t.timelineS||t.timelineE)?`<div class="kc-timeline" style="margin-top:2px">${timelineBar(t)}</div>`:''}
-              </div>`;
-            }).join('')}
-          </div>
-          <!-- Add button -->
-          <button onclick="openTaskForStatus('all','${s}')"
-            style="flex-shrink:0;padding:8px;border:none;border-top:1px solid ${cfg.border};background:transparent;color:${cfg.color};font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;gap:5px;opacity:.7;transition:opacity .15s"
-            onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.7'">
-            <i class="ti ti-plus" style="font-size:11px;line-height:1;display:block"></i> Add item
-          </button>
-        </div>`;
-      }).join('')}
-    </div>
-  </div>`;
+  let html='<div class="kanban-wrap"><div class="kb-cols" style="overflow-y:hidden;overflow-x:auto;min-height:0">';
+  statuses.forEach(s=>{
+    const items=tasks.filter(t=>t.status===s);
+    html+=`<div class="kc">
+      <div class="kch ${tgm[s]||'todo'}">
+        <span class="kch-title">${s.toUpperCase()}</span>
+        <span class="pill ${sch[s]}" style="font-size:9px">${items.length}</span>
+      </div>
+      <div class="kc-body">
+        ${items.map(t=>{
+          const hasSubs=(t.subitems||[]).length;
+          const b=BOARDS.find(b=>b.id===t.world);
+          const subs=t.subitems||[];
+          return`<div class="kcard" onclick="editTask(${t.id})" oncontextmenu="showCtx(event,${t.id},'task')" style="border-top:2px solid ${b?b.stripe:'var(--border)'}">
+            <div class="kct">${t.title}</div>
+            ${t.client?`<div class="kcm"><span style="color:var(--teal)">◈</span>${t.client}</div>`:''}
+            ${t.platform?`<div class="kcm"><i class="ti ti-device-desktop" style="font-size:10px;line-height:1;display:block"></i>${t.platform}</div>`:''}
+            ${t.due?`<div class="kcp">Due: ${t.due}</div>`:''}
+            <div class="kcm" style="margin-top:3px"><div class="pdot ${t.priority==='High'?'ph':t.priority==='Medium'?'pm':'pl'}"></div>${t.priority}</div>
+            ${(t.timelineS||t.timelineE)?`<div class="kc-timeline">${timelineBar(t)}</div>`:''}
+            ${t.connBoard?`<div class="kc-conn">${connChip(t)}</div>`:''}
+            ${hasSubs?`<div class="kc-subitems"><div style="font-size:9px;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.07em">↳ ${hasSubs} sub-item${hasSubs>1?'s':''}</div>${subs.slice(0,3).map(s=>`<div class="kc-sub-row"><div class="pdot ${s.status==='Done'?'pg':''}" style="width:6px;height:6px;border-radius:50%;background:${s.status==='Done'?'var(--green)':'var(--text3)'}"></div>${s.title}</div>`).join('')}</div>`:''}
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="kc-add" onclick="openTaskForStatus('all','${s}')"><i class="ti ti-plus" style="font-size:11px;line-height:1;display:block"></i> Add item</div>
+    </div>`;
+  });
+  html+='</div></div>';
+  el.innerHTML=html;
 }
 
 // ── BOARDS LIST VIEW (Workspace overview) ─────────────────────────────────
@@ -5822,7 +5843,7 @@ function renderWorkIH(){
         ${tasks.slice(0,4).map(t=>`<div style="display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid var(--border);cursor:pointer;font-size:11px" onclick="editTask(${t.id})">
           <div class="pdot ${t.priority==='High'?'ph':t.priority==='Medium'?'pm':'pl'}"></div>
           <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text1)">${t.title}</span>
-          <span class="pill ${t.status==='Done'?'pg':t.status==='In Progress'?'pt':t.status==='No Progress'?'pam':'pgr'}" style="font-size:9px">${t.status}</span>
+          ${tsPill(t.status||'Todo')}
         </div>`).join('')}
         ${tasks.length>4?`<div style="font-size:10px;color:var(--text3);margin-top:4px">+${tasks.length-4} more</div>`:''}
         ${!tasks.length?'<div style="font-size:10px;color:var(--text3)">No tasks yet.</div>':''}
@@ -5838,7 +5859,7 @@ function renderWorkIH(){
 function openTaskForClient(e,clientName){e.stopPropagation();document.getElementById('taskModalTitle').textContent='New Task';editingTaskId=null;['title','platform','notes'].forEach(id=>{const el=document.getElementById('tf-'+id);if(el)el.value='';});document.getElementById('tf-world').value='WORK-IH';document.getElementById('tf-prio').value='Medium';document.getElementById('tf-status').value='Todo';document.getElementById('tf-due').value='';document.getElementById('tf-client').value=clientName;openModal('taskModal');}
 function askClientTasks(e,id){e.stopPropagation();const c=DB.clients.find(x=>x.id===id);if(!c)return;setView('ai');setTimeout(()=>qp(`What tasks should be created or prioritized for client "${c.name}"? Next action: "${c.next}". Status: ${c.status}.`),300);}
 function populateIHClientFilter(){const sel=document.getElementById('ihCF');if(!sel)return;const clients=[...new Set(DB.tasks.filter(t=>t.world==='WORK-IH'&&t.client).map(t=>t.client))];sel.innerHTML='<option value="all">All Clients</option>'+clients.map(c=>`<option value="${c}">${c}</option>`).join('');}
-function renderIHClientTasks(){const cf=document.getElementById('ihCF')?.value||'all';const tasks=DB.tasks.filter(t=>t.world==='WORK-IH'&&(cf==='all'||t.client===cf));document.getElementById('ihCTbody').innerHTML=tasks.map(t=>`<tr onclick="editTask(${t.id})"><td style="font-weight:500">${t.title}</td><td>${t.client||'—'}</td><td style="font-size:11px;color:var(--text3)">${t.platform||'—'}</td><td><span style="display:flex;align-items:center;gap:4px"><div class="pdot ${t.priority==='High'?'ph':t.priority==='Medium'?'pm':'pl'}"></div>${t.priority}</span></td><td><span class="pill ${t.status==='Done'?'pg':t.status==='In Progress'?'pt':t.status==='No Progress'?'pam':'pgr'}">${t.status}</span></td><td style="font-size:11px;color:var(--text3)">${t.due||'—'}</td><td style="font-size:11px;color:var(--text3);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.notes||'—'}</td><td><button class="btn btn-d" style="padding:2px 7px" onclick="deleteTask(event,${t.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:block"></i></button></td></tr>`).join('');}
+function renderIHClientTasks(){const cf=document.getElementById('ihCF')?.value||'all';const tasks=DB.tasks.filter(t=>t.world==='WORK-IH'&&(cf==='all'||t.client===cf));document.getElementById('ihCTbody').innerHTML=tasks.map(t=>`<tr onclick="editTask(${t.id})"><td style="font-weight:500">${t.title}</td><td>${t.client||'—'}</td><td style="font-size:11px;color:var(--text3)">${t.platform||'—'}</td><td><span style="display:flex;align-items:center;gap:4px"><div class="pdot ${t.priority==='High'?'ph':t.priority==='Medium'?'pm':'pl'}"></div>${t.priority}</span></td><td><span ${tsPill(t.status||'Todo')}</span></td><td style="font-size:11px;color:var(--text3)">${t.due||'—'}</td><td style="font-size:11px;color:var(--text3);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.notes||'—'}</td><td><button class="btn btn-d" style="padding:2px 7px" onclick="deleteTask(event,${t.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:block"></i></button></td></tr>`).join('');}
 
 // ===== WORK CS =====
 // CS client config
@@ -5907,7 +5928,7 @@ function renderCSKanban(tasks,cfg){
 function renderCSList(tasks,cfg){
   if(!tasks){const allCS=DB.tasks.filter(t=>t.world==='WORK-CS');tasks=csActiveClient==='chainsmoker'?allCS.filter(t=>!t.client||/chainsmoker/i.test(t.client)):allCS.filter(t=>/sweetheart/i.test(t.client||''));}
   const tb=document.getElementById('csTbody');if(!tb)return;
-  tb.innerHTML=tasks.map(t=>`<tr onclick="editTask(${t.id})"><td style="font-weight:500">${t.title}</td><td style="font-size:11px;color:var(--text3)">${t.client||'—'}</td><td style="font-size:11px;color:var(--text3)">${t.platform||'—'}</td><td><span style="display:flex;align-items:center;gap:4px"><div class="pdot ${t.priority==='High'?'ph':t.priority==='Medium'?'pm':'pl'}"></div>${t.priority}</span></td><td><span class="pill ${t.status==='Done'?'pg':t.status==='In Progress'?'pt':t.status==='No Progress'?'pam':'pgr'}">${t.status}</span></td><td style="font-size:11px;color:var(--text3)">${t.due||'—'}</td><td><button class="btn btn-d" style="padding:2px 7px" onclick="deleteTask(event,${t.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:block"></i></button></td></tr>`).join('');
+  tb.innerHTML=tasks.map(t=>`<tr onclick="editTask(${t.id})"><td style="font-weight:500">${t.title}</td><td style="font-size:11px;color:var(--text3)">${t.client||'—'}</td><td style="font-size:11px;color:var(--text3)">${t.platform||'—'}</td><td><span style="display:flex;align-items:center;gap:4px"><div class="pdot ${t.priority==='High'?'ph':t.priority==='Medium'?'pm':'pl'}"></div>${t.priority}</span></td><td><span ${tsPill(t.status||'Todo')}</span></td><td style="font-size:11px;color:var(--text3)">${t.due||'—'}</td><td><button class="btn btn-d" style="padding:2px 7px" onclick="deleteTask(event,${t.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:block"></i></button></td></tr>`).join('');
 }
 
 // ===== TASKS =====
@@ -6093,7 +6114,7 @@ function dropVentureCard(e,newStage){
 }
 function renderBuild(){
   const apps=[{name:'NAKNAK v8',icon:'❤️',desc:'Family safety & health app',color:'--teal',key:'NAKNAK',status:'Active',rev:'₱0–₱199/mo'},{name:'DISKARTE',icon:'🏪',desc:'POS / inventory / utang tracker',color:'--orange',key:'DISKARTE',status:'Active',rev:'Beta'},{name:'PASAHERO RPG',icon:'🚌',desc:'Filipino commuter retro RPG',color:'--amber',key:'PASAHERO',status:'In Dev',rev:'Concept'}];
-  document.getElementById('buildApps').innerHTML=apps.map(a=>{const tasks=DB.tasks.filter(t=>t.world==='BUILD'&&t.title.toLowerCase().includes(a.key.toLowerCase()));return`<div class="hc" style="border-top:2px solid var(${a.color})"><div style="font-size:24px;margin-bottom:6px">${a.icon}</div><div style="font-size:11px;font-weight:700;color:var(${a.color});margin-bottom:2px">${a.name}</div><div style="font-size:11px;color:var(--text3);margin-bottom:9px">${a.desc}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><span class="pill pt" style="font-size:9px">${a.status}</span><span style="font-size:10px;color:var(--text3)">${a.rev}</span></div><div style="border-top:1px solid var(--border);padding-top:7px;margin-bottom:7px"><div style="font-size:8px;font-weight:700;color:var(--text3);margin-bottom:5px;text-transform:uppercase;letter-spacing:.1em">Tasks (${tasks.length})</div>${tasks.map(t=>`<div style="display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--text2)"><div class="pdot ${t.priority==='High'?'ph':t.priority==='Medium'?'pm':'pl'}"></div><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.title}</span><span class="pill ${t.status==='Done'?'pg':t.status==='In Progress'?'pt':'pgr'}" style="font-size:9px">${t.status}</span></div>`).join('')||'<div style="font-size:10px;color:var(--text3)">No tasks yet.</div>'}</div><button class="btn btn-g" style="width:100%;font-size:10px" onclick="openTaskForStatus('BUILD','Todo');document.getElementById('tf-title').value='[${a.key}] '"><i class="ti ti-plus" style="font-size:11px;line-height:1;display:inline-block"></i> Add Task</button></div>`;}).join('');
+  document.getElementById('buildApps').innerHTML=apps.map(a=>{const tasks=DB.tasks.filter(t=>t.world==='BUILD'&&t.title.toLowerCase().includes(a.key.toLowerCase()));return`<div class="hc" style="border-top:2px solid var(${a.color})"><div style="font-size:24px;margin-bottom:6px">${a.icon}</div><div style="font-size:11px;font-weight:700;color:var(${a.color});margin-bottom:2px">${a.name}</div><div style="font-size:11px;color:var(--text3);margin-bottom:9px">${a.desc}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><span class="pill pt" style="font-size:9px">${a.status}</span><span style="font-size:10px;color:var(--text3)">${a.rev}</span></div><div style="border-top:1px solid var(--border);padding-top:7px;margin-bottom:7px"><div style="font-size:8px;font-weight:700;color:var(--text3);margin-bottom:5px;text-transform:uppercase;letter-spacing:.1em">Tasks (${tasks.length})</div>${tasks.map(t=>`<div style="display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--text2)"><div class="pdot ${t.priority==='High'?'ph':t.priority==='Medium'?'pm':'pl'}"></div><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.title}</span>${tsPill(t.status||'Todo')}</div>`).join('')||'<div style="font-size:10px;color:var(--text3)">No tasks yet.</div>'}</div><button class="btn btn-g" style="width:100%;font-size:10px" onclick="openTaskForStatus('BUILD','Todo');document.getElementById('tf-title').value='[${a.key}] '"><i class="ti ti-plus" style="font-size:11px;line-height:1;display:inline-block"></i> Add Task</button></div>`;}).join('');
 }
 function renderSides(){
   document.getElementById('sidesCount').textContent=DB.sides.length;
@@ -7642,73 +7663,97 @@ function addMemory(){const mem=prompt('Memory:');if(!mem)return;const m={id:Date
 function deleteMemoryItem(id){DB.memories=DB.memories.filter(m=>m.id!==id);SB.remove('memories',id,'memories');renderMemory();}
 
 // CAPTURE
-async function processCapture(){
+async function processCapture(){const input=document.getElementById('captureInput');const text=input?.value?.trim();if(!text)return;input.value='';await executeVoiceCommand(text);}
+
+// ── QUICK CAPTURE — reliable NLP slash-prefix router ─────────────────────────
+function runCapture(){
   const input=document.getElementById('captureInput');
   if(!input)return;
   const raw=input.value.trim();
   if(!raw)return;
   input.value='';
 
-  // Slash-prefix routing
-  const m=raw.match(/^\/([a-z]+(?:-[a-z]+)?)\s*([\s\S]*)/i);
-  if(m){
-    const prefix=m[1].toLowerCase();
-    const body=(m[2]||'').trim();
-    const worldMap={
-      'cs':'WORK-CS','chainsmoker':'WORK-CS',
-      'ih':'WORK-IH','ideahub':'WORK-IH',
-      'build':'BUILD','diskarte':'BUILD',
-      'faith':'FAITH','buklod':'FAITH',
-      'sides':'SIDES','raket':'SIDES',
-      'venture':'VENTURE','tjc':'VENTURE',
-      'life':'LIFE'
-    };
-    const navMap={
-      'brief':'brief','daily':'brief','home':'brief',
-      'tasks':'tasks','task':'tasks',
-      'notes':'notes','note':'notes',
-      'calendar':'calendar','cal':'calendar',
-      'ai':'ai','workspace':'ai',
-      'memory':'memory','history':'history',
-      'settings':'settings','health':'health',
-      'morning':'jarvis-brief','capture':'jarvis-capture'
-    };
-    if(worldMap[prefix]){
-      const world=worldMap[prefix];
-      const title=body||'New task';
-      const t={id:Date.now(),title,world,priority:'Medium',status:'Todo',due:'',platform:'',client:'',notes:'',subitems:[],timelineS:'',timelineE:'',numValue:null,connBoard:null,connItemId:null,groupId:null};
-      DB.tasks.unshift(t);
-      save('tasks');SB.upsert('tasks',t,'tasks');
-      addHistory('add','Quick capture → '+world+': '+title,{...t,_dbKey:'tasks'});
-      renderTasks();renderBrief();
-      showToast('✓ Task → '+world+': '+title.substring(0,40));
-      setTimeout(()=>setView(worldMap[prefix]==='WORK-CS'?'work-cs':worldMap[prefix]==='WORK-IH'?'work-ih':worldMap[prefix].toLowerCase()),350);
-      return;
-    }
-    if(prefix==='debit'||prefix==='credit'){
-      const nm=body.match(/^[₱$]?([\d,]+(?:\.\d+)?)\s*(.*)/);
-      if(nm){
-        const amount=parseFloat(nm[1].replace(/,/g,''));
-        const desc=(nm[2]||body).trim()||'Quick entry';
-        if(!isNaN(amount)&&amount>0){
-          const type=prefix==='debit'?'Debit':'Credit';
-          const cf={id:Date.now(),type,amount,desc,date:new Date().toISOString().split('T')[0],account:'Cash',cat:'Business',notes:'Quick Capture'};
-          DB.cashflow.unshift(cf);save('cashflow');SB.upsert('cashflow',cf,'cashflow');
-          addHistory('add',type+' ₱'+amount+': '+desc,{...cf,_dbKey:'cashflow'});
-          renderBrief();
-          showToast('✓ '+type+' ₱'+amount.toLocaleString()+' — '+desc.substring(0,30));
-          return;
-        }
-      }
-      showToast('⚠ Format: /'+prefix+' [amount] [description]');
-      return;
-    }
-    if(navMap[prefix]){setView(navMap[prefix]);return;}
-    showToast('⚠ Unknown /'+prefix+'. Try /cs /ih /build /faith /debit /credit');
+  const WORLD_MAP={
+    'cs':'WORK-CS','chainsmoker':'WORK-CS',
+    'ih':'WORK-IH','ideahub':'WORK-IH',
+    'build':'BUILD','diskarte':'BUILD',
+    'faith':'FAITH','buklod':'FAITH',
+    'sides':'SIDES','raket':'SIDES',
+    'venture':'VENTURE','tjc':'VENTURE',
+    'life':'LIFE'
+  };
+  const VIEW_MAP={
+    'WORK-CS':'work-cs','WORK-IH':'work-ih','BUILD':'build',
+    'FAITH':'faith','SIDES':'sides','VENTURE':'venture','LIFE':'life'
+  };
+  const NAV_MAP={
+    'brief':'brief','daily':'brief','home':'brief','tasks':'tasks','task':'tasks',
+    'notes':'notes','note':'notes','calendar':'calendar','cal':'calendar',
+    'ai':'ai','workspace':'ai','memory':'memory','history':'history',
+    'settings':'settings','health':'health','morning':'jarvis-brief'
+  };
+
+  const slashM=raw.match(/^\/([a-z]+(?:-[a-z]+)?)\s*([\s\S]*)/i);
+  if(!slashM){
+    // No prefix — voice engine
+    if(typeof executeVoiceCommand==='function')executeVoiceCommand(raw);
     return;
   }
-  // No prefix — fall through to voice engine
-  await executeVoiceCommand(raw);
+
+  const prefix=slashM[1].toLowerCase();
+  const body=(slashM[2]||'').trim();
+
+  // World router — add task then navigate
+  if(WORLD_MAP[prefix]){
+    const world=WORLD_MAP[prefix];
+    const title=body||'New task';
+    const task={
+      id:Date.now(),title,world,priority:'Medium',status:'Todo',
+      due:'',platform:'',client:'',notes:'',subitems:[],
+      timelineS:'',timelineE:'',numValue:null,connBoard:null,connItemId:null,groupId:null
+    };
+    DB.tasks.unshift(task);
+    save('tasks');
+    if(typeof SB!=='undefined')SB.upsert('tasks',task,'tasks');
+    if(typeof addHistory==='function')addHistory('add','Quick capture → '+world+': '+title,{...task,_dbKey:'tasks'});
+    if(typeof renderTasks==='function')renderTasks();
+    if(typeof renderBrief==='function')renderBrief();
+    showToast('✓ Task added to '+world+' — "'+title.substring(0,35)+'"');
+    setTimeout(()=>{if(typeof setView==='function')setView(VIEW_MAP[world]||'tasks');},350);
+    return;
+  }
+
+  // Financial entries
+  if(prefix==='debit'||prefix==='credit'){
+    const nm=body.match(/^[₱$]?([\d,]+(?:\.\d+)?)\s*(.*)/);
+    if(nm){
+      const amount=parseFloat(nm[1].replace(/,/g,''));
+      const desc=(nm[2]||body).trim()||'Quick entry';
+      if(!isNaN(amount)&&amount>0){
+        const type=prefix==='debit'?'Debit':'Credit';
+        const cf={id:Date.now(),type,amount,desc,
+          date:new Date().toISOString().split('T')[0],
+          account:'Cash',cat:'Business',notes:'Quick Capture'};
+        DB.cashflow.unshift(cf);
+        save('cashflow');
+        if(typeof SB!=='undefined')SB.upsert('cashflow',cf,'cashflow');
+        if(typeof addHistory==='function')addHistory('add',type+' ₱'+amount+': '+desc,{...cf,_dbKey:'cashflow'});
+        if(typeof renderBrief==='function')renderBrief();
+        showToast('✓ '+type+' ₱'+amount.toLocaleString()+' — '+desc.substring(0,30));
+        return;
+      }
+    }
+    showToast('⚠ Format: /'+prefix+' [amount] [description]  e.g. /debit 500 Coffee');
+    return;
+  }
+
+  // Navigation shortcuts
+  if(NAV_MAP[prefix]){
+    if(typeof setView==='function')setView(NAV_MAP[prefix]);
+    return;
+  }
+
+  showToast('⚠ Unknown: /'+prefix+' · Try /cs /ih /build /faith /debit /credit');
 }
 
 // ===== VOICE COMMAND ENGINE =====
