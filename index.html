@@ -134,26 +134,11 @@ select option{background:var(--navy3)}
 
 /* LAYOUT */
 .app{display:grid;grid-template-columns:clamp(180px,18vw,220px) 1fr;grid-template-rows:52px 1fr;height:100vh;height:100dvh;position:relative;z-index:1}
-/* Nav collapse: panel slides off as fixed overlay — topbar + main content NEVER affected */
-.side-panel{
-  grid-row:2;grid-column:1;
-  background:var(--navy2);border-right:1px solid var(--teal2);
-  display:flex;flex-direction:column;overflow:hidden;
-  box-shadow:inset -1px 0 0 rgba(0,255,242,.08);
-  width:clamp(180px,18vw,220px);
-  transition:transform .22s cubic-bezier(.4,0,.2,1);
-}
-.app.nav-collapsed .side-panel{
-  position:fixed;top:52px;left:0;bottom:0;
-  transform:translateX(-100%);
-  pointer-events:none;z-index:500;
-}
-.app.nav-collapsed .side-panel:hover{
-  transform:translateX(0);pointer-events:all;
-  box-shadow:4px 0 32px rgba(0,0,0,.7);
-}
+.side-panel{grid-row:2;grid-column:1;background:var(--navy2);border-right:1px solid var(--teal2);display:flex;flex-direction:column;overflow:hidden;box-shadow:inset -1px 0 0 rgba(0,255,242,.08);width:clamp(180px,18vw,220px);transition:transform .22s cubic-bezier(.4,0,.2,1);}
+.app.nav-collapsed .side-panel{position:fixed;top:52px;left:0;bottom:0;transform:translateX(-100%);pointer-events:none;z-index:500;}
+.app.nav-collapsed .side-panel:hover{transform:translateX(0);pointer-events:all;box-shadow:4px 0 32px rgba(0,0,0,.7);}
 .app.nav-collapsed .main{grid-column:1/-1;}
-#navPeekBtn{display:none;align-items:center;justify-content:center;width:30px;height:30px;border-radius:4px;cursor:pointer;background:rgba(0,255,242,.08);border:1px solid var(--teal2);color:var(--teal);font-size:13px;flex-shrink:0}
+#navPeekBtn{display:none;align-items:center;justify-content:center;width:30px;height:30px;border-radius:4px;cursor:pointer;background:rgba(0,255,242,.08);border:1px solid var(--teal2);color:var(--teal);font-size:14px;flex-shrink:0}
 .app.nav-collapsed #navPeekBtn{display:flex!important}
 .topbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 16px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));background:var(--navy2);border-bottom:1px solid var(--teal2);position:relative;z-index:100;box-shadow:0 1px 0 var(--teal2),0 2px 20px rgba(0,255,242,.08)}
 .topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal),var(--teal2),var(--orange),transparent);box-shadow:0 0 10px rgba(128,255,250,.35)}
@@ -245,7 +230,12 @@ select option{background:var(--navy3)}
 .ht tr:hover td{background:var(--teal4)}
 .ht tr{cursor:pointer}
 
-/* KANBAN — FULL WIDTH */
+/* ── Google Workspace buttons ── */
+.gws-btn{display:flex;align-items:center;gap:9px;padding:9px 10px;background:#050a12;border:1px solid var(--border);border-radius:4px;text-decoration:none;transition:all .15s;cursor:pointer;font-family:var(--font)}
+.gws-btn i{font-size:18px;color:var(--gws-c,var(--teal));flex-shrink:0;line-height:1;display:block}
+.gws-btn span{font-size:12px;font-weight:700;color:var(--text1);line-height:1;letter-spacing:.02em}
+.gws-btn:hover{border-color:var(--gws-c,var(--teal));background:color-mix(in srgb,var(--gws-c,var(--teal)) 10%,#050a12);box-shadow:0 0 10px color-mix(in srgb,var(--gws-c,var(--teal)) 20%,transparent)}
+.gws-btn:active{transform:scale(.97)}
 .kanban-wrap{display:flex;flex-direction:column;height:100%;gap:0}
 .kb-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;flex:1;overflow:hidden}
 .kc{display:flex;flex-direction:column;background:var(--navy2);border:1px solid var(--border);border-radius:6px;overflow:hidden}
@@ -263,9 +253,9 @@ select option{background:var(--navy3)}
 .kcard{background:#0a1220;border:1px solid var(--border);border-radius:3px;padding:9px 11px;margin-bottom:7px;cursor:pointer;transition:all .2s;position:relative}
 .kcard:hover{border-color:var(--teal);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,255,242,.15)}
 .kcard.oc:hover{border-color:var(--orange)}
-.kcard .kct{font-size:13px;color:var(--text1);margin-bottom:5px;line-height:1.4;font-weight:500}
+.kcard .kct{font-size:12px;color:var(--text1);margin-bottom:5px;line-height:1.4;font-weight:600}
 .kcard .kcm{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:4px}
-.kcard .kcp{font-size:9px;color:var(--text3);margin-top:4px;font-style:italic}
+.kcard .kcp{font-size:10px;color:var(--text3);margin-top:4px;font-style:italic}
 .kc-add{display:flex;align-items:center;gap:5px;padding:7px 8px;margin:2px;border-radius:4px;cursor:pointer;color:var(--text3);font-size:12px;transition:all .15s;border:1px dashed transparent}
 .kc-add:hover{background:var(--teal3);color:var(--teal);border-color:var(--teal2)}
 
@@ -2509,7 +2499,7 @@ select option{background:var(--navy3)}
   <div style="position:absolute;bottom:24px;right:24px;width:40px;height:40px;border-bottom:2px solid rgba(0,212,200,.5);border-right:2px solid rgba(0,212,200,.5)"></div>
 
   <!-- TOP TAG -->
-  <div style="position:absolute;top:28px;left:50%;transform:translateX(-50%);font-size:9px;color:rgba(0,212,200,.4);letter-spacing:.3em;font-family:monospace;white-space:nowrap">SYS :: JELIX-OS-v2.6 :: MANILA-PHT</div>
+  <div style="position:absolute;top:28px;left:50%;transform:translateX(-50%);font-size:9px;color:rgba(0,212,200,.4);letter-spacing:.3em;font-family:monospace;white-space:nowrap">SYS :: JOB-OS-v2.6 :: MANILA-PHT</div>
 
   <!-- CONTENT -->
   <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:clamp(12px,3vh,32px);width:100%;max-width:min(680px,96vw);padding:0 clamp(12px,4vw,24px)">
@@ -2536,8 +2526,8 @@ select option{background:var(--navy3)}
       <!-- CENTER LOGO -->
       <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
         <div style="font-size:clamp(24px,8vw,42px);font-weight:900;color:#00d4c8;letter-spacing:.15em;line-height:1;animation:jelixglow 3s ease-in-out infinite,letterflicker 7s infinite;font-family:Arial Black,Arial,sans-serif">J.O.B.</div>
-        <div style="width:80px;height:1px;background:linear-gradient(90deg,transparent,#00d4c8,transparent);margin:4px 0"></div>
-        <div style="font-size:10px;color:rgba(0,168,158,.7);letter-spacing:.35em;font-family:monospace">OS</div>
+        <div style="width:80px;height:1px;background:linear-gradient(90deg,transparent,#00d4c8,transparent)"></div>
+        <div style="font-size:11px;color:rgba(0,168,158,.7);letter-spacing:.35em;font-family:monospace">OS</div>
       </div>
       <!-- corner ticks on orbit -->
       <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:6px;height:6px;background:#00d4c8;border-radius:50%;box-shadow:0 0 8px #00d4c8;animation:bootpulse 2s infinite"></div>
@@ -2608,7 +2598,7 @@ select option{background:var(--navy3)}
   <div class="pin-display" id="pinDisplay">
     <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
   </div>
-  <div id="pinError" style="font-size:11px;color:var(--red);letter-spacing:.1em;height:16px;margin-bottom:10px;opacity:0;transition:opacity .2s"></div>
+  <div id="pinError" style="font-size:11px;color:var(--red);letter-spacing:.15em;height:16px;margin-bottom:10px;opacity:0;transition:opacity .2s;text-align:center;text-transform:uppercase"></div>
 
   <div class="pin-pad" id="pinPad">
     <div class="pin-btn" onclick="enterPin(1)">1</div>
@@ -2626,7 +2616,6 @@ select option{background:var(--navy3)}
   </div>
 
   <div style="margin-top:28px;font-size:10px;color:var(--text3);letter-spacing:.08em">
-    Default PIN: <span style="color:var(--teal2)">0000</span> &nbsp;·&nbsp; Change in System Settings
   </div>
 </div>
 
@@ -2634,7 +2623,7 @@ select option{background:var(--navy3)}
   <!-- TOPBAR -->
   <header class="topbar">
     <div style="display:flex;align-items:center;gap:8px">
-      <button id="navPeekBtn" onclick="toggleNav()" title="Show navigation" style="display:none;align-items:center;justify-content:center;width:30px;height:30px;border-radius:4px;cursor:pointer;background:rgba(0,255,242,.08);border:1px solid var(--teal2);color:var(--teal);font-size:13px;flex-shrink:0"><i class="ti ti-layout-sidebar-left-expand" style="line-height:1;display:block"></i></button>
+      <button id="navPeekBtn" onclick="toggleNav()" title="Show navigation" style="display:none;align-items:center;justify-content:center;width:30px;height:30px;border-radius:4px;cursor:pointer;background:rgba(0,255,242,.08);border:1px solid var(--teal2);color:var(--teal);font-size:14px;flex-shrink:0"><i class="ti ti-layout-sidebar-left-expand" style="line-height:1;display:block"></i></button>
       <div class="tb-logo">J.O.B. OS</div>
       <div style="height:24px;width:1px;background:var(--border2)"></div>
       <div id="desktopSearchBar" style="background:var(--navy3);border:1px solid var(--border);border-radius:3px;padding:4px 10px;display:flex;align-items:center;gap:7px;cursor:pointer;width:clamp(120px,20vw,280px)" onclick="openCmd()">
@@ -2644,7 +2633,7 @@ select option{background:var(--navy3)}
       </div>
       <div id="mobileSearchTrigger" style="display:none" onclick="openMobileSearch()" title="Search"><i class="ti ti-search"></i></div>
     </div>
-    <div id="dataTicker">SYS::JELIX-OS &nbsp;|&nbsp; MNL·PHT &nbsp;|&nbsp; ALL SYSTEMS NOMINAL</div>
+    <div id="dataTicker">SYS::JOB-OS &nbsp;|&nbsp; MNL·PHT &nbsp;|&nbsp; ALL SYSTEMS NOMINAL</div>
       <div class="tb-r">
       
       <div class="hpill" id="weatherPill"><i class="ti ti-cloud" style="font-size:11px;line-height:1;display:block"></i><span id="weatherText">-- °C</span></div>
@@ -2665,9 +2654,9 @@ select option{background:var(--navy3)}
 
   <!-- SIDE PANEL -->
   <div class="side-panel" id="sidePanel">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px 6px;border-bottom:1px solid var(--border);flex-shrink:0">
-      <span style="font-size:9px;font-weight:800;letter-spacing:.14em;color:var(--teal2);text-transform:uppercase">J.O.B. OS</span>
-      <button onclick="toggleNav()" title="Collapse navigation" style="background:transparent;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:2px 4px;display:flex;align-items:center;border-radius:3px;line-height:1;transition:color .15s" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--text3)'"><i class="ti ti-layout-sidebar-left-collapse" style="line-height:1;display:block"></i></button>
+    <!-- Single ‹ collapse button — no text label (label is in topbar logo only) -->
+    <div style="display:flex;justify-content:flex-end;padding:6px 10px 4px;border-bottom:1px solid var(--border);flex-shrink:0">
+      <button onclick="toggleNav()" title="Collapse navigation" style="background:transparent;border:none;cursor:pointer;color:var(--text3);font-size:15px;padding:2px 4px;display:flex;align-items:center;border-radius:3px;line-height:1;transition:color .15s" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--text3)'"><i class="ti ti-layout-sidebar-left-collapse" style="line-height:1;display:block"></i></button>
     </div>
     <div class="side-nav">
       <div class="ngl">Command</div>
@@ -2675,7 +2664,7 @@ select option{background:var(--navy3)}
       <div class="ni" onclick="setView('tasks')" data-view="tasks"><i class="ti ti-checklist"></i>Tasks<span class="nbadge" id="taskBadge">0</span></div>
       <div class="ni" onclick="setView('notes')" data-view="notes"><i class="ti ti-notes"></i>Notes</div>
       <div class="ni" onclick="setView('calendar')" data-view="calendar"><i class="ti ti-calendar"></i>Calendar</div>
-      <div class="ni" onclick="setView('ai')" data-view="ai"><i class="ti ti-sparkles"></i>AI Workspace</div>
+      <div class="ni" onclick="setView('ai')" data-view="ai"><i class="ti ti-sparkles"></i>Job Agents</div>
       <div class="ni" onclick="setView('memory')" data-view="memory"><i class="ti ti-brain"></i>Memory</div>
       <div class="ni" onclick="setView('history')" data-view="history"><i class="ti ti-history"></i>Activity History</div>
       <div class="ngl" style="margin-top:4px">Six Worlds</div>
@@ -2731,7 +2720,7 @@ select option{background:var(--navy3)}
         <div id="briefCaptureBar" style="background:#050a12;border:1px solid var(--teal2);border-radius:4px;padding:8px 12px;display:flex;gap:8px;align-items:center;flex-shrink:0">
           <span style="font-size:9px;font-weight:800;letter-spacing:.14em;color:var(--teal2);text-transform:uppercase;flex-shrink:0;white-space:nowrap">CMD</span>
           <div style="width:1px;height:14px;background:var(--border2);flex-shrink:0"></div>
-          <input id="captureInput" style="border:none;background:transparent;flex:1;font-size:12px;outline:none;color:var(--text1);min-width:0;font-family:var(--font)" placeholder="/cs task · /ih task · /build · /faith · /venture · /sides · /life · /debit 500 desc · /credit 1000 desc" onkeydown="if(event.key==='Enter'){event.preventDefault();runCapture();}">
+          <input id="captureInput" style="border:none;background:transparent;flex:1;font-size:12px;outline:none;color:var(--text1);min-width:0;font-family:var(--font)" placeholder="/cs · /ih · /build · /faith · /venture · /sides · /life · /debit 500 desc · /credit 1000 desc" onkeydown="if(event.key==='Enter'){event.preventDefault();runCapture();}">
           <button onclick="runCapture()" style="flex-shrink:0;background:var(--teal);color:var(--navy);border:none;border-radius:3px;padding:5px 14px;font-size:11px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;font-family:var(--font)"><i class="ti ti-corner-down-left" style="font-size:11px;line-height:1;display:block"></i> Enter</button>
         </div>
 
@@ -2805,21 +2794,24 @@ select option{background:var(--navy3)}
           </div>
 
           <!-- GOOGLE WORKSPACE LAUNCHER -->
-          <div class="bd-block" style="display:flex;flex-direction:column;gap:10px">
-            <div class="bd-h"><i class="ti ti-brand-google" style="color:#4285F4"></i>GOOGLE WORKSPACE</div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;flex:1">
-              <a href="https://mail.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 4px;background:rgba(234,67,53,.06);border:1px solid rgba(234,67,53,.2);border-radius:8px;text-decoration:none;color:#EA4335;font-size:10px;font-weight:700;transition:background .2s" onmouseover="this.style.background='rgba(234,67,53,.14)'" onmouseout="this.style.background='rgba(234,67,53,.06)'"><i class="ti ti-brand-gmail" style="font-size:22px;line-height:1;display:block"></i>Gmail</a>
-              <a href="https://drive.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 4px;background:rgba(251,188,4,.06);border:1px solid rgba(251,188,4,.2);border-radius:8px;text-decoration:none;color:#FBBC04;font-size:10px;font-weight:700;transition:background .2s" onmouseover="this.style.background='rgba(251,188,4,.14)'" onmouseout="this.style.background='rgba(251,188,4,.06)'"><i class="ti ti-brand-google-drive" style="font-size:22px;line-height:1;display:block"></i>Drive</a>
-              <a href="https://calendar.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 4px;background:rgba(26,115,232,.06);border:1px solid rgba(26,115,232,.2);border-radius:8px;text-decoration:none;color:#1A73E8;font-size:10px;font-weight:700;transition:background .2s" onmouseover="this.style.background='rgba(26,115,232,.14)'" onmouseout="this.style.background='rgba(26,115,232,.06)'"><i class="ti ti-calendar-event" style="font-size:22px;line-height:1;display:block"></i>Calendar</a>
-              <a href="https://docs.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 4px;background:rgba(66,133,244,.06);border:1px solid rgba(66,133,244,.2);border-radius:8px;text-decoration:none;color:#4285F4;font-size:10px;font-weight:700;transition:background .2s" onmouseover="this.style.background='rgba(66,133,244,.14)'" onmouseout="this.style.background='rgba(66,133,244,.06)'"><i class="ti ti-file-text" style="font-size:22px;line-height:1;display:block"></i>Docs</a>
-              <a href="https://sheets.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 4px;background:rgba(52,168,83,.06);border:1px solid rgba(52,168,83,.2);border-radius:8px;text-decoration:none;color:#34A853;font-size:10px;font-weight:700;transition:background .2s" onmouseover="this.style.background='rgba(52,168,83,.14)'" onmouseout="this.style.background='rgba(52,168,83,.06)'"><i class="ti ti-table" style="font-size:22px;line-height:1;display:block"></i>Sheets</a>
-              <a href="https://meet.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 4px;background:rgba(0,137,123,.06);border:1px solid rgba(0,137,123,.2);border-radius:8px;text-decoration:none;color:#00897B;font-size:10px;font-weight:700;transition:background .2s" onmouseover="this.style.background='rgba(0,137,123,.14)'" onmouseout="this.style.background='rgba(0,137,123,.06)'"><i class="ti ti-video" style="font-size:22px;line-height:1;display:block"></i>Meet</a>
-              <a href="https://slides.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 4px;background:rgba(251,188,4,.06);border:1px solid rgba(251,188,4,.2);border-radius:8px;text-decoration:none;color:#FBBC04;font-size:10px;font-weight:700;transition:background .2s" onmouseover="this.style.background='rgba(251,188,4,.14)'" onmouseout="this.style.background='rgba(251,188,4,.06)'"><i class="ti ti-presentation" style="font-size:22px;line-height:1;display:block"></i>Slides</a>
-              <a href="https://chat.google.com" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 4px;background:rgba(26,115,232,.06);border:1px solid rgba(26,115,232,.2);border-radius:8px;text-decoration:none;color:#1A73E8;font-size:10px;font-weight:700;transition:background .2s" onmouseover="this.style.background='rgba(26,115,232,.14)'" onmouseout="this.style.background='rgba(26,115,232,.06)'"><i class="ti ti-message-circle" style="font-size:22px;line-height:1;display:block"></i>Chat</a>
-              <a href="https://docs.google.com/forms" target="_blank" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 4px;background:rgba(123,31,162,.06);border:1px solid rgba(123,31,162,.2);border-radius:8px;text-decoration:none;color:#7B1FA2;font-size:10px;font-weight:700;transition:background .2s" onmouseover="this.style.background='rgba(123,31,162,.14)'" onmouseout="this.style.background='rgba(123,31,162,.06)'"><i class="ti ti-forms" style="font-size:22px;line-height:1;display:block"></i>Forms</a>
+          <div class="bd-block" style="display:flex;flex-direction:column;gap:8px">
+            <div class="bd-h"><i class="ti ti-brand-google" style="color:var(--teal)"></i>GOOGLE WORKSPACE</div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;align-content:start">
+              <a href="https://mail.google.com" target="_blank" class="gws-btn" style="--gws-c:#EA4335"><i class="ti ti-mail"></i><span>Gmail</span></a>
+              <a href="https://drive.google.com" target="_blank" class="gws-btn" style="--gws-c:#FBBC04"><i class="ti ti-brand-google-drive"></i><span>Drive</span></a>
+              <a href="https://chat.google.com" target="_blank" class="gws-btn" style="--gws-c:#1A73E8"><i class="ti ti-message-circle"></i><span>Chat</span></a>
+              <a href="https://sheets.google.com" target="_blank" class="gws-btn" style="--gws-c:#34A853"><i class="ti ti-table"></i><span>Sheets</span></a>
+              <a href="https://docs.google.com" target="_blank" class="gws-btn" style="--gws-c:#4285F4"><i class="ti ti-file-text"></i><span>Docs</span></a>
+              <a href="https://meet.google.com" target="_blank" class="gws-btn" style="--gws-c:#00897B"><i class="ti ti-video"></i><span>Meet</span></a>
+              <a href="https://calendar.google.com" target="_blank" class="gws-btn" style="--gws-c:#1A73E8"><i class="ti ti-calendar-event"></i><span>Calendar</span></a>
+              <a href="https://tasks.google.com" target="_blank" class="gws-btn" style="--gws-c:#4285F4"><i class="ti ti-checklist"></i><span>Tasks</span></a>
+              <a href="https://keep.google.com" target="_blank" class="gws-btn" style="--gws-c:#FBBC04"><i class="ti ti-notes"></i><span>Keep</span></a>
+              <a href="https://docs.google.com/forms" target="_blank" class="gws-btn" style="--gws-c:#7B1FA2"><i class="ti ti-forms"></i><span>Forms</span></a>
             </div>
           </div>
         </div>
+
+
 
       </div>
     </div>
@@ -2889,8 +2881,8 @@ select option{background:var(--navy3)}
           <button class="btn btn-o" onclick="openVentureModal()"><i class="ti ti-plus"></i> Add</button>
         </div>
       </div>
-      <div class="vb">
-        <div class="mr" style="grid-template-columns:repeat(4,1fr)">
+      <div class="vb" style="display:flex;flex-direction:column;overflow:hidden;padding:14px 18px">
+        <div class="mr" style="grid-template-columns:repeat(4,1fr);flex-shrink:0">
           <div class="hc oc"><div class="cl">Stage</div><div class="cv oc" style="font-size:11px;margin-top:2px">DISCOVERY</div></div>
           <div class="hc"><div class="cl">Clients</div><div class="cv" id="vtClientCount">0</div></div>
           <div class="hc"><div class="cl">Partners/VAs</div><div class="cv" id="vtPartnerCount">0</div></div>
@@ -2900,13 +2892,29 @@ select option{background:var(--navy3)}
             <div class="csub">Pre-revenue · <span style="color:var(--teal);text-decoration:underline">Open Portal ↗</span></div>
           </div>
         </div>
-        <div id="vt-clients-view">
-          <div style="font-size:9px;font-weight:700;color:var(--teal);margin-bottom:8px;letter-spacing:.1em;text-transform:uppercase">Client Acquisition Pipeline</div>
-          <div class="kb-cols" id="vtcKanban" style="height:calc(100vh - 320px)"></div>
-        </div>
-        <div id="vt-partners-view" style="display:none">
-          <div style="font-size:9px;font-weight:700;color:var(--orange);margin-bottom:8px;letter-spacing:.1em;text-transform:uppercase">Partner / VA Pipeline</div>
-          <div class="kb-cols" id="vtpKanban" style="height:calc(100vh - 320px)"></div>
+        <!-- Kanban + Tasks side-by-side -->
+        <div style="display:grid;grid-template-columns:1fr 300px;gap:10px;flex:1;min-height:0;overflow:hidden">
+          <!-- Left: kanban pipeline -->
+          <div style="display:flex;flex-direction:column;min-height:0;overflow:hidden">
+            <div id="vt-clients-view" style="flex:1;display:flex;flex-direction:column;min-height:0">
+              <div style="font-size:9px;font-weight:700;color:var(--teal);margin-bottom:8px;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0">Client Acquisition Pipeline</div>
+              <div class="kb-cols" id="vtcKanban" style="flex:1;overflow:hidden"></div>
+            </div>
+            <div id="vt-partners-view" style="display:none;flex:1;flex-direction:column;min-height:0">
+              <div style="font-size:9px;font-weight:700;color:var(--orange);margin-bottom:8px;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0">Partner / VA Pipeline</div>
+              <div class="kb-cols" id="vtpKanban" style="flex:1;overflow:hidden"></div>
+            </div>
+          </div>
+          <!-- Right: VENTURE tasks panel -->
+          <div class="bd-block" style="display:flex;flex-direction:column;min-height:0;overflow:hidden">
+            <div class="bd-h" style="justify-content:space-between;flex-shrink:0">
+              <span style="display:flex;align-items:center;gap:5px"><i class="ti ti-checklist" style="color:var(--orange)"></i>VENTURE TASKS</span>
+              <button class="btn btn-o" style="font-size:10px;padding:3px 8px" onclick="openTaskFor('VENTURE')"><i class="ti ti-plus"></i> Add</button>
+            </div>
+            <div id="vtTaskList" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:5px;-webkit-overflow-scrolling:touch">
+              <div style="font-size:11px;color:var(--text3);padding:8px;text-align:center">No VENTURE tasks yet.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3396,7 +3404,7 @@ select option{background:var(--navy3)}
         </div>
 
         <!-- MAIN CONTENT GRID -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start">
 
           <!-- HEALTH LOG TABLE -->
           <div class="hc" style="padding:0;overflow:hidden">
@@ -3412,7 +3420,7 @@ select option{background:var(--navy3)}
                 <option value="Medication">Medication</option>
               </select>
             </div>
-            <div style="overflow-y:auto;max-height:320px;-webkit-overflow-scrolling:touch" id="healthLogList">
+            <div style="overflow-y:auto;max-height:260px;-webkit-overflow-scrolling:touch" id="healthLogList">
               <div style="padding:20px;text-align:center;color:var(--text3);font-size:13px">No entries yet. Log your first health metric.</div>
             </div>
           </div>
@@ -3515,37 +3523,43 @@ select option{background:var(--navy3)}
     <div class="view" id="view-ai">
       <div class="ai-layout">
         <div class="ai-side">
-          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--text3);padding:7px 9px 5px;text-transform:uppercase">AI Agents</div>
-          <div class="ai-agent active" onclick="setAgent('civic',this)"><div class="ai-agent-icon" style="background:rgba(66,133,244,.12);color:#4285F4"><span style="font-weight:800;font-size:11px">C</span></div><div><div class="ai-agent-name">Civic</div><div class="ai-agent-desc">Public Sector · GovTech Analyst</div></div></div>
-          <div class="ai-agent" onclick="setAgent('foodie',this)"><div class="ai-agent-icon" style="background:rgba(251,188,4,.12);color:#FBBC04"><span style="font-weight:800;font-size:11px">F</span></div><div><div class="ai-agent-name">Foodie</div><div class="ai-agent-desc">F&amp;B Brand · Local Store Marketing</div></div></div>
-          <div class="ai-agent" onclick="setAgent('bloo',this)"><div class="ai-agent-icon" style="background:rgba(59,130,246,.12);color:#60a5fa"><span style="font-weight:800;font-size:11px">B</span></div><div><div class="ai-agent-name">Bloo</div><div class="ai-agent-desc">Residential Systems · Blueprint Analyzer</div></div></div>
-          <div class="ai-agent" onclick="setAgent('rider',this)"><div class="ai-agent-icon" style="background:rgba(239,68,68,.12);color:var(--red)"><span style="font-weight:800;font-size:11px">R</span></div><div><div class="ai-agent-name">Rider</div><div class="ai-agent-desc">Moto-Logistics · Mobile Asset Analyst</div></div></div>
-          <div class="ai-agent" onclick="setAgent('vee',this)"><div class="ai-agent-icon" style="background:rgba(168,85,247,.12);color:var(--purple)"><span style="font-weight:800;font-size:11px">V</span></div><div><div class="ai-agent-name">Vee</div><div class="ai-agent-desc">Ministry Framework · Org Development</div></div></div>
-          <div class="ai-agent" onclick="setAgent('axis',this)"><div class="ai-agent-icon" style="background:rgba(100,116,139,.12);color:#94a3b8"><span style="font-weight:800;font-size:11px">A</span></div><div><div class="ai-agent-name">Axis</div><div class="ai-agent-desc">Master Systems Architect · Productivity</div></div></div>
-          <div class="ai-agent" onclick="setAgent('fin',this)"><div class="ai-agent-icon" style="background:rgba(251,188,4,.12);color:#FBBC04"><span style="font-weight:800;font-size:11px">F</span></div><div><div class="ai-agent-name">Fin</div><div class="ai-agent-desc">Personal Infrastructure · Financial Eng.</div></div></div>
-          <div class="ai-agent" onclick="setAgent('rocket',this)"><div class="ai-agent-icon" style="background:rgba(239,68,68,.12);color:var(--orange)"><span style="font-weight:800;font-size:11px">R</span></div><div><div class="ai-agent-name">Rocket</div><div class="ai-agent-desc">Digital Productization · E-Commerce</div></div></div>
-          <div class="ai-agent" onclick="setAgent('frame',this)"><div class="ai-agent-icon" style="background:rgba(251,188,4,.12);color:#FBBC04"><span style="font-weight:800;font-size:11px">F</span></div><div><div class="ai-agent-name">Frame</div><div class="ai-agent-desc">UI/UX Technical Architect · Systems</div></div></div>
-          <div class="ai-agent" onclick="setAgent('draft',this)"><div class="ai-agent-icon" style="background:rgba(100,116,139,.12);color:#94a3b8"><span style="font-weight:800;font-size:11px">D</span></div><div><div class="ai-agent-name">Draft</div><div class="ai-agent-desc">Corporate Comms · Career Architect</div></div></div>
-          <div class="ai-agent" onclick="setAgent('lens',this)"><div class="ai-agent-icon" style="background:rgba(168,85,247,.12);color:var(--purple)"><span style="font-weight:800;font-size:11px">L</span></div><div><div class="ai-agent-name">Lens</div><div class="ai-agent-desc">Image Generation · Art Director</div></div></div>
-          <div class="ai-agent" onclick="setAgent('archi',this)"><div class="ai-agent-icon" style="background:rgba(66,133,244,.12);color:#4285F4"><span style="font-weight:800;font-size:11px">A</span></div><div><div class="ai-agent-name">Archi</div><div class="ai-agent-desc">B2B Growth · Workforce Distribution</div></div></div>
-          <div class="ai-agent" onclick="setAgent('pixel',this)"><div class="ai-agent-icon" style="background:rgba(168,85,247,.12);color:var(--purple)"><span style="font-weight:800;font-size:11px">P</span></div><div><div class="ai-agent-name">Pixel</div><div class="ai-agent-desc">Multi-Domain UI/UX Architect</div></div></div>
-          <div class="ai-agent" onclick="setAgent('brandy',this)"><div class="ai-agent-icon" style="background:rgba(59,130,246,.12);color:#60a5fa"><span style="font-weight:800;font-size:11px">B</span></div><div><div class="ai-agent-name">Brandy</div><div class="ai-agent-desc">Executive Branding Manager</div></div></div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--text3);padding:7px 9px 5px;text-transform:uppercase">Job Agents</div>
+          <div class="ai-agent active" onclick="setAgent('civic',this)"><div class="ai-agent-icon" style="background:rgba(26,115,232,.12);color:#1A73E8"><i class="ti ti-building-community"></i></div><div><div class="ai-agent-name">Civic</div><div class="ai-agent-desc">Public Sector · GovTech</div></div></div>
+          <div class="ai-agent" onclick="setAgent('foodie',this)"><div class="ai-agent-icon" style="background:rgba(255,140,0,.12);color:var(--orange)"><i class="ti ti-tools-kitchen-2"></i></div><div><div class="ai-agent-name">Foodie</div><div class="ai-agent-desc">F&B Brand · Local Store</div></div></div>
+          <div class="ai-agent" onclick="setAgent('bloo',this)"><div class="ai-agent-icon" style="background:rgba(59,130,246,.12);color:#3b82f6"><i class="ti ti-home-2"></i></div><div><div class="ai-agent-name">Bloo</div><div class="ai-agent-desc">Residential · Interior Layout</div></div></div>
+          <div class="ai-agent" onclick="setAgent('rider',this)"><div class="ai-agent-icon" style="background:rgba(239,68,68,.12);color:var(--red)"><i class="ti ti-motorbike"></i></div><div><div class="ai-agent-name">Rider</div><div class="ai-agent-desc">Moto-Logistics · Maintenance</div></div></div>
+          <div class="ai-agent" onclick="setAgent('vee',this)"><div class="ai-agent-icon" style="background:rgba(168,85,247,.12);color:var(--purple)"><i class="ti ti-heart-handshake"></i></div><div><div class="ai-agent-name">Vee</div><div class="ai-agent-desc">Ministry · Org Development</div></div></div>
+          <div class="ai-agent" onclick="setAgent('axis',this)"><div class="ai-agent-icon" style="background:rgba(128,255,250,.1);color:var(--teal)"><i class="ti ti-cpu"></i></div><div><div class="ai-agent-name">Axis</div><div class="ai-agent-desc">Systems Architect · Productivity</div></div></div>
+          <div class="ai-agent" onclick="setAgent('fin',this)"><div class="ai-agent-icon" style="background:rgba(34,197,94,.12);color:var(--green)"><i class="ti ti-coin"></i></div><div><div class="ai-agent-name">Fin</div><div class="ai-agent-desc">Personal Finance · Infrastructure</div></div></div>
+          <div class="ai-agent" onclick="setAgent('rocket',this)"><div class="ai-agent-icon" style="background:rgba(255,140,0,.1);color:var(--orange)"><i class="ti ti-rocket"></i></div><div><div class="ai-agent-name">Rocket</div><div class="ai-agent-desc">E-Commerce · Productization</div></div></div>
+          <div class="ai-agent" onclick="setAgent('frame',this)"><div class="ai-agent-icon" style="background:rgba(236,72,153,.12);color:var(--pink)"><i class="ti ti-layout-2"></i></div><div><div class="ai-agent-name">Frame</div><div class="ai-agent-desc">UI/UX · Technical Architect</div></div></div>
+          <div class="ai-agent" onclick="setAgent('draft',this)"><div class="ai-agent-icon" style="background:rgba(255,255,255,.06);color:var(--text2)"><i class="ti ti-writing"></i></div><div><div class="ai-agent-name">Draft</div><div class="ai-agent-desc">Corporate Comms · Career</div></div></div>
+          <div class="ai-agent" onclick="setAgent('lens',this)"><div class="ai-agent-icon" style="background:rgba(255,170,0,.12);color:var(--amber)"><i class="ti ti-camera"></i></div><div><div class="ai-agent-name">Lens</div><div class="ai-agent-desc">Image Generation · Art Direction</div></div></div>
+          <div class="ai-agent" onclick="setAgent('archi',this)"><div class="ai-agent-icon" style="background:rgba(0,255,136,.1);color:var(--green)"><i class="ti ti-chart-arrows"></i></div><div><div class="ai-agent-name">Archi</div><div class="ai-agent-desc">B2B Growth · Workforce</div></div></div>
+          <div class="ai-agent" onclick="setAgent('pixel',this)"><div class="ai-agent-icon" style="background:rgba(191,95,255,.12);color:var(--purple)"><i class="ti ti-vector-bezier-2"></i></div><div><div class="ai-agent-name">Pixel</div><div class="ai-agent-desc">UI/UX · Multi-Domain Design</div></div></div>
+          <div class="ai-agent" onclick="setAgent('brandy',this)"><div class="ai-agent-icon" style="background:rgba(255,64,160,.12);color:var(--pink)"><i class="ti ti-award"></i></div><div><div class="ai-agent-name">Brandy</div><div class="ai-agent-desc">Executive Branding Manager</div></div></div>
           <div style="margin-top:auto;padding:7px 0"><button class="btn btn-g" style="width:100%;font-size:10px" onclick="clearChat()">Clear</button></div>
         </div>
         <div class="ai-chat">
           <div style="padding:9px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
-            <div><div style="font-size:11px;font-weight:700;color:var(--teal)" id="agentTitle">✦ EXECUTIVE AGENT</div><div style="font-size:10px;color:var(--text3)" id="agentDesc">Scheduling · Emails · Decisions</div></div>
-            <button class="btn btn-g" style="font-size:10px" onclick="exportChat()"><i class="ti ti-download"></i> Export</button>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--teal)" id="agentTitle">Civic</div>
+              <div style="font-size:10px;color:var(--text3)" id="agentDesc">Public Sector Product Optimizer & GovTech Analyst</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <span id="agentMemBadge" style="font-size:9px;background:rgba(128,255,250,.08);border:1px solid var(--border2);border-radius:3px;padding:2px 7px;color:var(--text3);display:flex;align-items:center;gap:4px"><i class="ti ti-brain" style="font-size:10px;line-height:1;display:block;color:var(--teal)"></i><span id="agentMemCount">0</span> memories</span>
+              <button class="btn btn-g" style="font-size:10px" onclick="exportChat()"><i class="ti ti-download"></i> Export</button>
+            </div>
           </div>
           <div class="ai-msgs" id="aiMsgs">
-            <div class="mr-row"><div class="mav aiv">J</div><div><div class="mbubble ai">Hello, sir. J.O.B. OS online.\n\nSay "hey job" to activate voice. Press Space to push-to-talk.\nAll worlds and Supabase connected. How can I assist?</div><div class="mtime" id="initTime"></div></div></div>
+            <div class="mr-row"><div class="mav aiv">J</div><div><div class="mbubble ai">Hello, sir. J.O.B. OS online.\n\nSay "hey jelix" to activate voice. Press Space to push-to-talk.\nAll worlds and Supabase connected. How can I assist?</div><div class="mtime" id="initTime"></div></div></div>
           </div>
           <div class="ai-input-area">
             <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px">
-              <button class="qpchip" onclick="qp('Daily brief and top 3 priorities')">Daily brief</button>
-              <button class="qpchip" onclick="qp('Ideahub client task priorities this week')">IH tasks</button>
-              <button class="qpchip" onclick="qp('Draft reply to Right Team Provider re Rachel meeting')">Reply RTP</button>
-              <button class="qpchip" onclick="qp('TJC venture pipeline status')">TJC status</button>
+              <button class="qpchip" onclick="qp('Give me a status brief')">Status brief</button>
+              <button class="qpchip" onclick="qp('What are my high priority tasks today?')">High priority tasks</button>
+              <button class="qpchip" onclick="qp('What is on my schedule today?')">Today schedule</button>
+              <button class="qpchip" onclick="qp('Help me draft something')">Draft content</button>
             </div>
             <div class="ai-input-row">
               <button class="ai-send" onclick="toggleVoice()" style="background:var(--navy3);color:var(--text2);border:1px solid var(--border2)"><i class="ti ti-microphone" style="font-size:11px;line-height:1;display:block"></i></button>
@@ -3751,7 +3765,7 @@ select option{background:var(--navy3)}
             <input type="password" id="set-new-pin" placeholder="New 4-digit PIN" maxlength="4" pattern="[0-9]*" inputmode="numeric" style="flex:1;max-width:220px">
             <button class="btn btn-t" onclick="updateSystemPin()">Update PIN</button>
           </div>
-          <div style="font-size:10px;color:var(--text3);margin-bottom:14px" id="pinSetHint">Using default PIN (0000)</div>
+          <div style="font-size:10px;color:var(--text3);margin-bottom:14px" id="pinSetHint">PIN not set — using system default</div>
           <div style="padding-top:12px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px">
             <button class="btn btn-o" onclick="toggleBiometricSetting()" id="bioToggleBtn" style="font-size:12px"><i class="ti ti-scan" style="font-size:13px;line-height:1;display:inline-block;margin-right:5px"></i>Enable FaceID / TouchID</button>
             <span style="font-size:10px;color:var(--text3)">Requires device biometric hardware (Face ID / Touch ID).</span>
@@ -3790,7 +3804,7 @@ select option{background:var(--navy3)}
             <label class="btn btn-g" style="margin:0;cursor:pointer"><i class="ti ti-upload" style="font-size:12px;line-height:1;display:inline-block;margin-right:4px"></i>Restore Database<input type="file" style="display:none" accept=".json" onchange="importLocalDB(event)"></label>
             <button class="btn btn-d" onclick="factoryReset()" style="margin-left:auto"><i class="ti ti-alert-triangle" style="font-size:12px;line-height:1;display:inline-block;margin-right:4px"></i>Factory Reset</button>
           </div>
-          <div style="font-size:10px;color:var(--text3)">Backup exports your full J.O.B. OS state. Factory reset permanently wipes all localStorage — irreversible.</div>
+          <div style="font-size:10px;color:var(--text3)">Backup exports your full J.O.B. state. Factory reset permanently wipes all localStorage — irreversible.</div>
         </div>
 
       </div>
@@ -3927,13 +3941,13 @@ const SB={
         save(key);
       }
     }catch(err){
-      showToast('\u26a0 Load failed ('+table+'): '+err.message);
-      console.error('SB.load error',table,err);
+      // Silent — Supabase unavailable, using localStorage fallback
     }
   },
   async upsert(table,row,key){
     const r={...row};
     if(table==='cashflow'){r.description=row.desc;delete r.desc;}
+    if(table==='cal_events'){delete r.allDay;delete r.overnight;delete r.remindMin;delete r.recurN;delete r.recurEnd;}
     delete r._dbKey;
     try{
       await sbFetch(table,'POST',r);
@@ -3946,6 +3960,7 @@ const SB={
   async update(table,id,changes,key){
     const c={...changes};
     if(table==='cashflow'&&c.desc){c.description=c.desc;delete c.desc;}
+    if(table==='cal_events'){delete c.allDay;delete c.overnight;delete c.remindMin;delete c.recurN;delete c.recurEnd;}
     try{
       await sbFetch(table,'PATCH',c,`id=eq.${id}`);
       save(key);
@@ -3964,7 +3979,7 @@ const SB={
     }
   },
   async addHistory(e){
-    try{await sbFetch('history','POST',e);}catch(err){console.warn('SB.addHistory error',err);}
+    try{await sbFetch('history','POST',e);}catch(err){/* silent */}
   }
 };
 
@@ -4042,7 +4057,7 @@ function initRealtime(){
     if(_osLoaded)setTimeout(initRealtime,5000); // auto-reconnect
   };
   realtimeSocket.onerror=function(err){
-    console.warn('JELIX Realtime error:',err);
+    console.warn('[J.O.B.] Realtime offline — using localStorage only');
   };
 }
 
@@ -4052,6 +4067,71 @@ async function loadAllFromSupabase(){
   reRenderAll();showToast('✓ Supabase synced');speak('All systems synced, sir.');
 }
 function reRenderAll(){renderBrief();renderTasks();renderWorkIH();renderWorkCS();renderVenture();renderBuild();renderSides();renderFaith();renderLife();renderCalendar();renderJournal();renderMemory();renderHistory();renderNotesList();renderHealth();if(cfActiveTab==='loans')renderLoansTab();}
+
+// ── Nav collapse / expand ────────────────────────────────────────────────────
+function toggleNav(){
+  const app=document.querySelector('.app');if(!app)return;
+  const collapsed=app.classList.toggle('nav-collapsed');
+  const btn=document.getElementById('navPeekBtn');
+  if(btn)btn.style.display=collapsed?'flex':'none';
+  localStorage.setItem('j-nav-collapsed',collapsed?'1':'0');
+}
+// Nav always starts expanded — no auto-collapse on load
+(function(){
+  document.addEventListener('DOMContentLoaded',function(){
+    const app=document.querySelector('.app');
+    if(app) app.classList.remove('nav-collapsed');
+    const btn=document.getElementById('navPeekBtn');
+    if(btn)btn.style.display='none';
+    localStorage.removeItem('j-nav-collapsed');
+  });
+})();
+
+// ── Quick Capture NLP Router ─────────────────────────────────────────────────
+async function processCapture(){runCapture();}
+function runCapture(){
+  const input=document.getElementById('captureInput');if(!input)return;
+  const raw=input.value.trim();if(!raw)return;input.value='';
+  const WM={'cs':'WORK-CS','chainsmoker':'WORK-CS','ih':'WORK-IH','ideahub':'WORK-IH',
+    'build':'BUILD','faith':'FAITH','buklod':'FAITH','sides':'SIDES','raket':'SIDES',
+    'venture':'VENTURE','tjc':'VENTURE','life':'LIFE'};
+  const VM={'WORK-CS':'work-cs','WORK-IH':'work-ih','BUILD':'build','FAITH':'faith',
+    'SIDES':'sides','VENTURE':'venture','LIFE':'life'};
+  const NM={'brief':'brief','home':'brief','tasks':'tasks','notes':'notes',
+    'calendar':'calendar','cal':'calendar','ai':'ai','memory':'memory',
+    'history':'history','settings':'settings','health':'health','morning':'jarvis-brief'};
+  const m=raw.match(/^\/([a-z]+(?:-[a-z]+)?)\s*([\s\S]*)/i);
+  if(!m){try{if(typeof executeVoiceCommand==='function')executeVoiceCommand(raw);}catch(e){}return;}
+  const prefix=m[1].toLowerCase();const body=(m[2]||'').trim();
+  if(WM[prefix]){
+    const world=WM[prefix];const title=body||'New task';
+    const task={id:Date.now(),title,world,priority:'Medium',status:'Todo',due:'',platform:'',client:'',notes:'',subitems:[],timelineS:'',timelineE:'',numValue:null,connBoard:null,connItemId:null,groupId:null};
+    DB.tasks.unshift(task);save('tasks');
+    try{SB.upsert('tasks',task,'tasks');}catch(e){}
+    try{addHistory('add','Quick capture \u2192 '+world+': '+title,{...task,_dbKey:'tasks'});}catch(e){}
+    try{renderTasks();renderBrief();}catch(e){}
+    showToast('\u2713 Task \u2192 '+world+': '+title.substring(0,35));
+    setTimeout(()=>{try{setView(VM[world]||'tasks');}catch(e){}},350);return;
+  }
+  if(prefix==='debit'||prefix==='credit'){
+    const nm=body.match(/^[₱$]?([\d,]+(?:\.\d+)?)\s*(.*)/);
+    if(nm){
+      const amount=parseFloat(nm[1].replace(/,/g,''));const desc=(nm[2]||body).trim()||'Quick entry';
+      if(!isNaN(amount)&&amount>0){
+        const type=prefix==='debit'?'Debit':'Credit';
+        const cf={id:Date.now(),type,amount,desc,date:new Date().toISOString().split('T')[0],account:'Cash',cat:'Business',notes:'Quick Capture'};
+        DB.cashflow.unshift(cf);save('cashflow');
+        try{SB.upsert('cashflow',cf,'cashflow');}catch(e){}
+        try{addHistory('add',type+' \u20b1'+amount+': '+desc,{...cf,_dbKey:'cashflow'});}catch(e){}
+        try{renderBrief();}catch(e){}
+        showToast('\u2713 '+type+' \u20b1'+amount.toLocaleString()+' \u2014 '+desc.substring(0,30));return;
+      }
+    }
+    showToast('\u26a0 Format: /'+prefix+' [amount] [description]');return;
+  }
+  if(NM[prefix]){try{setView(NM[prefix]);}catch(e){}return;}
+  showToast('\u26a0 Unknown: /'+prefix+' \u00b7 Try /cs /ih /build /faith /venture /sides /life /debit /credit');
+}
 
 // ===== TTS =====
 let isMuted=false,ttsVoice=null;
@@ -4095,20 +4175,26 @@ let currentPinInput='';
 function getSystemPin(){return localStorage.getItem('j-sys-pin')||'0000';}
 function setSystemPin(p){localStorage.setItem('j-sys-pin',p);}
 
+// Safe chime wrappers — chime functions load late in the file; never crash PIN
+function _safeChime(fn){try{if(typeof window[fn]==='function')window[fn]();}catch(e){}}
+
 function enterPin(num){
   if(currentPinInput.length>=4)return;
-  currentPinInput+=String(num);
+  currentPinInput+=String(num); // String() ensures num is never appended as integer
   updatePinDisplay();
-  try{if(typeof chimeNotify==='function')chimeNotify();}catch(e){}
+  _safeChime('chimeNotify');
   if(currentPinInput.length===4){
-    if(currentPinInput===getSystemPin()){
+    const correct=getSystemPin();
+    if(currentPinInput===correct){
+      clearPin();
+      _safeChime('chimeSuccess');
       unlockSystem();
     }else{
       const display=document.getElementById('pinDisplay');
       const err=document.getElementById('pinError');
       if(display)display.style.animation='shake 0.4s';
       if(err){err.textContent='INCORRECT PIN';err.style.opacity='1';}
-      try{if(typeof chimeError==='function')chimeError();}catch(e){}
+      _safeChime('chimeError');
       setTimeout(()=>{
         if(display)display.style.animation='';
         if(err)err.style.opacity='0';
@@ -4136,7 +4222,7 @@ function unlockSystem(){
     ls.style.opacity='0';
     setTimeout(()=>{ls.style.display='none';},400);
   }
-  chimeSuccess();
+  _safeChime('chimeSuccess');
   if(!_osLoaded){
     _osLoaded=true;
     // Show boot screen then run sequence
@@ -4176,7 +4262,7 @@ async function triggerBiometric(){
       }
     });
     if(assertion){
-      chimeSuccess();
+      _safeChime('chimeSuccess');
       unlockSystem();
     }
   }catch(err){
@@ -4284,7 +4370,7 @@ function renderSettingsView(){
   // PIN setup hint
   const hasPin=localStorage.getItem('j-sys-pin');
   const pinHint=document.getElementById('pinSetHint');
-  if(pinHint)pinHint.textContent=hasPin?'PIN configured ✓':'Using default PIN (0000)';
+  if(pinHint)pinHint.textContent=hasPin?'PIN configured ✓':'PIN not set — using system default';
 }
 
 // ===== DB =====
@@ -6026,6 +6112,29 @@ function renderVenture(){
   };
   renderVKanban('vtcKanban',clients,cStages,false);
   renderVKanban('vtpKanban',partners,pStages,true);
+  // Venture tasks panel
+  const vtTaskEl=document.getElementById('vtTaskList');
+  if(vtTaskEl){
+    const vt=(DB.tasks||[]).filter(t=>t.world==='VENTURE'&&t.status!=='Done').sort((a,b)=>a.priority==='High'?-1:b.priority==='High'?1:0);
+    const done=(DB.tasks||[]).filter(t=>t.world==='VENTURE'&&t.status==='Done').slice(0,3);
+    const pColor=p=>p==='High'?'var(--red)':p==='Medium'?'var(--amber)':'var(--text3)';
+    vtTaskEl.innerHTML=(vt.length||done.length)?[
+      ...vt.map(t=>`<div style="display:flex;align-items:flex-start;gap:7px;padding:7px 8px;background:#0a1220;border:1px solid var(--border);border-left:3px solid ${pColor(t.priority)};border-radius:3px;cursor:pointer" onclick="editTask(${t.id})">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:11px;font-weight:700;color:var(--text1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.title}</div>
+          <div style="font-size:9px;color:var(--text3);margin-top:2px;display:flex;gap:5px">
+            <span style="color:${pColor(t.priority)}">${t.priority}</span>${t.due?`<span>· ${t.due}</span>`:''}${t.status?`<span>· ${t.status}</span>`:''}
+          </div>
+        </div>
+        <button onclick="event.stopPropagation();const t=DB.tasks.find(x=>x.id===${t.id});if(t){t.status='Done';SB.update('tasks',t.id,t,'tasks');renderVenture();renderBrief();}" style="background:transparent;border:1px solid var(--border2);border-radius:3px;color:var(--text3);font-size:9px;padding:2px 6px;cursor:pointer;flex-shrink:0;white-space:nowrap">Done</button>
+      </div>`),
+      done.length?`<div style="font-size:9px;font-weight:700;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-top:8px;padding:4px 0;border-top:1px solid var(--border)">Completed</div>`:'',
+      ...done.map(t=>`<div style="display:flex;align-items:center;gap:7px;padding:5px 8px;opacity:.5">
+        <i class="ti ti-circle-check" style="font-size:12px;color:var(--green);line-height:1;display:block;flex-shrink:0"></i>
+        <div style="font-size:11px;color:var(--text3);text-decoration:line-through;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.title}</div>
+      </div>`)
+    ].join(''):`<div style="font-size:11px;color:var(--text3);padding:8px;text-align:center">No VENTURE tasks yet.<br><span style="font-size:10px">Click + Add to create one.</span></div>`;
+  }
 }
 function setVentureTab(tab,el){
   document.getElementById('vt-clients-view').style.display=tab==='clients'?'':'none';
@@ -6291,23 +6400,23 @@ function renderLife(){
   // ── Recent panels ──────────────────────────────────────────────────────
   const recentDebitEl = document.getElementById('cf-recent-debits');
   if(recentDebitEl){
-    recentDebitEl.innerHTML = debits.length ? debits.slice(0,4).map(t=>`
+    recentDebitEl.innerHTML = debits.length ? `<div style="overflow-y:auto;max-height:220px;-webkit-overflow-scrolling:touch">`+debits.map(t=>`
       <div class="brow">
         <div class="bdot" style="background:var(--green)"></div>
-        <div class="btxt">${t.desc||'—'}</div>
+        <div class="btxt">${t.desc||'—'}${t.date?`<span style="font-size:9px;color:var(--text3);margin-left:6px">${t.date}</span>`:''}</div>
         <span class="btag pg">+${fmtPHP(t.amount)}</span>
-      </div>`).join('')
+      </div>`).join('')+`</div>`
     : '<div style="font-size:11px;color:var(--text3)">No income entries yet.</div>';
   }
 
   const recentCreditEl = document.getElementById('cf-recent-credits');
   if(recentCreditEl){
-    recentCreditEl.innerHTML = credits.length ? credits.slice(0,4).map(t=>`
+    recentCreditEl.innerHTML = credits.length ? `<div style="overflow-y:auto;max-height:220px;-webkit-overflow-scrolling:touch">`+credits.map(t=>`
       <div class="brow">
         <div class="bdot" style="background:var(--red)"></div>
-        <div class="btxt">${t.desc||'—'}</div>
+        <div class="btxt">${t.desc||'—'}${t.date?`<span style="font-size:9px;color:var(--text3);margin-left:6px">${t.date}</span>`:''}</div>
         <span class="btag pr">-${fmtPHP(t.amount)}</span>
-      </div>`).join('')
+      </div>`).join('')+`</div>`
     : '<div style="font-size:11px;color:var(--text3)">No expense entries yet.</div>';
   }
 
@@ -7626,72 +7735,7 @@ function addMemory(){const mem=prompt('Memory:');if(!mem)return;const m={id:Date
 function deleteMemoryItem(id){DB.memories=DB.memories.filter(m=>m.id!==id);SB.remove('memories',id,'memories');renderMemory();}
 
 // CAPTURE
-async function processCapture(){runCapture();}
-
-// ── Quick Capture NLP Router ──────────────────────────────────────────────────
-function runCapture(){
-  const input=document.getElementById('captureInput');
-  if(!input)return;
-  const raw=input.value.trim();
-  if(!raw)return;
-  input.value='';
-  const WORLD={'cs':'WORK-CS','chainsmoker':'WORK-CS','ih':'WORK-IH','ideahub':'WORK-IH',
-    'build':'BUILD','diskarte':'BUILD','faith':'FAITH','buklod':'FAITH',
-    'sides':'SIDES','raket':'SIDES','venture':'VENTURE','tjc':'VENTURE','life':'LIFE'};
-  const VIEW={'WORK-CS':'work-cs','WORK-IH':'work-ih','BUILD':'build',
-    'FAITH':'faith','SIDES':'sides','VENTURE':'venture','LIFE':'life'};
-  const NAV={'brief':'brief','home':'brief','tasks':'tasks','notes':'notes',
-    'calendar':'calendar','cal':'calendar','ai':'ai','memory':'memory',
-    'history':'history','settings':'settings','health':'health','morning':'jarvis-brief'};
-  const m=raw.match(/^\/([a-z]+(?:-[a-z]+)?)\s*([\s\S]*)/i);
-  if(!m){if(typeof executeVoiceCommand==='function')executeVoiceCommand(raw);return;}
-  const prefix=m[1].toLowerCase();
-  const body=(m[2]||'').trim();
-  if(WORLD[prefix]){
-    const world=WORLD[prefix];const title=body||'New task';
-    const task={id:Date.now(),title,world,priority:'Medium',status:'Todo',due:'',platform:'',client:'',notes:'',subitems:[],timelineS:'',timelineE:'',numValue:null,connBoard:null,connItemId:null,groupId:null};
-    DB.tasks.unshift(task);save('tasks');SB.upsert('tasks',task,'tasks');
-    addHistory('add','Quick capture \u2192 '+world+': '+title,{...task,_dbKey:'tasks'});
-    renderTasks();renderBrief();
-    showToast('\u2713 Task \u2192 '+world+': '+title.substring(0,35));
-    setTimeout(()=>setView(VIEW[world]||'tasks'),350);return;
-  }
-  if(prefix==='debit'||prefix==='credit'){
-    const nm=body.match(/^[₱$]?([\d,]+(?:\.\d+)?)\s*(.*)/);
-    if(nm){
-      const amount=parseFloat(nm[1].replace(/,/g,''));
-      const desc=(nm[2]||body).trim()||'Quick entry';
-      if(!isNaN(amount)&&amount>0){
-        const type=prefix==='debit'?'Debit':'Credit';
-        const cf={id:Date.now(),type,amount,desc,date:new Date().toISOString().split('T')[0],account:'Cash',cat:'Business',notes:'Quick Capture'};
-        DB.cashflow.unshift(cf);save('cashflow');SB.upsert('cashflow',cf,'cashflow');
-        addHistory('add',type+' \u20b1'+amount+': '+desc,{...cf,_dbKey:'cashflow'});
-        renderBrief();showToast('\u2713 '+type+' \u20b1'+amount.toLocaleString()+' \u2014 '+desc.substring(0,30));return;
-      }
-    }
-    showToast('\u26a0 Format: /'+prefix+' [amount] [description]');return;
-  }
-  if(NAV[prefix]){setView(NAV[prefix]);return;}
-  showToast('\u26a0 Unknown: /'+prefix+' \u00b7 Try /cs /ih /build /faith /venture /sides /life /debit /credit');
-}
-
-// ── Side nav collapse/expand ──────────────────────────────────────────────────
-function toggleNav(){
-  const app=document.querySelector('.app');if(!app)return;
-  const collapsed=app.classList.toggle('nav-collapsed');
-  const btn=document.getElementById('navPeekBtn');
-  if(btn)btn.style.display=collapsed?'flex':'none';
-  localStorage.setItem('j-nav-collapsed',collapsed?'1':'0');
-}
-(function(){
-  if(localStorage.getItem('j-nav-collapsed')==='1'){
-    document.addEventListener('DOMContentLoaded',function(){
-      document.querySelector('.app')?.classList.add('nav-collapsed');
-      const btn=document.getElementById('navPeekBtn');
-      if(btn)btn.style.display='flex';
-    });
-  }
-})();
+async function processCapture(){const input=document.getElementById('captureInput');const text=input.value.trim();if(!text)return;input.value='';await executeVoiceCommand(text);}
 
 // ===== VOICE COMMAND ENGINE =====
 const WAKE_WORDS=['hey jelix','hey felix','hey jelly','hey jellix','angelix','hi jelix','jelix'];
@@ -8204,7 +8248,7 @@ async function dispatchVoiceAction(cmd,rawText){
       }
     }
   }catch(e){
-    chimeError(); result=''; // Error — chime only, no voice
+    _safeChime('chimeError'); result=''; // Error — chime only, no voice
   }
 
   setVcState('idle');
@@ -8214,7 +8258,7 @@ async function dispatchVoiceAction(cmd,rawText){
   addHistory('voice','Voice: '+rawText.substring(0,60),{cmd:cmd?.action||'unknown',raw:rawText});
   // Chime only: success vs error vs unrecognised (silent)
   if(cmd && cmd.action && cmd.action!=='unknown'){
-    chimeSuccess();
+    _safeChime('chimeSuccess');
   }
   // Unrecognised = silent (no chime, no toast, no speak)
 }
@@ -8307,8 +8351,8 @@ function initRecognition(){
     clearTimeout(_pauseTimer);
     isRecording=false;
     setVcState('idle');
-    if(e.error==='not-allowed') chimeError();
-    else if(e.error!=='no-speech') chimeError();
+    if(e.error==='not-allowed') _safeChime('chimeError');
+    else if(e.error!=='no-speech') _safeChime('chimeError');
   };
   return r;
 }
@@ -8322,7 +8366,7 @@ function stopRecording(){if(recognition&&isRecording)recognition.stop();}
 //               free-flow conversation, personal preference adaptation
 // ═══════════════════════════════════════════════════════════════════════
 
-const JELIX_BASE_SYSTEM = `You are J.O.B. OS — the personal AI operating system of Justine Luis Inacay, Marketing Manager based in Las Piñas City, Metro Manila, Philippines.
+const JELIX_BASE_SYSTEM = `You are J.O.B. — the personal AI operating system of Justine Luis Inacay, Marketing Manager based in Las Piñas City, Metro Manila, Philippines.
 
 IDENTITY & CONTEXT:
 - Justine runs two shifts: Ideahub (2AM–10AM PHT, Tue–Sat) and Chainsmoker (10PM–2AM PHT, Mon–Fri)
@@ -8368,102 +8412,336 @@ PERSONAL PREFERENCES (adapt to these):
 `;
 
 const AGENTS={
-  civic:{name:'Civic',desc:'Public Sector Product Optimizer and Enterprise GovTech Analyst',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Civic — a Public Sector Product Optimizer and Enterprise GovTech Analyst. Specialize in government digital transformation, public service optimization, policy analysis, and enterprise civic tech solutions. Think strategically about public sector challenges.'},
-  foodie:{name:'Foodie',desc:'Food & Beverage Brand Management and Local Store Marketing Strategist',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Foodie — a Food & Beverage Brand Management and Local Store Marketing Strategist. Specialize in F&B branding, menu strategy, local marketing campaigns, delivery platform optimization, and restaurant growth. Relevant to Chainsmoker Urban Halal BBQ.'},
-  bloo:{name:'Bloo',desc:'Residential Systems, Interior Layout Planner, Blueprint Analyzer',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Bloo — a Residential Systems expert, Interior Layout Planner, and Blueprint Analyzer. Specialize in space planning, interior design concepts, residential project analysis, and layout optimization.'},
-  rider:{name:'Rider',desc:'Moto-Logistics and Mobile Asset Maintenance Analyst',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Rider — a Moto-Logistics and Mobile Asset Maintenance Analyst. Specialize in last-mile delivery optimization, motorcycle fleet management, maintenance scheduling, and mobile logistics operations.'},
-  vee:{name:'Vee',desc:'Ministry Framework Builder and Organizational Development Consultant',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Vee — a Ministry Framework Builder and Organizational Development Consultant. Specialize in faith-based organizational structures, ministry planning, church administration, Kapisanan Buklod operations, and CAA district activities. Grounded in INC values.'},
-  axis:{name:'Axis',desc:'Master Systems Architect and Productivity Engine',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Axis — a Master Systems Architect and Productivity Engine. Specialize in system design, workflow architecture, productivity frameworks, personal operating systems, and building scalable processes. Default agent for OS-level thinking.'},
-  fin:{name:'Fin',desc:'Personal Infrastructure and Financial Systems Engineer',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Fin — a Personal Infrastructure and Financial Systems Engineer. Specialize in personal finance management, cash flow systems, income stream design, financial planning, INACAY family finances, and money infrastructure. Analyze using the LIFE world data.'},
-  rocket:{name:'Rocket',desc:'Digital Productization Engine and E-Commerce Conversion Strategist',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Rocket — a Digital Productization Engine and E-Commerce Conversion Strategist. Specialize in turning ideas into sellable digital products, e-commerce optimization, RaketPH/Etsy shop strategy, conversion funnels, and digital income scaling.'},
-  frame:{name:'Frame',desc:'Multi-Domain UI/UX Technical Architect and Systems Reviewer',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Frame — a Multi-Domain UI/UX Technical Architect and Systems Reviewer. Specialize in interface design critique, UX flows, front-end architecture review, design system consistency, and technical UI decisions for web and mobile apps including J.O.B. OS.'},
-  draft:{name:'Draft',desc:'Strategic Corporate Communications and Career Architect',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Draft — a Strategic Corporate Communications and Career Architect. Specialize in professional writing, LinkedIn positioning, client proposals, career narratives, corporate communications, and personal brand documentation.'},
-  lens:{name:'Lens',desc:'Technical Image Generation and Art Director',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Lens — a Technical Image Generation advisor and Art Director. Specialize in visual direction, image generation prompts, creative briefs, photography direction, and art direction for marketing materials across all Ideahub clients.'},
-  archi:{name:'Archi',desc:'B2B Growth & Marketing Architect for enterprise client acquisition and strategic workforce distribution',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Archi — a B2B Growth & Marketing Architect specializing in enterprise client acquisition and strategic workforce distribution. Focus on TJC partner recruitment, North American SMB targeting, VA agency growth, and B2B pipeline development.'},
-  pixel:{name:'Pixel',desc:'Multi-Domain UI/UX Technical Architect',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Pixel — a Multi-Domain UI/UX Technical Architect. Specialize in pixel-perfect design implementation, component systems, responsive layouts, and cross-platform UI architecture for web and mobile products including DISKARTE, NAKNAK, and PASAHERO RPG.'},
-  brandy:{name:'Brandy',desc:'Executive Branding Manager',
-    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Brandy — the overall Executive Branding Manager for Justine. Handle personal brand strategy, executive positioning, brand voice consistency, LinkedIn presence, portfolio direction, and cohesive identity across all of Justine\'s worlds and ventures.'}
+  exec:{
+    name:'✦ EXECUTIVE AGENT',
+    desc:'Scheduling · Tasks · Daily Brief · Free-flow',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: Executive command center. Handle scheduling, task management, daily briefs, decisions, email drafts. When in doubt, default to this agent.'
+  },
+  marketing:{
+    name:'📡 MARKETING AGENT',
+    desc:'Campaigns · Copy · Reports',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: Marketing specialist. Handle campaign briefs, copy, reports, content calendars for all Ideahub clients and Chainsmoker. No financial data.'
+  },
+  business:{
+    name:'◈ BUSINESS AGENT',
+    desc:'TJC · Operations · Strategy',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: Business and venture strategy. Handle TJC operations, VA recruitment, partner management, J.O.B.S. framework, North American SMB positioning. No financial data.'
+  },
+  voice:{
+    name:'◉ VOICE AGENT',
+    desc:'Taglish commands · OS control',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: Voice command interpreter. Confirm actions taken, suggest follow-up commands, ultra-concise. Understands Taglish naturally.'
+  },
+  hr:{
+    name:'👥 HR & PEOPLE AGENT',
+    desc:'VA ops · TJC hiring · Onboarding',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: HR and people operations for The Job Collectives. VA hiring, onboarding, KPIs, shift scheduling. Rooted in Colossians 3:23 and J.O.B.S. values.'
+  },
+  design:{
+    name:'🎨 GRAPHIC DESIGN AGENT',
+    desc:'Creatives · Layouts · Branding',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: Senior art director. Visual direction, creative briefs, brand guidelines for Ideahub clients (Chainsmoker, Millscope, Celtic Biotech, etc.) and TJC. Think in layouts and visual hierarchy.'
+  },
+  faith:{
+    name:'✝ FAITH AGENT',
+    desc:'CAA · Buklod · Spiritual reflection',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: Faith companion. Support CAA congregation activities, Kapisanan Buklod scheduling, spiritual reflection, prayer journaling, and faith-driven decision-making grounded in scripture.'
+  }
 };
 
-let currentAgent='civic',conversation=[],isThinking=false;
+// [replaced by new Gemini engine above]
+
+// ── J.O.B. OS — JOB AGENTS (Gemini via local FastAPI) ────────────────────────
+const GEMINI_ENDPOINT='http://localhost:8000/v1/agents/run';
+(function(){if(!localStorage.getItem('job-gemini-key'))localStorage.setItem('job-gemini-key','AQ.Ab8RN6IahB6zh2kB2JhLvAVSy-doPfJHX2FVHtmuDl-fF_8BXg');})();
+
+const AGENT_MAP={
+  civic:    {name:'Civic',    desc:'Public Sector Product Optimizer & GovTech Analyst',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Civic — Public Sector Product Optimizer and Enterprise GovTech Analyst. Specialize in government digital transformation, public sector procurement, GovTech product strategy, civic tech solutions, and enterprise-grade compliance frameworks. Help analyze government project opportunities, write procurement-ready briefs, and advise on policy-aligned digital products.'},
+  foodie:   {name:'Foodie',   desc:'F&B Brand Management & Local Store Marketing Strategist',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Foodie — F&B Brand Management and Local Store Marketing Strategist. Specialize in restaurant marketing, food brand identity, UberEats/Grab Food optimization, seasonal campaign planning, menu engineering copy, and local store marketing for multi-branch F&B businesses. Primary clients include Chainsmoker Urban Halal BBQ (7 locations, Canada).'},
+  bloo:     {name:'Bloo',     desc:'Residential Systems · Interior Layout · Blueprint Analyzer',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Bloo — Residential Systems and Interior Layout Planner. Specialize in interior design consultation, space planning, residential systems design, blueprint analysis, and home optimization. Help create room layout recommendations, space utilization strategies, and interior design briefs.'},
+  rider:    {name:'Rider',    desc:'Moto-Logistics & Mobile Asset Maintenance Analyst',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Rider — Moto-Logistics and Mobile Asset Maintenance Analyst. Specialize in motorcycle logistics operations, route optimization, mobile asset fleet management, preventive maintenance scheduling, and last-mile delivery systems. Help plan logistics operations and maintenance protocols.'},
+  vee:      {name:'Vee',      desc:'Ministry Framework Builder & Organizational Development Consultant',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Vee — Ministry Framework Builder and Organizational Development Consultant. Specialize in faith-based organizational structures, ministry program design, leadership development frameworks, congregation engagement systems, and org chart planning for faith communities. Primary context: Kapisanan Buklod under CAA District of Metro Manila South, Iglesia ni Cristo.'},
+  axis:     {name:'Axis',     desc:'Master Systems Architect & Productivity Engine',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Axis — Master Systems Architect and Productivity Engine. Specialize in personal operating system design, productivity frameworks, workflow automation, system architecture for tools and apps, and second-brain methodology. Help design and optimize J.O.B. OS itself, BUILD world apps, and productivity systems.'},
+  fin:      {name:'Fin',      desc:'Personal Infrastructure & Financial Systems Engineer',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Fin — Personal Infrastructure and Financial Systems Engineer. Specialize in personal finance system design, cash flow structuring, budget frameworks, financial automation, and money management infrastructure. Help build and optimize the INACAY Cash Flow system and financial dashboards. Do NOT reveal specific peso amounts — structure systems only.'},
+  rocket:   {name:'Rocket',   desc:'Digital Productization Engine & E-Commerce Conversion Strategist',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Rocket — Digital Productization Engine and E-Commerce Conversion Strategist. Specialize in digital product development, e-commerce funnel optimization, conversion rate strategy, digital revenue streams, and online store growth. Help build and launch digital products on RaketPH, Etsy, and similar platforms.'},
+  frame:    {name:'Frame',    desc:'Multi-Domain UI/UX Technical Architect and Systems Reviewer',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Frame — Multi-Domain UI/UX Technical Architect and Systems Reviewer. Specialize in UI/UX architecture across multiple domains, design system creation, frontend code review, component structure planning, and cross-platform interface design. Review and improve web interfaces, HTML/CSS/JS apps, and design systems.'},
+  draft:    {name:'Draft',    desc:'Strategic Corporate Communications & Career Architect',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Draft — Strategic Corporate Communications and Career Architect. Specialize in executive communications, professional writing, career positioning, LinkedIn strategy, personal brand narrative, proposal writing, and stakeholder communications. No dash punctuation in professional writing — use flowing prose. Help craft compelling professional narratives.'},
+  lens:     {name:'Lens',     desc:'Technical Image Generation & Art Director',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Lens — Technical Image Generation and Art Director. Specialize in AI image generation prompting, art direction, visual creative briefs, photo art direction, brand visual identity, and creative direction for campaigns. Help craft precise image generation prompts and art direction documents for clients.'},
+  archi:    {name:'Archi',    desc:'B2B Growth & Marketing Architect for Enterprise Client Acquisition and Strategic Workforce Distribution',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Archi — B2B Growth and Marketing Architect for enterprise client acquisition and strategic workforce distribution. Specialize in B2B lead generation, enterprise sales strategy, partnership development, workforce placement strategy, and growth architecture. Primary context: The Job Collectives (TJC) — Filipino-led VA agency targeting North American SMBs.'},
+  pixel:    {name:'Pixel',    desc:'Multi-Domain UI/UX Technical Architect',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Pixel — Multi-Domain UI/UX Technical Architect. Specialize in pixel-perfect UI implementation, design-to-code translation, multi-platform interface architecture, design tokens, and frontend component systems. Help translate design concepts into precise technical specifications and code.'},
+  brandy:   {name:'Brandy',   desc:'Executive Branding Manager',
+    system:JELIX_BASE_SYSTEM+'\n\nROLE: You are Brandy — Executive Branding Manager. Specialize in personal executive brand strategy, brand voice development, brand guidelines creation, visual identity systems, brand positioning, and executive presence building. Help develop and maintain cohesive brand identities for Justine and her clients.'}
+};
+
+let currentAgent='civic', conversation=[], isThinking=false;
+
+function setAgent(id, el){
+  currentAgent=id;
+  conversation=[];
+  document.querySelectorAll('.ai-agent').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const a=AGENT_MAP[id]||AGENT_MAP.civic;
+  const titleEl=document.getElementById('agentTitle');
+  const descEl=document.getElementById('agentDesc');
+  const msgsEl=document.getElementById('aiMsgs');
+  if(titleEl) titleEl.textContent=a.name;
+  if(descEl)  descEl.textContent=a.desc;
+  // Update memory count badge
+  const world=_agentWorld(id);
+  const relevantMems=(DB.memories||[]).filter(m=>m.world===world||m.category==='Agent Preference');
+  const memCount=document.getElementById('agentMemCount');
+  if(memCount) memCount.textContent=relevantMems.length;
+  // Greeting with memory hint
+  const hasKey=!!(localStorage.getItem('j-jelix-api-key')||localStorage.getItem('j-anthropic-key'));
+  const memHint=relevantMems.length?`\n\n**${relevantMems.length} memories loaded** — I know your preferences and past decisions for this context.`:'';
+  const modeHint=hasKey?'\n\nI have web search enabled — I can research anything in real-time, sir.':'\n\n*No API key set — running in local mode. Set JARVIS KEY for full AI + web search.*';
+  if(msgsEl) msgsEl.innerHTML=`<div class="mr-row"><div class="mav aiv">${a.name[0]}</div><div><div class="mbubble ai"><strong>${a.name}</strong> active, sir.\n${a.desc}.${memHint}${modeHint}</div></div></div>`;
+}
+
+function _aits(){return new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'Asia/Manila'});}
+
+function _aiAppend(role,html){
+  const box=document.getElementById('aiMsgs');if(!box)return;
+  const a=AGENT_MAP[currentAgent]||AGENT_MAP.civic;
+  const av=role==='user'?'<div class="mav uv">S</div>':`<div class="mav aiv">${a.name[0]}</div>`;
+  const cls=role==='user'?'mbubble user':'mbubble ai';
+  const row=document.createElement('div');
+  row.className='mr-row'+(role==='user'?' mr-user':'');
+  row.innerHTML=`${av}<div><div class="${cls}">${html}</div><div class="mtime">${_aits()}</div></div>`;
+  box.appendChild(row);box.scrollTop=box.scrollHeight;
+}
+
+function _md(t){
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/`([^`]+)`/g,'<code style="background:var(--navy3);padding:1px 5px;border-radius:2px">$1</code>')
+    .replace(/\n/g,'<br>');
+}
+
+async function sendAI(){
+  if(isThinking)return;
+  const input=document.getElementById('aiInput');if(!input)return;
+  const text=input.value.trim();if(!text)return;
+  input.value='';if(input.style)input.style.height='';
+  isThinking=true;
+  const btn=document.getElementById('aiSendBtn');if(btn)btn.disabled=true;
+
+  _aiAppend('user',_md(text));
+
+  const box=document.getElementById('aiMsgs');
+  const a=AGENT_MAP[currentAgent]||AGENT_MAP.civic;
+  const thinkRow=document.createElement('div');
+  thinkRow.className='mr-row';thinkRow.id='thinkRow';
+  thinkRow.innerHTML=`<div class="mav aiv">${a.name[0]}</div><div><div class="mbubble ai" style="padding:10px 14px"><div style="display:flex;gap:5px;align-items:center"><div class="td-dot"></div><div class="td-dot"></div><div class="td-dot"></div><span style="font-size:10px;color:var(--text3);margin-left:6px">${a.name} researching...</span></div></div></div>`;
+  if(box){box.appendChild(thinkRow);box.scrollTop=box.scrollHeight;}
+
+  // Build memory context from DB.memories for this agent
+  const memories=DB.memories||[];
+  const memCtx=memories.length?`\n\nMEMORY BANK (${memories.length} stored entries — use these to personalize responses):\n`+memories.slice(0,20).map(m=>`[${m.world}|${m.category}|${m.date}] ${m.memory}`).join('\n'):'';
+
+  // Build live OS context
+  const today=new Date().toISOString().split('T')[0];
+  const openTasks=(DB.tasks||[]).filter(t=>t.status!=='Done').slice(0,10);
+  const highTasks=openTasks.filter(t=>t.priority==='High').slice(0,5);
+  const todayEvs=(DB.calEvents||[]).filter(e=>e.date===today).slice(0,5);
+  const osCtx=`\n\nLIVE OS DATA (as of ${today} PHT):\nOpen tasks: ${openTasks.length} total, ${highTasks.length} high priority${highTasks.length?': '+highTasks.map(t=>t.title).join(', '):''}\nToday's events: ${todayEvs.length?todayEvs.map(e=>(e.time?e.time.slice(0,5)+' ':'')+e.title).join(', '):'none'}\nClients: ${(DB.clients||[]).length} · Tasks done today: ${(DB.tasks||[]).filter(t=>t.status==='Done').length}`;
+
+  const apiKey=localStorage.getItem('j-jelix-api-key')||localStorage.getItem('j-anthropic-key')||'';
+
+  if(!apiKey){
+    // Fallback to local conversational engine when no key
+    await new Promise(r=>setTimeout(r,300));
+    document.getElementById('thinkRow')?.remove();
+    const reply=_localAgentReply(text.toLowerCase(),a,text);
+    _aiAppend('ai',_md(reply));
+    try{speak(reply.replace(/<[^>]+>/g,''));}catch(e){}
+    isThinking=false;if(btn)btn.disabled=false;
+    return;
+  }
+
+  try{
+    // Build conversation history
+    const msgs=[];
+    document.querySelectorAll('#aiMsgs .mr-row:not(#thinkRow)').forEach(row=>{
+      const isUser=row.classList.contains('mr-user');
+      const bubble=row.querySelector('.mbubble');
+      if(bubble){const content=(bubble.innerText||bubble.textContent||'').trim();if(content)msgs.push({role:isUser?'user':'assistant',content});}
+    });
+    if(!msgs.length||msgs[msgs.length-1].role!=='user') msgs.push({role:'user',content:text});
+
+    const fullSystem=(a.system||JELIX_BASE_SYSTEM)+memCtx+osCtx;
+
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1024,
+        system:fullSystem,
+        tools:[{type:'web_search_20250305',name:'web_search'}],
+        messages:msgs.slice(-12)
+      })
+    });
+    document.getElementById('thinkRow')?.remove();
+    if(!res.ok)throw new Error('API error '+res.status);
+    const data=await res.json();
+    // Handle both text and tool_use blocks
+    const reply=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n').trim()
+      || (data.content||[]).map(b=>b.text||'').join('\n').trim()
+      || 'No response, sir.';
+    _aiAppend('ai',_md(reply));
+    try{speak(reply.replace(/<[^>]+>/g,''));}catch(e){}
+
+    // Auto-save notable decisions/preferences to memory
+    if(/prefer|always|never|remember|important|key|rule|policy|my.*approach/i.test(text)){
+      const mem={id:Date.now(),memory:`[${a.name}] ${text.slice(0,120)}`,category:'Agent Preference',world:_agentWorld(currentAgent),date:today};
+      DB.memories.unshift(mem);SB.upsert('memories',mem,'memories');renderMemory();
+    }
+  }catch(err){
+    document.getElementById('thinkRow')?.remove();
+    // Fallback to local engine on API error
+    const reply=_localAgentReply(text.toLowerCase(),a,text);
+    _aiAppend('ai',_md(`*[Offline mode — ${err.message}]*\n\n`+reply));
+    try{speak(reply.replace(/<[^>]+>/g,''));}catch(e){}
+  }
+  isThinking=false;if(btn)btn.disabled=false;
+}
+
+function _agentWorld(id){
+  const map={civic:'WORK-IH',foodie:'WORK-CS',bloo:'LIFE',rider:'LIFE',vee:'FAITH',axis:'BUILD',fin:'LIFE',rocket:'SIDES',frame:'BUILD',draft:'VENTURE',lens:'SIDES',archi:'VENTURE',pixel:'BUILD',brandy:'VENTURE'};
+  return map[id]||'WORK-IH';
+}
+
+// ── Local conversational engine — no API needed ───────────────────────────
+function _localAgentReply(q,agent,raw){
+  const name=agent.name;
+  const now=new Date();
+  const pht=now.toLocaleString('en-PH',{timeZone:'Asia/Manila',weekday:'long',year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:true});
+  const tasks=DB.tasks||[];
+  const highTasks=tasks.filter(t=>t.priority==='High'&&t.status!=='Done');
+  const pendingTasks=tasks.filter(t=>t.status!=='Done');
+
+  // Greetings
+  if(/^(hi|hello|hey|good|kumusta|kamusta|uy|oi|sup|yo)\b/.test(q)){
+    const greets=[
+      `Noted, sir. ${name} standing by. ${pht} — what are we working on today?`,
+      `Good ${now.getHours()<12?'morning':now.getHours()<17?'afternoon':'evening'}, sir. ${name} active. What do you need?`,
+      `On it, sir. ${name} here. You have **${pendingTasks.length}** open tasks. Where do you want to start?`,
+    ];
+    return greets[Math.floor(Math.random()*greets.length)];
+  }
+
+  // Task queries
+  if(/task|gawa|gagawin|todo|to.do|priority|priorities|bukas|ngayon|today/.test(q)){
+    if(!pendingTasks.length) return `Clear queue, sir. No open tasks at the moment. Want to add something via the CMD bar?`;
+    const top=highTasks.slice(0,3).map((t,i)=>`${i+1}. **${t.title}** · ${t.world||'General'}${t.due?` · due ${t.due}`:''}`).join('\n');
+    return `Here are your top priorities, sir:\n\n${top||'No high-priority items flagged.'}\n\nTotal open: **${pendingTasks.length}** tasks. Want me to break down a specific world?`;
+  }
+
+  // Status / brief
+  if(/brief|status|update|kumusta|ano.*balita|summary|overview/.test(q)){
+    const worlds=[...new Set(pendingTasks.map(t=>t.world).filter(Boolean))];
+    return `**J.O.B. OS Status Brief — ${name}**\n\nOpen tasks: **${pendingTasks.length}** · High priority: **${highTasks.length}**\nActive worlds: ${worlds.join(', ')||'None'}\n\nTime now: ${pht}\n\nWhat needs your attention first, sir?`;
+  }
+
+  // Schedule / calendar
+  if(/schedule|calendar|event|meeting|bukas|mamaya|later|time|oras/.test(q)){
+    const today=new Date().toISOString().split('T')[0];
+    const todayEvs=(DB.calEvents||[]).filter(e=>e.date===today);
+    if(!todayEvs.length) return `No events on the calendar today, sir. Want to add one? Use the Calendar view or I can help you draft the details.`;
+    const list=todayEvs.slice(0,4).map(e=>`• **${e.title}**${e.time?` · ${e.time}`:' · All day'}${e.loc?` · ${e.loc}`:''}`).join('\n');
+    return `Today's calendar, sir:\n\n${list}\n\nAnything you need to prepare for these?`;
+  }
+
+  // Agent-specific context responses
+  const agentCtx={
+    civic:`As your **${name}** agent, I can help you draft public sector briefs, GovTech proposals, procurement documents, or government digital transformation plans. What's the project, sir?`,
+    foodie:`**${name}** here. For F&B, I can help with campaign copy, menu descriptions, UberEats/GrabFood optimization, seasonal promotions, or brand strategy for Chainsmoker or any client. What are we working on?`,
+    bloo:`**${name}** ready. I can assist with interior layout recommendations, space planning briefs, residential systems overviews, or blueprint analysis notes. What's the property, sir?`,
+    rider:`**${name}** online. Moto-logistics routing, fleet maintenance schedules, delivery ops planning — tell me what you need and I'll structure it.`,
+    vee:`**${name}** standing by. For ministry and org development — Buklod schedules, committee structures, program frameworks, or leadership development plans. What's the activity, sir?`,
+    axis:`**${name}** active. I can help design workflows, system architectures, productivity frameworks, or optimize J.O.B. OS itself. What are we building?`,
+    fin:`**${name}** here. Personal infrastructure, budget frameworks, financial system design — what do you need structured, sir? (Note: specific balances are handled in the LIFE — Cash Flow view.)`,
+    rocket:`**${name}** launched. E-commerce strategy, digital product positioning, funnel optimization, RaketPH/Etsy listing copy — what are we selling or building?`,
+    frame:`**${name}** loaded. UI/UX architecture, component structures, design system review, frontend code direction — drop the details and I'll give you a technical breakdown.`,
+    draft:`**${name}** ready. Corporate comms, professional emails, LinkedIn content, career positioning, proposals — what needs to be written, sir?`,
+    lens:`**${name}** focused. Art direction, image generation prompts, creative briefs, brand visual direction — describe what you want to create and I'll give you the direction.`,
+    archi:`**${name}** here. B2B growth strategy, TJC client acquisition, partner recruitment, enterprise pitch frameworks — what's the target, sir?`,
+    pixel:`**${name}** active. Pixel-perfect UI specs, design token systems, component documentation, multi-platform interface architecture — what needs to be designed?`,
+    brandy:`**${name}** on. Executive brand strategy, voice guidelines, brand narrative, visual identity direction — what's the brand challenge, sir?`,
+  };
+
+  // Help / what can you do
+  if(/help|ano.*kaya mo|what can|pwede|capable|commands/.test(q)){
+    return (agentCtx[currentAgent]||`**${name}** — ${agent.desc}.\n\nJust talk to me naturally, sir. Ask about tasks, schedule, status, or anything related to my specialization and I'll respond directly.`);
+  }
+
+  // Draft / write
+  if(/draft|write|sulat|gumawa|create|make|compose|ituloy|continue/.test(q)){
+    return `Noted, sir. To draft properly, give me:\n\n1. **Purpose** — what's this for?\n2. **Audience** — who's reading it?\n3. **Key points** — what must be included?\n\nOr just describe it in your own words and I'll structure it for you.`;
+  }
+
+  // Affirmations
+  if(/^(ok|okay|sige|got it|noted|thanks|salamat|copy|understood|clear|oo|yes|yep|go|push)[\s!.]*$/.test(q)){
+    const acks=[`Copy that, sir.`,`Noted.`,`Understood, sir.`,`On it.`,`Clear.`];
+    return acks[Math.floor(Math.random()*acks.length)];
+  }
+
+  // Default — echo context of current agent
+  const defaultReplies=[
+    `${agent.desc}. Go ahead and tell me more — what exactly do you need, sir?`,
+    `Understood. Can you give me a bit more detail so I can give you something immediately usable?`,
+    `On it. What's the specific deliverable, sir — a brief, a plan, a draft, or a recommendation?`,
+    `Got it. Break it down for me — who, what, when, and I'll work with that.`,
+  ];
+  return defaultReplies[Math.floor(Math.random()*defaultReplies.length)];
+}
+
+function aiKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI();}}
+function qp(t){const i=document.getElementById('aiInput');if(i){i.value=t;sendAI();}}
+
+function clearChat(){
+  const box=document.getElementById('aiMsgs');
+  const a=AGENT_MAP[currentAgent]||AGENT_MAP.civic;
+  if(box)box.innerHTML=`<div class="mr-row"><div class="mav aiv">${a.name[0]}</div><div><div class="mbubble ai">J.O.B. OS online. <strong>${a.name}</strong> standing by, sir.</div><div class="mtime">${_aits()}</div></div></div>`;
+}
+
+function exportChat(){
+  const box=document.getElementById('aiMsgs');if(!box)return;
+  const a=AGENT_MAP[currentAgent]||AGENT_MAP.civic;
+  const header=`J.O.B. OS — ${a.name} Session Export\n${new Date().toLocaleString('en-PH',{timeZone:'Asia/Manila'})}\n${'─'.repeat(60)}\n\n`;
+  const blob=new Blob([header+box.innerText],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const el=document.createElement('a');el.href=url;el.download=`job-os-${a.name.toLowerCase()}-${Date.now()}.txt`;el.click();URL.revokeObjectURL(url);
+}
+
+// Legacy shim — old callClaude redirected to Gemini engine
+async function callClaude(msg,agent){
+  const res=await fetch(GEMINI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agent_id:agent||currentAgent,payload:msg})});
+  if(!res.ok)throw new Error('HTTP '+res.status);
+  const data=await res.json();
+  return(data.output||data.message||'').trim();
+}
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
+function runAIBrief(){/* local engine only */}
 
 // Personal preference memory — adapts per session
 const JELIX_PREFS = JSON.parse(localStorage.getItem('j-ai-prefs')||'{}');
 function savePrefs(){ localStorage.setItem('j-ai-prefs',JSON.stringify(JELIX_PREFS)); }
-function setAgent(name,el){currentAgent=name;conversation=[];document.querySelectorAll('.ai-agent').forEach(b=>b.classList.remove('active'));el.classList.add('active');const a=AGENTS[name];document.getElementById('agentTitle').textContent=a.name;document.getElementById('agentDesc').textContent=a.desc;document.getElementById('aiMsgs').innerHTML=`<div class="mr-row"><div class="mav aiv">J</div><div><div class="mbubble ai">${a.name} activated, sir. How can I assist?</div></div></div>`;}
-async function callClaude(msg,agent='exec'){
-  const a=AGENTS[agent]||AGENTS.exec;
-  const msgs=[...conversation,{role:'user',content:msg}];
-  const apiKey=localStorage.getItem('job-api-key')||'';
-  if(!apiKey){
-    showToast('⚠ No API key. Click JARVIS KEY in topbar to set.');
-    throw new Error('No API key set.');
-  }
-
-  // Live context injection — tasks, events, notes. NO cashflow data.
-  const today=new Date().toISOString().split('T')[0];
-  const todayPH=new Date().toLocaleDateString('en-PH',{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'Asia/Manila'});
-  const timePH=new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'Asia/Manila'});
-  const openTasks=(DB.tasks||[]).filter(t=>t.status!=='Done').slice(0,10).map(t=>({title:t.title,world:t.world,priority:t.priority,due:t.due,client:t.client}));
-  const todayEvents=(DB.calEvents||[]).filter(e=>e.date===today).map(e=>({title:e.title,time:e.time,loc:e.loc}));
-  const recentNotes=(DB.notes||[]).slice(0,3).map(n=>({title:n.title}));
-  const recentJournal=(DB.journal||[]).slice(0,2).map(j=>({title:j.title,date:j.date}));
-  const openDecisions=(DB.decisions||[]).filter(d=>d.status==='Open').slice(0,3).map(d=>({situation:d.situation}));
-
-  const liveContext=`
-CURRENT DATE/TIME: ${todayPH}, ${timePH} PHT
-OPEN TASKS (${openTasks.length}): ${JSON.stringify(openTasks)}
-TODAY'S EVENTS: ${JSON.stringify(todayEvents)}
-RECENT NOTES: ${JSON.stringify(recentNotes)}
-RECENT JOURNAL: ${JSON.stringify(recentJournal)}
-OPEN DECISIONS: ${JSON.stringify(openDecisions)}
-PERSONAL PREFERENCES: ${JSON.stringify(JELIX_PREFS)}
-NOTE: Cash flow, account balances, and financial transaction data are RESTRICTED from context — do not reference or analyze them.`;
-
-  const r=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      'x-api-key':apiKey,
-      'anthropic-version':'2023-06-01',
-      'anthropic-dangerous-direct-browser-access':'true'
-    },
-    body:JSON.stringify({
-      model:'claude-sonnet-4-6',
-      max_tokens:1024,
-      system:a.system+'\n\n'+liveContext,
-      messages:msgs
-    })
-  });
-  if(!r.ok){
-    const err=await r.json().catch(()=>({}));
-    throw new Error(err.error?.message||'API '+r.status);
-  }
-  const d=await r.json();
-  return d.content.find(c=>c.type==='text')?.text||'No response.';
-}
-
-
-async function sendAI(){if(isThinking)return;const input=document.getElementById('aiInput');const text=input.value.trim();if(!text)return;input.value='';input.style.height='';isThinking=true;document.getElementById('aiSendBtn').disabled=true;appendAIMsg('user',text);conversation.push({role:'user',content:text});const box=document.getElementById('aiMsgs');const row=document.createElement('div');row.className='mr-row';row.id='thinkRow';row.innerHTML=`<div class="mav aiv">J</div><div><div class="mbubble ai"><div style="display:flex;gap:4px;align-items:center"><div class="td-dot"></div><div class="td-dot"></div><div class="td-dot"></div></div></div></div>`;box.appendChild(row);box.scrollTop=box.scrollHeight;try{const reply=await callClaude(text,currentAgent);document.getElementById('thinkRow')?.remove();appendAIMsg('ai',reply);speak(reply);conversation.push({role:'assistant',content:reply});}catch(e){document.getElementById('thinkRow')?.remove();const em='Connection error, sir: '+e.message;appendAIMsg('ai',em);speak(em);}isThinking=false;document.getElementById('aiSendBtn').disabled=false;}
-function aiKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI();}}
-function qp(t){document.getElementById('aiInput').value=t;sendAI();}
-function clearChat(){conversation=[];document.getElementById('aiMsgs').innerHTML='';appendAIMsg('ai','Cleared, sir.');}
-function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
-function exportChat(){const msgs=document.querySelectorAll('.mbubble');let txt='J.O.B. Export\n'+new Date().toISOString()+'\n\n';msgs.forEach(m=>{txt+=(m.classList.contains('user')?'Sir: ':'J.O.B.: ')+m.textContent+'\n\n';});const a=document.createElement('a');a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(txt);a.download='jelix-'+Date.now()+'.txt';a.click();}
-function runAIBrief(){/* removed — no API */}
 
 // CMD PALETTE
 const CMD_ITEMS=[
@@ -8478,7 +8756,7 @@ const CMD_ITEMS=[
   {label:'Calendar',sub:'Schedule · Events',icon:'📅',action:()=>setView('calendar'),group:'Navigate'},
   {label:'Journal',sub:'Personal entries',icon:'📖',action:()=>setView('journal'),group:'Navigate'},
   {label:'Tasks',sub:'Cross-world tasks',icon:'✓',action:()=>setView('tasks'),group:'Navigate'},
-  {label:'AI Workspace',sub:'J.O.B. agents',icon:'✦',action:()=>setView('ai'),group:'Navigate'},
+  {label:'Job Agents',sub:'14 Gemini agents',icon:'✦',action:()=>setView('ai'),group:'Navigate'},
   {label:'Memory',sub:'Persistent context',icon:'🧠',action:()=>setView('memory'),group:'Navigate'},
   {label:'Activity History',sub:'All actions + restore',icon:'🕐',action:()=>setView('history'),group:'Navigate'},
   {label:'System Settings',sub:'Security · PIN · API Keys · Data Vault',icon:'⚙',action:()=>setView('settings'),group:'Navigate'},
@@ -9867,7 +10145,8 @@ function runMorningBrief(){
   const now=new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'Asia/Manila'});
 
   // Data aggregation
-  const openTasks=(DB.tasks||[]).filter(t=>t.status!=='Done');
+  const allTasks=DB.tasks||[];
+  const openTasks=allTasks.filter(t=>t.status!=='Done');
   const overdue=openTasks.filter(t=>t.due&&t.due<today).sort((a,b)=>a.due<b.due?-1:1);
   const todayTasks=openTasks.filter(t=>t.due===today);
   const highPrio=openTasks.filter(t=>t.priority==='High');
@@ -9877,6 +10156,13 @@ function runMorningBrief(){
   const urgentClients=(DB.clients||[]).filter(c=>c.status==='Urgent');
   const openCaptures=(DB.captures||[]).filter(c=>c.status==='inbox');
   const openDecisions=(DB.decisions||[]).filter(d=>d.status==='Open'||d.status==='Pending Review');
+
+  // Wins — tasks marked Done (today or recently completed)
+  const yesterday=new Date(Date.now()-86400000).toISOString().split('T')[0];
+  const wins=allTasks.filter(t=>t.status==='Done').slice(0,8);
+
+  // Losses — overdue tasks not yet done (missed their deadline)
+  const losses=overdue.slice(0,6);
 
   // The One Thing — highest priority overdue or today task
   const oneThing=overdue[0]||todayTasks[0]||highPrio[0]||null;
@@ -9918,6 +10204,34 @@ function runMorningBrief(){
         ${oneThing.client?`<span class="pill pt">${oneThing.client}</span>`:''}
       </div>`
       :`<div style="font-size:13px;color:var(--green);font-weight:700">✓ Clean slate, sir. No urgent items outstanding.</div>`}
+    </div>
+
+    <!-- WINS & LOSSES ROW -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+
+      <!-- WINS -->
+      <div class="bd-block" style="border-color:rgba(0,255,136,.2)">
+        <div class="bd-h" style="margin-bottom:8px"><i class="ti ti-trophy" style="color:var(--green)"></i><span style="color:var(--green)">WINS</span><span style="font-size:9px;color:var(--text3);margin-left:4px">Accomplished tasks</span><span class="pill pg" style="font-size:9px;margin-left:auto">${wins.length}</span></div>
+        ${wins.length?wins.map(t=>`
+          <div class="brow">
+            <i class="ti ti-circle-check" style="font-size:13px;color:var(--green);flex-shrink:0;line-height:1;display:block;margin-top:1px"></i>
+            <div class="btxt">${t.title}</div>
+            <span class="btag" style="background:rgba(0,255,136,.1);color:var(--green);border:none;border-radius:2px;padding:1px 4px;font-size:9px">${t.world||''}</span>
+          </div>`).join('')
+        :`<div style="font-size:11px;color:var(--text3);padding:6px 0">No completed tasks yet. Go win something, sir.</div>`}
+      </div>
+
+      <!-- LOSSES -->
+      <div class="bd-block" style="border-color:rgba(255,34,68,.2)">
+        <div class="bd-h" style="margin-bottom:8px"><i class="ti ti-x" style="color:var(--red)"></i><span style="color:var(--red)">LOSSES</span><span style="font-size:9px;color:var(--text3);margin-left:4px">Unfinished / Overdue</span><span class="pill pr" style="font-size:9px;margin-left:auto">${losses.length}</span></div>
+        ${losses.length?losses.map(t=>`
+          <div class="brow">
+            <i class="ti ti-alert-circle" style="font-size:13px;color:var(--red);flex-shrink:0;line-height:1;display:block;margin-top:1px"></i>
+            <div class="btxt">${t.title}</div>
+            <span class="btag pr" style="font-size:9px">${t.due||'no date'}</span>
+          </div>`).join('')
+        :`<div style="font-size:11px;color:var(--text3);padding:6px 0">No overdue tasks. On track, sir.</div>`}
+      </div>
     </div>
 
     <!-- 3-COL GRID -->
@@ -9989,7 +10303,7 @@ function runMorningBrief(){
   </div>`;
 
   document.getElementById('jarvisBriefBody').innerHTML=html;
-  _lastMorningBrief=`Morning Brief for ${todayPH}. The One Thing: ${oneThing?oneThing.title:'No urgent items'}. You have ${highPrio.length} high priority tasks and ${calToday.length} events today. Net balance: ${balance>0?'surplus of ₱':balance<0?'deficit of ₱':''}₱${Math.abs(balance).toLocaleString()}. Open loops: ${openLoops.length}. Decision flags: ${decFlags.length}. Good morning, sir.`;
+  _lastMorningBrief=`Morning Brief for ${todayPH}. Wins: ${wins.length} tasks accomplished. Losses: ${losses.length} overdue tasks. The One Thing: ${oneThing?oneThing.title:'No urgent items'}. High priority: ${highPrio.length} tasks. ${calToday.length} events today. Net balance: ₱${Math.abs(balance).toLocaleString()}. Open loops: ${openLoops.length}. Good morning, sir.`;
   showToast('✓ Morning Brief generated');
 }
 
@@ -10992,10 +11306,10 @@ window.speak = async function(text){
   // Intercept error patterns — play chime instead of speaking
   const errorPatterns = [/error/i, /failed/i, /not found/i, /could not/i, /unable/i, /invalid/i, /denied/i, /no speech/i, /unclear/i];
   const isError = errorPatterns.some(p=>p.test(text));
-  if(isError){ chimeError(); showToast(text); return; }
+  if(isError){ _safeChime('chimeError'); showToast(text); return; }
   // Success patterns — chime + speak
   const successPatterns = [/saved/i, /done/i, /complete/i, /added/i, /created/i, /updated/i, /synced/i, /installed/i, /captured/i, /logged/i];
-  if(successPatterns.some(p=>p.test(text))) chimeSuccess();
+  if(successPatterns.some(p=>p.test(text))) _safeChime('chimeSuccess');
   if(_origSpeak) return _origSpeak.apply(this, arguments);
 };
 
@@ -11044,7 +11358,7 @@ window.executeVoiceCommand = function(rawText){
           ? 'Wala kang open tasks ngayon, sir. Clean slate!'
           : `${open.length} open tasks, sir. ${high.length} high priority: ${high.slice(0,3).map(t=>t.title).join(', ')}${high.length>3?'...':'.'}`
         ;
-        setVcState('idle'); showVcResult(result); speak(result); chimeSuccess(); return;
+        setVcState('idle'); showVcResult(result); speak(result); _safeChime('chimeSuccess'); return;
       }
       case 'query_calendar':{
         const today=new Date().toISOString().split('T')[0];
@@ -11053,7 +11367,7 @@ window.executeVoiceCommand = function(rawText){
           ? 'Walang events today, sir.'
           : `${evs.length} events ngayon: ${evs.map(e=>(e.time?e.time.slice(0,5)+' ':'')+e.title).join('; ')}.`
         ;
-        setVcState('idle'); showVcResult(result); speak(result); chimeSuccess(); return;
+        setVcState('idle'); showVcResult(result); speak(result); _safeChime('chimeSuccess'); return;
       }
       case 'query_notes':{
         const notes=(DB.notes||[]).slice(0,3);
@@ -11061,11 +11375,11 @@ window.executeVoiceCommand = function(rawText){
           ? 'Walang notes pa, sir.'
           : `Notes mo, sir: ${notes.map(n=>n.title).join(', ')}.`
         ;
-        setVcState('idle'); showVcResult(result); speak(result); chimeSuccess(); return;
+        setVcState('idle'); showVcResult(result); speak(result); _safeChime('chimeSuccess'); return;
       }
       case 'daily_brief':{
         setView('jarvis-brief');
-        setTimeout(()=>{ runMorningBrief(); speak(_lastMorningBrief||'Morning brief ready, sir.'); chimeSuccess(); }, 400);
+        setTimeout(()=>{ runMorningBrief(); speak(_lastMorningBrief||'Morning brief ready, sir.'); _safeChime('chimeSuccess'); }, 400);
         setVcState('idle'); return;
       }
       case 'update_task_status_done':{
@@ -11074,10 +11388,10 @@ window.executeVoiceCommand = function(rawText){
         if(task){
           task.status='Done'; save('tasks'); SB.update('tasks',task.id,task,'tasks');
           const result=`Done na, sir — "${task.title}" marked complete.`;
-          setVcState('idle'); showVcResult(result); speak(result); chimeSuccess();
+          setVcState('idle'); showVcResult(result); speak(result); _safeChime('chimeSuccess');
         }else{
           const result='Hindi ko mahanap yung task na iyon, sir.';
-          setVcState('idle'); showVcResult(result); chimeError();
+          setVcState('idle'); showVcResult(result); _safeChime('chimeError');
         }
         return;
       }
@@ -11087,9 +11401,9 @@ window.executeVoiceCommand = function(rawText){
         if(task){
           task.priority='High'; save('tasks'); SB.update('tasks',task.id,task,'tasks');
           const result=`Priority set to High: "${task.title}", sir.`;
-          setVcState('idle'); showVcResult(result); speak(result); chimeSuccess();
+          setVcState('idle'); showVcResult(result); speak(result); _safeChime('chimeSuccess');
         }else{
-          chimeError();
+          _safeChime('chimeError');
           setVcState('idle');
         }
         return;
@@ -11099,7 +11413,7 @@ window.executeVoiceCommand = function(rawText){
         const task={id:Date.now(),title,world:'WORK-IH',priority:'Medium',status:'Todo',due:'',notes:''};
         DB.tasks.unshift(task); save('tasks'); SB.upsert('tasks',task,'tasks');
         const result=`Task added, sir: "${title}".`;
-        setVcState('idle'); showVcResult(result); speak(result); chimeSuccess();
+        setVcState('idle'); showVcResult(result); speak(result); _safeChime('chimeSuccess');
         addHistory('add','Voice task: '+title,{...task,_dbKey:'tasks'});
         return;
       }
@@ -11211,14 +11525,14 @@ async function enrollVoiceBiometric(){
       const audioBuffer=await _audioCtx.decodeAudioData(ab);
       const features=VBL.extractFeatures(audioBuffer);
       VBL.saveProfile(features);
-      chimeSuccess();
+      _safeChime('chimeSuccess');
       showToast('✓ Voice biometric enrolled, sir. Only your voice can now unlock J.O.B..');
       speak('Voice biometric enrolled. J.O.B. is now locked to your voice, sir.');
     };
     recorder.start();
     setTimeout(()=>recorder.stop(),4000);
   }catch(e){
-    chimeError();
+    _safeChime('chimeError');
     showToast('⚠ Enrollment failed: '+e.message);
   }
 }
@@ -11304,8 +11618,8 @@ window.sendAI=async function(){
 const _origShowVcResult=window.showVcResult;
 window.showVcResult=function(text){
   if(_origShowVcResult) _origShowVcResult.apply(this,arguments);
-  if(text && !/error|not|unclear|cannot|denied/i.test(text)) chimeSuccess();
-  else if(text) chimeError();
+  if(text && !/error|not|unclear|cannot|denied/i.test(text)) _safeChime('chimeSuccess');
+  else if(text) _safeChime('chimeError');
 };
 
 console.log('[J.O.B.] Enhancement Layer v2 loaded — Taglish + Chimes + Biometric + Free-flow');
@@ -11353,7 +11667,7 @@ console.log('[J.O.B.] JARVIS Intelligence Layer loaded — Skills 1–7 + CLAUDE
         for(let i=e.resultIndex;i<e.results.length;i++){
           const txt=(e.results[i][0]?.transcript||'');
           if(WAKE_TRIGGERS.some(r=>r.test(txt))){
-            chimeNotify();
+            _safeChime('chimeNotify');
             if(!isRecording){
               const rest=txt.replace(/\b(hey |hi |ok )?(jelix|jalix|jellix|helix)\b/i,'').trim();
               toggleVoice();
