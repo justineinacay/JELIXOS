@@ -2163,14 +2163,46 @@ select option{background:var(--navy3)}
     <div class="mh"><div class="mt" id="clientModalTitle">Client</div><button class="mc" onclick="closeModal('clientModal')">×</button></div>
     <div class="mb">
       <div class="fg"><label class="fl">Client Name</label><input id="cf-name" placeholder="e.g. Millscope Markets"></div>
+      <div class="fg"><label class="fl">Short Description</label><input id="cf-desc" placeholder="e.g. Biotech investor relations and webinar management"></div>
       <div class="fr">
         <div class="fg"><label class="fl">Status</label><select id="cf-status"><option>Active</option><option>Pending</option><option>Urgent</option><option>Paused</option><option>Done</option></select></div>
+        <div class="fg" style="max-width:110px">
+          <label class="fl" style="display:flex;align-items:center;gap:5px">Brand Color
+            <span style="font-size:9px;color:var(--text3)">(hex)</span>
+          </label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="color" id="cf-color-picker" value="#00d4c8" style="width:32px;height:28px;padding:1px;border:1px solid var(--border2);border-radius:4px;background:#050a12;cursor:pointer;flex-shrink:0" oninput="document.getElementById('cf-color').value=this.value">
+            <input id="cf-color" placeholder="#00d4c8" style="flex:1;min-width:0" oninput="if(/^#[0-9a-fA-F]{6}$/.test(this.value))document.getElementById('cf-color-picker').value=this.value">
+          </div>
+        </div>
       </div>
-      <div class="fg"><label class="fl">Next Action</label><input id="cf-next" placeholder="What needs to happen next?"></div>
       <div class="fg"><label class="fl">Contact</label><input id="cf-contact" placeholder="Email or name"></div>
       <div class="fg"><label class="fl">Google Drive Link</label><input id="cf-drive" placeholder="https://drive.google.com/..."></div>
     </div>
     <div class="mf"><button class="btn btn-g" onclick="closeModal('clientModal')">Cancel</button><button class="btn btn-t" onclick="saveClient()">Save</button></div>
+  </div>
+</div>
+
+<!-- MEMORY MODAL -->
+<div class="mov" id="memoryModal">
+  <div class="modal" style="max-width:480px">
+    <div class="mh"><div class="mt" id="memModalTitle">Add Memory</div><button class="mc" onclick="closeModal('memoryModal')">×</button></div>
+    <div class="mb">
+      <div class="fg"><label class="fl">Memory *</label><textarea id="mm-memory" rows="3" placeholder="e.g. RTP prefers afternoon meetings. Chainsmoker: no pork, halal certified." style="resize:vertical"></textarea></div>
+      <div class="fr">
+        <div class="fg"><label class="fl">Category</label>
+          <select id="mm-cat">
+            <option>General</option><option>Agent Preference</option><option>Brand</option><option>Client Preference</option><option>Product</option><option>Decision</option><option>Process</option><option>Personal</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">World</label>
+          <select id="mm-world">
+            <option>WORK-IH</option><option>WORK-CS</option><option>VENTURE</option><option>BUILD</option><option>SIDES</option><option>FAITH</option><option>LIFE</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="mf"><button class="btn btn-g" onclick="closeModal('memoryModal')">Cancel</button><button class="btn btn-t" onclick="saveMemoryItem()"><i class="ti ti-brain"></i> Save Memory</button></div>
   </div>
 </div>
 
@@ -2852,7 +2884,7 @@ select option{background:var(--navy3)}
           <button class="btn btn-o" onclick="openTaskFor('WORK-CS')"><i class="ti ti-plus"></i> Task</button>
         </div>
       </div>
-      <div class="vb" style="padding:14px 18px">
+      <div class="vb" style="padding:14px 18px;display:flex;flex-direction:column;overflow:hidden">
         <!-- CLIENT HEADER BANNER -->
         <div id="cs-client-banner" style="border-radius:5px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:12px">
           <div style="font-size:20px" id="cs-banner-icon">🔥</div>
@@ -2867,7 +2899,7 @@ select option{background:var(--navy3)}
             <div style="text-align:center"><div class="cl">Done</div><div style="font-size:18px;font-weight:700" id="csDone">0</div></div>
           </div>
         </div>
-        <div id="cs-kanban" style="height:calc(100vh - 290px)"><div class="kanban-wrap"><div class="kb-cols" id="csKanbanCols"></div></div></div>
+        <div id="cs-kanban" style="flex:1;min-height:0;overflow:hidden"><div class="kanban-wrap" style="height:100%"><div class="kb-cols" id="csKanbanCols"></div></div></div>
         <div id="cs-list" style="display:none"><table class="ht"><thead><tr><th>Task</th><th>Client</th><th>Platform</th><th>Priority</th><th>Status</th><th>Deadline</th><th></th></tr></thead><tbody id="csTbody"></tbody></table></div>
       </div>
     </div>
@@ -2947,14 +2979,29 @@ select option{background:var(--navy3)}
     <!-- ===== BUILD ===== -->
     <div class="view" id="view-build">
       <div class="vh"><div><div class="vt" style="color:var(--green)"><i class="ti ti-code"></i>BUILD — App Studio</div><div class="vs">NAKNAK · DISKARTE · PASAHERO</div></div><div class="va"><button class="btn btn-g" onclick="openTaskFor('BUILD')"><i class="ti ti-plus"></i> Task</button></div></div>
-      <div class="vb" style="padding:0"><div id="buildAppsWrap" style="padding:14px 18px"><div id="buildApps" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px"></div></div></div>
+      <div class="vb" style="padding:0;display:flex;flex-direction:column;overflow:hidden">
+        <div id="buildAppsWrap" style="padding:14px 18px;flex-shrink:0"><div id="buildApps" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px"></div></div>
+        <!-- BUILD tasks -->
+        <div style="flex:1;min-height:0;border-top:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 18px;border-bottom:1px solid var(--border);flex-shrink:0">
+            <div style="font-size:9px;font-weight:700;color:var(--green);letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:5px"><i class="ti ti-checklist" style="font-size:12px;line-height:1;display:block"></i>BUILD TASKS</div>
+            <select id="buildTaskFilter" onchange="renderBuildTasks()" class="filter-chip-sel" style="font-size:10px">
+              <option value="all">All Status</option>
+              <option>Todo</option><option>In Progress</option><option>Done</option>
+            </select>
+          </div>
+          <div id="buildTaskBody" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch">
+            <table class="ht"><thead><tr><th>Task</th><th>App</th><th>Priority</th><th>Status</th><th>Due</th><th></th></tr></thead><tbody id="buildTbody"></tbody></table>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ===== SIDES ===== -->
     <div class="view" id="view-sides">
       <div class="vh"><div><div class="vt" style="color:var(--amber)"><i class="ti ti-coins"></i>SIDES — Income Hub</div><div class="vs">RaketPH · Etsy · Digital Products</div></div><div class="va"><button class="btn btn-o" onclick="addSidesProduct()"><i class="ti ti-plus"></i> Product</button></div></div>
-      <div class="vb">
-        <div class="mr"><div class="hc"><div class="cl">Products</div><div class="cv" id="sidesCount">0</div></div></div>
+      <div class="vb" style="overflow-y:auto;-webkit-overflow-scrolling:touch">
+        <div class="mr" style="margin-bottom:12px"><div class="hc"><div class="cl">Total Products</div><div class="cv" id="sidesCount">0</div></div><div class="hc"><div class="cl">Active Listings</div><div class="cv" id="sidesActive" style="color:var(--green)">0</div></div><div class="hc oc"><div class="cl">Total Revenue</div><div class="cv oc" id="sidesRevenue">₱0</div></div></div>
         <div id="sidesProductGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px"></div>
       </div>
     </div>
@@ -3704,8 +3751,27 @@ select option{background:var(--navy3)}
 
     <!-- ===== MEMORY ===== -->
     <div class="view" id="view-memory">
-      <div class="vh"><div><div class="vt"><i class="ti ti-brain"></i>Memory System</div></div><div class="va"><button class="btn btn-t" onclick="addMemory()"><i class="ti ti-plus"></i> Memory</button></div></div>
-      <div class="vb"><table class="ht"><thead><tr><th>Memory</th><th>Category</th><th>World</th><th>Added</th><th></th></tr></thead><tbody id="memoryTbody"></tbody></table></div>
+      <div class="vh">
+        <div><div class="vt"><i class="ti ti-brain"></i>Memory System</div><div class="vs">Agent knowledge base · preferences · decisions</div></div>
+        <div class="va">
+          <select id="memWorldFilter" onchange="renderMemory()" class="filter-chip-sel" style="font-size:10px">
+            <option value="all">All Worlds</option>
+            <option>WORK-IH</option><option>WORK-CS</option><option>VENTURE</option><option>BUILD</option><option>SIDES</option><option>FAITH</option><option>LIFE</option>
+          </select>
+          <button class="btn btn-t" onclick="openMemoryModal()"><i class="ti ti-plus"></i> Memory</button>
+        </div>
+      </div>
+      <div class="vb" style="padding:0;display:flex;flex-direction:column;overflow:hidden">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);flex-shrink:0" class="mr" id="memStats">
+          <div class="hc"><div class="cl">Total</div><div class="cv" id="memTotal">0</div></div>
+          <div class="hc"><div class="cl">Agent Prefs</div><div class="cv" style="color:var(--teal)" id="memAgentCount">0</div></div>
+          <div class="hc"><div class="cl">Brands</div><div class="cv" style="color:var(--orange)" id="memBrandCount">0</div></div>
+          <div class="hc"><div class="cl">Decisions</div><div class="cv" style="color:var(--amber)" id="memDecCount">0</div></div>
+        </div>
+        <div style="flex:1;overflow-y:auto">
+          <table class="ht"><thead><tr><th>Memory</th><th>Category</th><th>World</th><th>Added</th><th></th></tr></thead><tbody id="memoryTbody"></tbody></table>
+        </div>
+      </div>
     </div>
 
     <!-- ===== HISTORY ===== -->
@@ -4197,7 +4263,7 @@ async function loadAllFromSupabase(){
   await Promise.all([SB.load('tasks','tasks'),SB.load('clients','clients'),SB.load('venture','venture'),SB.load('faith','faith'),SB.load('cashflow','cashflow'),SB.load('cal_events','calEvents'),SB.load('journal','journal'),SB.load('notes','notes'),SB.load('memories','memories'),SB.load('sides','sides'),SB.load('history','history'),SB.load('loans','loans')]);
   reRenderAll();showToast('✓ Supabase synced');speak('All systems synced, sir.');
 }
-function reRenderAll(){renderBrief();renderTasks();renderWorkIH();renderWorkCS();renderVenture();renderBuild();renderSides();renderFaith();renderLife();renderCalendar();renderJournal();renderMemory();renderHistory();renderNotesList();renderHealth();if(cfActiveTab==='loans')renderLoansTab();}
+function reRenderAll(){renderBrief();renderTasks();renderWorkIH();renderWorkCS();renderVenture();renderBuild();renderBuildTasks();renderSides();renderFaith();renderLife();renderCalendar();renderJournal();renderMemory();renderHistory();renderNotesList();renderHealth();if(cfActiveTab==='loans')renderLoansTab();}
 
 // ── Nav collapse / expand ────────────────────────────────────────────────────
 function toggleNav(){
@@ -4581,6 +4647,10 @@ const DB={
   patterns:JSON.parse(localStorage.getItem('j-patterns')||'null')||[],
   weeklySynth:JSON.parse(localStorage.getItem('j-weeklySynth')||localStorage.getItem('j-weekly-synth')||'null')||[],
   connections:JSON.parse(localStorage.getItem('j-connections')||'null')||[],
+  officers:JSON.parse(localStorage.getItem('j-officers')||'null')||[],
+  faithTopics:JSON.parse(localStorage.getItem('j-faithTopics')||'null')||[],
+  loans:JSON.parse(localStorage.getItem('j-loans')||'null')||[],
+  accounts:JSON.parse(localStorage.getItem('j-accounts')||'null')||[],
 };
 function save(k){localStorage.setItem('j-'+k,JSON.stringify(DB[k]))}
 
@@ -6020,67 +6090,69 @@ function getClientColor(idx){return IH_CLIENT_COLORS[idx%IH_CLIENT_COLORS.length
 
 function renderWorkIH(){
   const grid=document.getElementById('ihClientCards');if(!grid)return;
-  if(!DB.clients.length){grid.innerHTML='<div style="font-size:11px;color:var(--text3);padding:10px">No clients yet.</div>';return;}
+  if(!DB.clients.length){grid.innerHTML='<div style="font-size:11px;color:var(--text3);padding:10px">No clients yet. Click + Client to begin.</div>';return;}
   grid.innerHTML=DB.clients.map((c,idx)=>{
     const tasks=DB.tasks.filter(t=>t.world==='WORK-IH'&&t.client===c.name);
     const open=tasks.filter(t=>t.status!=='Done');
-    const done=tasks.filter(t=>t.status==='Done').length;
-    const high=open.filter(t=>t.priority==='High').length;
-    const col=getClientColor(idx);
-    const urgentOverride=c.status==='Urgent';
-    const accentColor=urgentOverride?'var(--red)':col.accent;
-    const accentBg=urgentOverride?'rgba(239,68,68,.06)':col.bg;
-    const accentBorder=urgentOverride?'rgba(239,68,68,.2)':col.border;
-    const statusCl=c.status==='Active'?'pt':c.status==='Urgent'?'pr':c.status==='Done'?'pg':'po';
-    return`<div style="background:#05090f;border:1px solid ${accentBorder};border-radius:6px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 0 0 1px ${accentColor}40'" onmouseout="this.style.boxShadow='none'">
+    const high=open.filter(t=>t.priority==='High');
+    const inprog=open.filter(t=>t.status==='In Progress');
 
-      <!-- CARD HEADER -->
-      <div style="padding:11px 13px 9px;border-bottom:1px solid ${accentBorder};background:${accentBg};border-left:3px solid ${accentColor}">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:5px">
-          <div style="font-size:12px;font-weight:800;color:${accentColor};line-height:1.2;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.name}</div>
+    // Brand color: use saved color, fallback to palette
+    const fallback=IH_CLIENT_COLORS[idx%IH_CLIENT_COLORS.length];
+    const urgentOverride=c.status==='Urgent';
+    const accentColor=urgentOverride?'#ef4444':(c.color&&/^#[0-9a-fA-F]{6}$/.test(c.color)?c.color:fallback.accent);
+    const accentBg=accentColor+'12';
+    const accentBorder=accentColor+'35';
+
+    const statusCl=c.status==='Active'?'pt':c.status==='Urgent'?'pr':c.status==='Done'?'pg':'po';
+    const pDot=p=>p==='High'?'#ef4444':p==='Medium'?'#f59e0b':'#4ade80';
+    const sCl=s=>s==='Done'?'pg':s==='In Progress'?'pt':s==='No Progress'?'pam':'pgr';
+
+    return`<div style="background:#05090f;border:1px solid ${accentBorder};border-radius:6px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s;font-size:11px" onmouseover="this.style.boxShadow='0 0 0 1px ${accentColor}50'" onmouseout="this.style.boxShadow='none'">
+
+      <!-- HEADER: accent left bar + name + status -->
+      <div style="padding:10px 12px 8px;border-bottom:1px solid ${accentBorder};background:${accentBg};border-left:3px solid ${accentColor}">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px">
+          <div style="font-size:11px;font-weight:800;color:${accentColor};line-height:1.2;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.01em">${c.name}</div>
           <span class="pill ${statusCl}" style="font-size:9px;flex-shrink:0">${c.status}</span>
         </div>
-        <!-- Next action -->
-        ${c.next?`<div style="font-size:10px;color:var(--text2);display:flex;align-items:flex-start;gap:5px;margin-bottom:5px">
-          <i class="ti ti-arrow-right" style="font-size:10px;color:${accentColor};flex-shrink:0;margin-top:1px;line-height:1;display:block"></i>
-          <span style="line-height:1.4">${c.next}</span>
-        </div>`:''}
-        <!-- Meta row -->
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          ${c.contact?`<span style="font-size:9px;color:var(--text3);display:flex;align-items:center;gap:3px"><i class="ti ti-mail" style="font-size:10px;line-height:1;display:block"></i>${c.contact}</span>`:''}
-          ${c.drive?`<a href="${c.drive}" target="_blank" onclick="event.stopPropagation()" style="font-size:9px;color:${accentColor};display:inline-flex;align-items:center;gap:3px;text-decoration:none"><i class="ti ti-brand-google-drive" style="font-size:11px;line-height:1;display:block"></i>Drive</a>`:''}
+        <!-- Description (replaces "what's next") -->
+        ${c.desc?`<div style="font-size:10px;color:var(--text3);line-height:1.4;margin-bottom:5px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${c.desc}</div>`:''}
+        <!-- Drive + Contact row -->
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:2px">
+          ${c.drive?`<a href="${c.drive}" target="_blank" onclick="event.stopPropagation()" style="font-size:10px;color:${accentColor};display:inline-flex;align-items:center;gap:3px;text-decoration:none;font-weight:600;border:1px solid ${accentBorder};border-radius:3px;padding:2px 7px;background:${accentBg};transition:all .15s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'"><i class="ti ti-brand-google-drive" style="font-size:12px;line-height:1;display:block"></i>Drive</a>`:''}
+          ${c.contact?`<span style="font-size:10px;color:var(--text3);display:flex;align-items:center;gap:3px"><i class="ti ti-mail" style="font-size:11px;line-height:1;display:block"></i>${c.contact}</span>`:''}
         </div>
       </div>
 
-      <!-- TASK SUMMARY STRIP -->
-      <div style="padding:6px 13px;background:#040812;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0">
-        <span style="font-size:10px;font-weight:700;color:${accentColor}">${open.length}</span><span style="font-size:9px;color:var(--text3)">open</span>
-        ${high?`<span style="font-size:10px;font-weight:700;color:var(--red)">${high}</span><span style="font-size:9px;color:var(--text3)">high</span>`:''}
-        ${done?`<span style="font-size:10px;font-weight:700;color:var(--green)">${done}</span><span style="font-size:9px;color:var(--text3)">done</span>`:''}
+      <!-- TASK STATUS ROW — no numbers, just status indicators -->
+      <div style="padding:5px 12px;background:#040812;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;flex-shrink:0;flex-wrap:wrap">
+        ${open.length?[
+          high.length?`<span style="font-size:10px;display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;border-radius:50%;background:#ef4444;flex-shrink:0;display:inline-block"></span><span style="color:var(--text3)">${high.length} high</span></span>`:'',
+          inprog.length?`<span style="font-size:10px;display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;display:inline-block"></span><span style="color:var(--text3)">${inprog.length} in progress</span></span>`:'',
+          `<span style="font-size:10px;color:var(--text3)">${open.length} open</span>`
+        ].filter(Boolean).join('<span style="color:var(--border2);font-size:9px;margin:0 1px">·</span>')
+        :`<span style="font-size:10px;color:var(--text3);font-style:italic">${tasks.length?'All done ✓':'No tasks yet'}</span>`}
         <div style="flex:1"></div>
-        <button style="background:${accentBg};border:1px solid ${accentBorder};border-radius:3px;color:${accentColor};font-size:9px;padding:2px 8px;cursor:pointer;font-weight:700;display:flex;align-items:center;gap:3px" onclick="openTaskForClient(event,${JSON.stringify(c.name).replace(/"/g,'&quot;')})"><i class="ti ti-plus" style="font-size:10px;line-height:1;display:block"></i>Add Task</button>
+        <button style="background:${accentBg};border:1px solid ${accentBorder};border-radius:3px;color:${accentColor};font-size:10px;padding:2px 8px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:3px;transition:opacity .15s" onclick="openTaskForClient(event,${JSON.stringify(c.name).replace(/"/g,'&quot;')})" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'"><i class="ti ti-plus" style="font-size:11px;line-height:1;display:block"></i>Add Task</button>
       </div>
 
       <!-- TASK LIST -->
-      <div style="padding:7px 13px;flex:1;min-height:60px">
-        ${open.slice(0,4).map(t=>{
-          const pDot=t.priority==='High'?'#ef4444':t.priority==='Medium'?'#f59e0b':'#4ade80';
-          const sCl=t.status==='Done'?'pg':t.status==='In Progress'?'pt':t.status==='No Progress'?'pam':'pgr';
-          return`<div style="display:flex;align-items:center;gap:7px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer" onclick="editTask(${t.id})" onmouseover="this.style.background='rgba(255,255,255,.02)'" onmouseout="this.style.background='none'">
-            <div style="width:6px;height:6px;border-radius:50%;background:${pDot};flex-shrink:0"></div>
-            <span style="flex:1;font-size:11px;color:var(--text1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3">${t.title}</span>
-            <span class="pill ${sCl}" style="font-size:9px;flex-shrink:0">${t.status}</span>
-          </div>`;
-        }).join('')}
-        ${open.length>4?`<div style="font-size:10px;color:var(--text3);padding:4px 0;font-style:italic">+${open.length-4} more tasks</div>`:''}
-        ${!open.length?`<div style="font-size:10px;color:var(--text3);padding:6px 0;text-align:center;font-style:italic">${tasks.length?'All tasks completed ✓':'No tasks yet — add one above.'}</div>`:''}
+      <div style="padding:6px 12px;flex:1;min-height:52px">
+        ${open.slice(0,5).map(t=>`<div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.03);cursor:pointer;transition:background .1s;border-radius:2px" onclick="editTask(${t.id})" onmouseover="this.style.background='rgba(255,255,255,.025)'" onmouseout="this.style.background='none'">
+          <div style="width:5px;height:5px;border-radius:50%;background:${pDot(t.priority)};flex-shrink:0"></div>
+          <span style="flex:1;font-size:11px;color:var(--text1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.35">${t.title}</span>
+          <span class="pill ${sCl(t.status)}" style="font-size:9px;flex-shrink:0">${t.status}</span>
+        </div>`).join('')}
+        ${open.length>5?`<div style="font-size:10px;color:var(--text3);padding:3px 0;font-style:italic">+${open.length-5} more</div>`:''}
+        ${!open.length&&!tasks.length?`<div style="font-size:10px;color:var(--text3);padding:5px 0;text-align:center;font-style:italic">No tasks yet.</div>`:''}
       </div>
 
-      <!-- CARD FOOTER ACTIONS -->
-      <div style="padding:6px 13px;border-top:1px solid var(--border);display:flex;gap:5px;background:#040812">
-        <button class="btn btn-t" style="flex:1;font-size:10px" onclick="event.stopPropagation();editClient(${c.id})"><i class="ti ti-pencil" style="font-size:11px;line-height:1;display:inline-block"></i> Edit</button>
-        <button class="btn btn-g" style="flex:1;font-size:10px;color:var(--teal);border-color:var(--teal2)" onclick="askClientTasks(event,${c.id})"><i class="ti ti-sparkles" style="font-size:11px;line-height:1;display:inline-block"></i> AI Tasks</button>
-        <button class="btn btn-d" style="padding:2px 8px" onclick="deleteClientBtn(event,${c.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:block"></i></button>
+      <!-- FOOTER: Edit + Drive (if set) + Delete -->
+      <div style="padding:5px 12px;border-top:1px solid var(--border);display:flex;gap:5px;background:#040812">
+        <button class="btn btn-t" style="flex:1;font-size:10px;font-weight:600" onclick="event.stopPropagation();editClient(${c.id})"><i class="ti ti-pencil" style="font-size:10px;line-height:1;display:inline-block"></i> Edit</button>
+        ${c.drive?`<a href="${c.drive}" target="_blank" onclick="event.stopPropagation()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:4px;font-size:10px;font-weight:600;color:${accentColor};background:${accentBg};border:1px solid ${accentBorder};border-radius:4px;text-decoration:none;padding:4px 0;transition:opacity .15s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'"><i class="ti ti-brand-google-drive" style="font-size:12px;line-height:1;display:block"></i>Drive</a>`:`<button class="btn btn-g" style="flex:1;font-size:10px;font-weight:600;opacity:.4;cursor:default" disabled><i class="ti ti-brand-google-drive" style="font-size:10px;line-height:1;display:inline-block"></i> Drive</button>`}
+        <button class="btn btn-d" style="padding:2px 8px;flex-shrink:0" onclick="deleteClientBtn(event,${c.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:block"></i></button>
       </div>
     </div>`;
   }).join('');
@@ -6273,13 +6345,34 @@ function updateTaskClientDropdown(world){
 
 let editingClientId=null;
 function saveClient(){
-  const c={id:editingClientId||Date.now(),name:document.getElementById('cf-name').value.trim()||'Unnamed',world:'WORK-IH',status:document.getElementById('cf-status').value,next:document.getElementById('cf-next').value,contact:document.getElementById('cf-contact').value,drive:document.getElementById('cf-drive')?.value||''};
+  const color=document.getElementById('cf-color')?.value?.trim()||'';
+  const c={
+    id:editingClientId||Date.now(),
+    name:document.getElementById('cf-name').value.trim()||'Unnamed',
+    desc:document.getElementById('cf-desc')?.value?.trim()||'',
+    world:'WORK-IH',
+    status:document.getElementById('cf-status').value,
+    contact:document.getElementById('cf-contact').value,
+    drive:document.getElementById('cf-drive')?.value||'',
+    color:/^#[0-9a-fA-F]{6}$/.test(color)?color:''
+  };
   const isEdit=!!editingClientId;
   if(editingClientId){const i=DB.clients.findIndex(x=>x.id===editingClientId);if(i>=0)DB.clients[i]=c;SB.update('clients',c.id,c,'clients');}else{DB.clients.unshift(c);SB.upsert('clients',c,'clients');}
   addHistory(isEdit?'edit':'add',(isEdit?'Edited':'Added')+' client: '+c.name,{...c,_dbKey:'clients'});
   closeModal('clientModal');reRenderAll();showToast('✓ Client saved');
 }
-function editClient(id){const c=DB.clients.find(x=>x.id===id);if(!c)return;editingClientId=id;document.getElementById('clientModalTitle').textContent='Edit Client';['name','status','next','contact','drive'].forEach(f=>{const el=document.getElementById('cf-'+f);if(el)el.value=c[f]||'';});openModal('clientModal');}
+function editClient(id){
+  const c=DB.clients.find(x=>x.id===id);if(!c)return;
+  editingClientId=id;
+  document.getElementById('clientModalTitle').textContent='Edit Client';
+  ['name','desc','status','contact','drive'].forEach(f=>{const el=document.getElementById('cf-'+f);if(el)el.value=c[f]||'';});
+  const colorVal=c.color||'#00d4c8';
+  const colorInput=document.getElementById('cf-color');
+  const colorPicker=document.getElementById('cf-color-picker');
+  if(colorInput)colorInput.value=colorVal;
+  if(colorPicker)colorPicker.value=/^#[0-9a-fA-F]{6}$/.test(colorVal)?colorVal:'#00d4c8';
+  openModal('clientModal');
+}
 function deleteClientBtn(e,id){e.stopPropagation();const c=DB.clients.find(x=>x.id===id);DB.clients=DB.clients.filter(x=>x.id!==id);SB.remove('clients',id,'clients');addHistory('delete','Deleted client: '+c.name,{...c,_dbKey:'clients'});reRenderAll();showToast('Client deleted');}
 
 let editingVentureId=null;
@@ -6443,47 +6536,57 @@ function dropVentureCard(e,newStage){
   _dragVentureId=null;
 }
 function renderBuild(){
-  const apps=[{name:'NAKNAK v8',icon:'❤️',desc:'Family safety & health app',color:'--teal',key:'NAKNAK',status:'Active',rev:'₱0–₱199/mo'},{name:'DISKARTE',icon:'🏪',desc:'POS / inventory / utang tracker',color:'--orange',key:'DISKARTE',status:'Active',rev:'Beta'},{name:'PASAHERO RPG',icon:'🚌',desc:'Filipino commuter retro RPG',color:'--amber',key:'PASAHERO',status:'In Dev',rev:'Concept'}];
-  document.getElementById('buildApps').innerHTML=apps.map(a=>{const tasks=DB.tasks.filter(t=>t.world==='BUILD'&&t.title.toLowerCase().includes(a.key.toLowerCase()));return`<div class="hc" style="border-top:2px solid var(${a.color})"><div style="font-size:24px;margin-bottom:6px">${a.icon}</div><div style="font-size:11px;font-weight:700;color:var(${a.color});margin-bottom:2px">${a.name}</div><div style="font-size:11px;color:var(--text3);margin-bottom:9px">${a.desc}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><span class="pill pt" style="font-size:9px">${a.status}</span><span style="font-size:10px;color:var(--text3)">${a.rev}</span></div><div style="border-top:1px solid var(--border);padding-top:7px;margin-bottom:7px"><div style="font-size:8px;font-weight:700;color:var(--text3);margin-bottom:5px;text-transform:uppercase;letter-spacing:.1em">Tasks (${tasks.length})</div>${tasks.map(t=>`<div style="display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--text2)"><div class="pdot ${t.priority==='High'?'ph':t.priority==='Medium'?'pm':'pl'}"></div><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.title}</span><span class="pill ${t.status==='Done'?'pg':t.status==='In Progress'?'pt':'pgr'}" style="font-size:9px">${t.status}</span></div>`).join('')||'<div style="font-size:10px;color:var(--text3)">No tasks yet.</div>'}</div><button class="btn btn-g" style="width:100%;font-size:10px" onclick="openTaskForStatus('BUILD','Todo');document.getElementById('tf-title').value='[${a.key}] '"><i class="ti ti-plus" style="font-size:11px;line-height:1;display:inline-block"></i> Add Task</button></div>`;}).join('');
+  const knownApps=[{name:'NAKNAK v8',desc:'Family safety & health monitoring app',color:'var(--teal)',icon:'ti-heart-rate-monitor',key:'NAKNAK'},{name:'DISKARTE',desc:'POS + inventory for micro-retailers',color:'var(--green)',icon:'ti-receipt',key:'DISKARTE'},{name:'PASAHERO RPG',desc:'Filipino commuter retro RPG',color:'var(--purple)',icon:'ti-rocket',key:'PASAHERO'}];
+  const grid=document.getElementById('buildApps');
+  if(grid){grid.innerHTML=knownApps.map(app=>{
+    const tasks=DB.tasks.filter(t=>t.world==='BUILD'&&(t.client===app.name||t.title.toLowerCase().includes(app.key.toLowerCase())));
+    const open=tasks.filter(t=>t.status!=='Done').length;const done=tasks.filter(t=>t.status==='Done').length;
+    return`<div style="background:#05090f;border:1px solid ${app.color}30;border-top:2px solid ${app.color};border-radius:5px;padding:12px 14px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><i class="ti ${app.icon}" style="font-size:16px;color:${app.color};line-height:1;display:block"></i><div style="font-size:12px;font-weight:800;color:${app.color}">${app.name}</div></div>
+      <div style="font-size:10px;color:var(--text3);margin-bottom:8px">${app.desc}</div>
+      <div style="display:flex;gap:10px;font-size:10px;margin-bottom:8px"><span style="color:var(--text3)">${open} open</span><span style="color:var(--green)">${done} done</span></div>
+      <button class="btn btn-g" style="width:100%;font-size:10px" onclick="openTaskFor('BUILD')"><i class="ti ti-plus" style="font-size:11px;line-height:1;display:inline-block"></i> Add Task</button>
+    </div>`;}).join('');}
+  renderBuildTasks();
+}
+function renderBuildTasks(){
+  const tbody=document.getElementById('buildTbody');if(!tbody)return;
+  const sf=document.getElementById('buildTaskFilter')?.value||'all';
+  let tasks=DB.tasks.filter(t=>t.world==='BUILD');
+  if(sf!=='all')tasks=tasks.filter(t=>t.status===sf);
+  const pDot=p=>p==='High'?'#ef4444':p==='Medium'?'#f59e0b':'#4ade80';
+  const sCl=s=>s==='Done'?'pg':s==='In Progress'?'pt':s==='No Progress'?'pam':'pgr';
+  const pCl=p=>p==='High'?'pr':p==='Medium'?'pam':'pgr';
+  tbody.innerHTML=tasks.length?tasks.map(t=>`<tr onclick="editTask(${t.id})" style="cursor:pointer">
+    <td style="font-size:11px;font-weight:600;color:var(--text1)">${t.title}</td>
+    <td style="font-size:10px;color:var(--text3)">${t.client||t.platform||'—'}</td>
+    <td><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:6px;height:6px;border-radius:50%;background:${pDot(t.priority)};display:inline-block"></span><span class="pill ${pCl(t.priority)}" style="font-size:9px">${t.priority}</span></span></td>
+    <td><span class="pill ${sCl(t.status)}" style="font-size:9px">${t.status||'Todo'}</span></td>
+    <td style="font-size:10px;color:var(--text3)">${t.due||'—'}</td>
+    <td><button class="btn btn-d" style="padding:2px 6px" onclick="event.stopPropagation();deleteTask(event,${t.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:block"></i></button></td>
+  </tr>`).join(''):`<tr><td colspan="6" style="text-align:center;color:var(--text3);font-size:12px;padding:20px">No BUILD tasks yet. Use + Task to add one.</td></tr>`;
 }
 function renderSides(){
-  document.getElementById('sidesCount').textContent=DB.sides.length;
+  const countEl=document.getElementById('sidesCount');if(countEl)countEl.textContent=DB.sides.length;
+  const activeEl=document.getElementById('sidesActive');if(activeEl)activeEl.textContent=DB.sides.filter(p=>p.status==='Active').length;
+  const rev=DB.sides.reduce((s,p)=>s+(p.price||0),0);const revEl=document.getElementById('sidesRevenue');if(revEl)revEl.textContent='₱'+rev.toLocaleString('en-PH');
   const grid=document.getElementById('sidesProductGrid');if(!grid)return;
-  if(!DB.sides.length){grid.innerHTML='<div style="font-size:11px;color:var(--text3)">No products yet. Click + Product to start.</div>';return;}
+  if(!DB.sides.length){grid.innerHTML='<div style="font-size:11px;color:var(--text3);grid-column:1/-1">No products yet. Click + Product to start.</div>';return;}
   grid.innerHTML=DB.sides.map(p=>{
     const todos=p.todos||[];const done=todos.filter(t=>t.done).length;
     return`<div style="background:var(--navy2);border:1px solid var(--border);border-radius:6px;overflow:hidden">
-      <div style="padding:11px 13px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(245,158,11,.02))">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-          <div style="font-size:11px;font-weight:700;color:var(--amber)">${p.name}</div>
-          <span class="pill pt" style="font-size:9px">${p.status}</span>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:3px">
-          <div style="font-size:10px;color:var(--text3)">${p.platform||'—'}</div>
-          ${p.price?`<span style="font-size:11px;font-weight:700;color:var(--amber)">₱${p.price.toLocaleString()}</span>`:''}
-        </div>
-        ${p.drive?`<a href="${p.drive}" target="_blank" onclick="event.stopPropagation()" style="font-size:10px;color:var(--teal);display:inline-flex;align-items:center;gap:3px;margin-top:4px"><i class="ti ti-brand-google-drive" style="font-size:11px;line-height:1;display:block"></i> Drive</a>`:''}
+      <div style="padding:11px 13px;border-bottom:1px solid var(--border);background:rgba(245,158,11,.05)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><div style="font-size:11px;font-weight:700;color:var(--amber)">${p.name}</div><span class="pill pt" style="font-size:9px">${p.status}</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:3px"><div style="font-size:10px;color:var(--text3)">${p.platform||'—'}</div>${p.price?`<span style="font-size:11px;font-weight:700;color:var(--amber)">₱${p.price.toLocaleString()}</span>`:''}</div>
+        ${p.drive?`<a href="${p.drive}" target="_blank" onclick="event.stopPropagation()" style="font-size:10px;color:var(--teal);display:inline-flex;align-items:center;gap:3px;margin-top:4px"><i class="ti ti-brand-google-drive" style="font-size:11px;line-height:1;display:block"></i>Drive</a>`:''}
       </div>
       <div style="padding:10px 13px">
-        <div style="font-size:8px;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between">
-          <span>To-Do List (${done}/${todos.length})</span>
-          <button style="background:var(--teal3);border:1px solid var(--teal2);border-radius:3px;color:var(--teal);font-size:9px;padding:1px 7px;cursor:pointer" onclick="addSidesTodo(${p.id})">+ Add</button>
-        </div>
-        <div id="stodos-${p.id}">
-          ${todos.map((t,i)=>`<div style="display:flex;align-items:center;gap:7px;padding:4px 0;border-bottom:1px solid var(--border)">
-            <div onclick="toggleSideTodo(${p.id},${i})" style="width:13px;height:13px;border:1px solid ${t.done?'var(--teal)':'var(--border2)'};border-radius:2px;flex-shrink:0;cursor:pointer;background:${t.done?'var(--teal)':'transparent'};display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--navy)">${t.done?'✓':''}</div>
-            <span style="flex:1;font-size:11px;color:${t.done?'var(--text3)':'var(--text1)'};text-decoration:${t.done?'line-through':'none'}">${t.text}</span>
-            <button style="background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:11px;padding:0 3px" onclick="removeSideTodo(${p.id},${i})">×</button>
-          </div>`).join('')}
-          ${!todos.length?'<div style="font-size:10px;color:var(--text3)">No tasks yet.</div>':''}
-        </div>
+        <div style="font-size:9px;font-weight:700;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between"><span>To-Do (${done}/${todos.length})</span><button style="background:var(--teal3);border:1px solid var(--teal2);border-radius:3px;color:var(--teal);font-size:9px;padding:1px 7px;cursor:pointer" onclick="addSidesTodo(${p.id})">+ Add</button></div>
+        ${todos.map((t,i)=>`<div style="display:flex;align-items:center;gap:7px;padding:4px 0;border-bottom:1px solid var(--border)"><div onclick="toggleSideTodo(${p.id},${i})" style="width:13px;height:13px;border:1px solid ${t.done?'var(--teal)':'var(--border2)'};border-radius:2px;flex-shrink:0;cursor:pointer;background:${t.done?'var(--teal)':'transparent'};display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--navy)">${t.done?'✓':''}</div><span style="flex:1;font-size:11px;color:${t.done?'var(--text3)':'var(--text1)'};text-decoration:${t.done?'line-through':'none'}">${t.text}</span><button style="background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:11px;padding:0 3px" onclick="removeSideTodo(${p.id},${i})">×</button></div>`).join('')}
+        ${!todos.length?'<div style="font-size:10px;color:var(--text3)">No tasks yet.</div>':''}
       </div>
-      <div style="padding:6px 13px;border-top:1px solid var(--border);display:flex;gap:5px">
-        <button class="btn btn-g" style="flex:1;font-size:10px" onclick="event.stopPropagation();editSidesProduct(${p.id})"><i class="ti ti-pencil" style="font-size:11px;line-height:1;display:inline-block"></i> Edit</button>
-        <button class="btn btn-d" style="flex:1;font-size:10px" onclick="event.stopPropagation();deleteSide(${p.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:inline-block"></i> Delete</button>
-      </div>
-    </div>`;
-  }).join('');
+      <div style="padding:6px 13px;border-top:1px solid var(--border);display:flex;gap:5px"><button class="btn btn-g" style="flex:1;font-size:10px" onclick="event.stopPropagation();editSidesProduct(${p.id})"><i class="ti ti-pencil" style="font-size:11px;line-height:1;display:inline-block"></i> Edit</button><button class="btn btn-d" style="flex:1;font-size:10px" onclick="event.stopPropagation();deleteSide(${p.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:inline-block"></i> Delete</button></div>
+    </div>`;}).join('');
 }
 let editingSidesId=null;
 function addSidesProduct(){editingSidesId=null;document.getElementById('sidesModalTitle').textContent='New Product';['sp-name','sp-platform','sp-price','sp-drive','sp-notes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('sp-status').value='Active';openModal('sidesModal');}
@@ -8111,9 +8214,45 @@ function editJournal(id){const j=DB.journal.find(x=>x.id===id);if(!j)return;edit
 function deleteJournal(id){const j=DB.journal.find(x=>x.id===id);if(!j)return;DB.journal=DB.journal.filter(x=>x.id!==id);SB.remove('journal',id,'journal');addHistory('delete','Deleted journal: '+j.title,{...j,_dbKey:'journal'});showToast('Journal deleted');}
 
 // MEMORY
-function renderMemory(){document.getElementById('memoryTbody').innerHTML=DB.memories.map(m=>`<tr><td style="font-size:11px;max-width:280px">${m.memory}</td><td style="font-size:11px;color:var(--text3)">${m.category}</td><td><span class="pill pt" style="font-size:9px">${m.world}</span></td><td style="font-size:11px;color:var(--text3)">${m.date}</td><td><button class="btn btn-d" style="padding:2px 6px" onclick="deleteMemoryItem(${m.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:block"></i></button></td></tr>`).join('');}
-function addMemory(){const mem=prompt('Memory:');if(!mem)return;const m={id:Date.now(),memory:mem,category:prompt('Category:','General')||'General',world:prompt('World:','WORK-IH')||'WORK-IH',date:new Date().toISOString().split('T')[0]};DB.memories.unshift(m);SB.upsert('memories',m,'memories');renderMemory();showToast('✓ Memory saved');}
+let editingMemoryId=null;
+function openMemoryModal(id){
+  editingMemoryId=id||null;
+  const m=id?DB.memories.find(x=>x.id===id):null;
+  document.getElementById('memModalTitle').textContent=id?'Edit Memory':'Add Memory';
+  document.getElementById('mm-memory').value=m?m.memory:'';
+  document.getElementById('mm-cat').value=m?m.category:'General';
+  document.getElementById('mm-world').value=m?m.world:'WORK-IH';
+  openModal('memoryModal');
+}
+function saveMemoryItem(){
+  const mem=document.getElementById('mm-memory').value.trim();
+  if(!mem){showToast('Memory text required');return;}
+  const m={id:editingMemoryId||Date.now(),memory:mem,category:document.getElementById('mm-cat').value,world:document.getElementById('mm-world').value,date:new Date().toISOString().split('T')[0]};
+  if(editingMemoryId){const i=DB.memories.findIndex(x=>x.id===editingMemoryId);if(i>=0)DB.memories[i]=m;SB.update('memories',m.id,m,'memories');}
+  else{DB.memories.unshift(m);SB.upsert('memories',m,'memories');}
+  closeModal('memoryModal');renderMemory();showToast('✓ Memory saved');
+}
+function addMemory(){openMemoryModal();}// legacy alias
 function deleteMemoryItem(id){DB.memories=DB.memories.filter(m=>m.id!==id);SB.remove('memories',id,'memories');renderMemory();}
+function renderMemory(){
+  const wf=document.getElementById('memWorldFilter')?.value||'all';
+  const mems=wf==='all'?DB.memories:DB.memories.filter(m=>m.world===wf);
+  // Stats
+  const tot=document.getElementById('memTotal');if(tot)tot.textContent=DB.memories.length;
+  const ag=document.getElementById('memAgentCount');if(ag)ag.textContent=DB.memories.filter(m=>m.category==='Agent Preference').length;
+  const br=document.getElementById('memBrandCount');if(br)br.textContent=DB.memories.filter(m=>m.category==='Brand').length;
+  const dc=document.getElementById('memDecCount');if(dc)dc.textContent=DB.memories.filter(m=>m.category==='Decision').length;
+  // Table
+  const catColor=c=>c==='Agent Preference'?'var(--teal)':c==='Brand'?'var(--orange)':c==='Decision'?'var(--amber)':c==='Client Preference'?'var(--purple)':c==='Product'?'var(--green)':'var(--text3)';
+  document.getElementById('memoryTbody').innerHTML=mems.length?mems.map(m=>`<tr onclick="openMemoryModal(${m.id})" style="cursor:pointer">
+    <td style="font-size:11px;max-width:300px;color:var(--text1)">${m.memory}</td>
+    <td><span style="font-size:9px;color:${catColor(m.category)};border:1px solid ${catColor(m.category)}40;border-radius:3px;padding:1px 6px;background:${catColor(m.category)}12">${m.category}</span></td>
+    <td><span class="pill pt" style="font-size:9px">${m.world}</span></td>
+    <td style="font-size:10px;color:var(--text3)">${m.date}</td>
+    <td><button class="btn btn-d" style="padding:2px 6px" onclick="event.stopPropagation();deleteMemoryItem(${m.id})"><i class="ti ti-trash" style="font-size:11px;line-height:1;display:block"></i></button></td>
+  </tr>`).join('')
+  :'<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:20px;font-size:12px">No memories yet. Add one to power your agents, sir.</td></tr>';
+}
 
 // CAPTURE
 async function processCapture(){const input=document.getElementById('captureInput');const text=input.value.trim();if(!text)return;input.value='';await executeVoiceCommand(text);}
